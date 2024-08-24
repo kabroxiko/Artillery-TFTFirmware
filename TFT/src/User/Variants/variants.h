@@ -63,6 +63,8 @@
   #include "pin_MKS_TFT28_V4_0.h"
 #elif defined(MKS_TFT28_NEW_GENIUS)
   #include "pin_MKS_TFT28_NEW_GENIUS.h"
+#elif defined(ARTILLERY_TFT_CONTROLLER_V1_2)
+  #include "pin_ARTILLERY_TFT_CONTROLLER_V1_2.h"
 #elif defined(MKS_TFT32_V1_3)
   #include "pin_MKS_TFT32_V1_3.h"
 #elif defined(MKS_TFT32_V1_4)

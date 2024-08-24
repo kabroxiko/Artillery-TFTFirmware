@@ -206,7 +206,7 @@ long request_M23_M36(const char * filename)
                             NULL);            // the third error magic
 
     // skip source and first "/" character (e.g. "oMD:/sub_dir/cap2.gcode" -> "sub_dir/cap2.gcode")
-    mustStoreCmd("M23 %s\n", filename + strlen(getFS()) + 1);
+    mustStoreCmd("M23 /%s\n", filename + strlen(getFS()) + 1);
 
     sizeTag = "Size:";
   }
