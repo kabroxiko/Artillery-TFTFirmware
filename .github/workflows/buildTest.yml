@@ -1,119 +1,97 @@
-name: Build Test
+name: Test Build
 on:
-  pull_request:
+  pull_request_target:
     paths-ignore:
-    - Bootloader/**
-    - Copy to SD Card root directory to update/**
-    - images/**
-    - readme/**
-    - '**/*.md'
+      - Bootloader/**
+      - Copy to SD Card root directory to update/**
+      - images/**
+      - readme/**
+      - '**/*.md'
+  workflow_call:
+    outputs:
+      version:
+        description: "Tag name for release"
+        value: v${{ jobs.prepare.outputs.version }}
+  workflow_dispatch:
 
 jobs:
-  main:
-    name: Build Test
-    if: github.repository == 'bigtreetech/BIGTREETECH-TouchScreenFirmware'
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.list.outputs.matrix }}
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .cache/pip
+            .platformio/.cache
+            venv
+          key: ${{ runner.os }}-pio
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install PlatformIO Core
+        run:
+          |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --disable-pip-version-check --upgrade platformio
+
+      - name: List hardware
+        id: list
+        run: |
+          JSON=$(cat .github/hardware.json | jq -c '.')
+          echo matrix=${JSON} | tee -a $GITHUB_OUTPUT
+
+      - name: Extract SOFTWARE_VERSION
+        id: version
+        run: |
+          version=$(grep -Po '(?<=-DSOFTWARE_VERSION=)[0-9]+\.[0-9]+\.[0-9]+' platformio.ini)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/cache@v4
         with:
-          python-version: '3.9'
-          architecture: 'x64'
+          path: |
+            .cache/pip
+            .platformio/.cache
+            venv
+          key: ${{ runner.os }}-pio
 
-      - name: Install PlatformIO
+      - uses: montudor/action-zip@v1
+
+      - name: Build artifacts
         run: |
-          python -m pip install --upgrade pip
-          pip install -U platformio
+          source venv/bin/activate
+          platformio run --environment ${{ matrix.hardware }}
+          set -x
+          mv .pio/build/${{ matrix.hardware }}/*.bin MKS${{ matrix.assets_dir }}.bin
+          if [ "${{ matrix.assets_dir }}" == "TFT32" ]; then
+            mv "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/TFT28" "${{ matrix.assets_dir }}"
+          else
+            mv "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/${{ matrix.assets_dir }}" "."
+          fi
+          if [ "${{ matrix.custom_logo }}" != "" ]; then
+            cp -a "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/${{ matrix.custom_logo }}/bmp" \
+              "${{ matrix.assets_dir }}"
+          fi
+          mv "Copy to SD Card root directory to update/config.ini" "."
+          zip -mur ${{ matrix.hardware }}.zip MKS${{ matrix.assets_dir }}.bin ${{ matrix.assets_dir }} config.ini
 
-      - name: Build TFT24 V1.1
-        run: platformio run --environment BIGTREE_TFT24_V1_1
-
-      - name: Build TFT28 V1.0
-        run: platformio run --environment BIGTREE_TFT28_V1_0
-
-      - name: Build TFT28 V3.0
-        run: platformio run --environment BIGTREE_TFT28_V3_0
-
-      - name: Build TFT35 V1.0
-        run: platformio run --environment BIGTREE_TFT35_V1_0
-
-      - name: Build TFT35 V1.1
-        run: platformio run --environment BIGTREE_TFT35_V1_1
-
-      - name: Build TFT35 V1.2
-        run: platformio run --environment BIGTREE_TFT35_V1_2
-
-      - name: Build TFT35 V2.0
-        run: platformio run --environment BIGTREE_TFT35_V2_0
-
-      - name: Build TFT35 V3.0
-        run: platformio run --environment BIGTREE_TFT35_V3_0
-
-      - name: Build TFT35 E3 V3.0
-        run: platformio run --environment BIGTREE_TFT35_E3_V3_0
-
-      - name: Build TFT35 B1 V3.0
-        run: platformio run --environment BIGTREE_TFT35_B1_V3_0
-
-      - name: Build TFT43 V3.0
-        run: platformio run --environment BIGTREE_TFT43_V3_0
-
-      - name: Build TFT50 V3.0
-        run: platformio run --environment BIGTREE_TFT50_V3_0
-
-      - name: Build TFT70 V3.0
-        run: platformio run --environment BIGTREE_TFT70_V3_0
-
-      - name: Build GD_TFT24 V1.1
-        run: platformio run --environment BIGTREE_GD_TFT24_V1_1
-
-      - name: Build GD_TFT35 V2.0
-        run: platformio run --environment BIGTREE_GD_TFT35_V2_0
-
-      - name: Build GD TFT35 V3.0
-        run: platformio run --environment BIGTREE_GD_TFT35_V3_0
-
-      - name: Build GD TFT35 E3 V3.0
-        run: platformio run --environment BIGTREE_GD_TFT35_E3_V3_0
-
-      - name: Build GD TFT35 B1 V3.0
-        run: platformio run --environment BIGTREE_GD_TFT35_B1_V3_0
-
-      - name: Build GD TFT43 V3.0
-        run: platformio run --environment BIGTREE_GD_TFT43_V3_0
-
-      - name: Build GD TFT50 V3.0
-        run: platformio run --environment BIGTREE_GD_TFT50_V3_0
-
-      - name: Build GD TFT70 V3.0
-        run: platformio run --environment BIGTREE_GD_TFT70_V3_0
-
-      - name: Build MKS TFT28 V3.0
-        run: platformio run --environment MKS_TFT28_V3_0
-
-      - name: Build MKS TFT28 V4.0
-        run: platformio run --environment MKS_TFT28_V4_0
-
-      - name: Build MKS TFT28 New Genius
-        run: platformio run --environment MKS_TFT28_NEW_GENIUS
-
-      - name: Build MKS TFT32 V1.3
-        run: platformio run --environment MKS_TFT32_V1_3
-
-      - name: Build MKS TFT32 V1.4
-        run: platformio run --environment MKS_TFT32_V1_4
-
-      - name: Build MKS TFT32 V1.4 No Bootloader
-        run: platformio run --environment MKS_TFT32_V1_4_NOBL
-
-      - name: Build MKS TFT32L V3.0
-        run: platformio run --environment MKS_TFT32L_V3_0
-
-      - name: Build MKS TFT35 V1.0
-        run: platformio run --environment MKS_TFT35_V1_0
-
-      - name: Build MKS GD TFT28 V1.2-4
-        run: platformio run --environment MKS_GD_TFT28_V1_2_4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.hardware }}
+          path: ${{ matrix.hardware }}.zip
+          retention-days: 1
