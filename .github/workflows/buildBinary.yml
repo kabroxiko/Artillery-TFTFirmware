@@ -14,7 +14,7 @@ on:
 jobs:
   main:
     name: Build Binaries
-    if: github.repository == 'bigtreetech/BIGTREETECH-TouchScreenFirmware'
+    if: github.repository == 'kabroxiko/Artillery-TFTFirmware'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository

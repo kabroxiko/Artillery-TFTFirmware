@@ -11,7 +11,7 @@ on:
 jobs:
   main:
     name: Build Test
-    if: github.repository == 'bigtreetech/BIGTREETECH-TouchScreenFirmware'
+    if: github.repository == 'kabroxiko/Artillery-TFTFirmware'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
