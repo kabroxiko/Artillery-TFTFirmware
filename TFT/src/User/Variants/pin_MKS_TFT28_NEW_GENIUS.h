@@ -6,9 +6,14 @@
   #define UPDATE_DIR "TFT28"
 #endif
 
+// Hardware manufacturer
+#ifndef HARDWARE_MANUFACTURER
+  #define HARDWARE_MANUFACTURER "ARTILLERY_"
+#endif
+
 // Hardware version config
 #ifndef HARDWARE_VERSION
-  #define HARDWARE_VERSION "TFT28_NEW_GENIUS"
+  #define HARDWARE_VERSION STRINGIFY(BOARD_VERSION)
 #endif
 
 #if !defined(ST7920_EMULATOR) || defined(SPI3_PIN_SMART_USAGE)
