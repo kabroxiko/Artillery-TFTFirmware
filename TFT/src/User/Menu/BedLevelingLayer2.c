@@ -27,14 +27,6 @@ void menuBedLevelingLayer2(void)
       bedLevelingLayer2Items.title.index = LABEL_ABL_SETTINGS_BBL;
       break;
 
-    case BL_UBL:
-      bedLevelingLayer2Items.title.index = LABEL_ABL_SETTINGS_UBL;
-      bedLevelingLayer2Items.items[1].icon = ICON_EEPROM_SAVE;
-      bedLevelingLayer2Items.items[1].label.index = LABEL_SAVE;
-      bedLevelingLayer2Items.items[2].icon = ICON_EEPROM_RESTORE;
-      bedLevelingLayer2Items.items[2].label.index = LABEL_LOAD;
-      break;
-
     case BL_MBL:
       bedLevelingLayer2Items.title.index = LABEL_MBL_SETTINGS;
       break;
@@ -89,16 +81,6 @@ void menuBedLevelingLayer2(void)
         {
           OPEN_MENU(menuMBL);
         }
-        break;
-
-      case KEY_ICON_1:
-        if (infoMachineSettings.leveling == BL_UBL)
-          menuUBLSave();
-        break;
-
-      case KEY_ICON_2:
-        if (infoMachineSettings.leveling == BL_UBL)
-          menuUBLLoad();
         break;
 
       case KEY_ICON_3:

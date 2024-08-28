@@ -332,10 +332,6 @@ static inline bool processKnownDataFormat(const char * dataRow)
           title = (char *)textSelect(LABEL_ABL_SETTINGS_BBL);
           break;
 
-        case BL_UBL:
-          title = (char *)textSelect(LABEL_ABL_SETTINGS_UBL);
-          break;
-
         case BL_MBL:
           title = (char *)textSelect(LABEL_MBL_SETTINGS);
           break;
@@ -356,9 +352,7 @@ static inline bool processKnownDataFormat(const char * dataRow)
 
 static void meshSaveCallback(void)
 {
-  if (infoMachineSettings.leveling == BL_UBL)
-    menuUBLSave();
-  else if (infoMachineSettings.leveling != BL_DISABLED)
+  if (infoMachineSettings.leveling != BL_DISABLED)
     saveEepromSettings();
 
   if (meshData != NULL)  // if data have not been released (e.g. data are released when mesh editor menu is forced to exit)

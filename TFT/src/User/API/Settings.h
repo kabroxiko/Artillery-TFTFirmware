@@ -323,7 +323,6 @@ typedef enum
   BL_DISABLED = DISABLED,  // Bed Leveling Diabled
   BL_ABL,                  // Auto Bed Leveling (ABL)
   BL_BBL,                  // Bilinear Bed Leveling (BBL)
-  BL_UBL,                  // Unified Bed Leveling (UBL)
   BL_MBL,                  // Mesh Bed Leveling (MBL)
 } BL_TYPE;
 

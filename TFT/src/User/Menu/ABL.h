@@ -13,9 +13,6 @@ void ablUpdateStatus(bool succeeded);
 // start ABL process
 void ablStart(void);
 
-void menuUBLSave(void);
-void menuUBLLoad(void);
-
 #ifdef __cplusplus
 }
 #endif

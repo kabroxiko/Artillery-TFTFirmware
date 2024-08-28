@@ -240,8 +240,6 @@ void setupMachine(FW_TYPE fwType)
       infoMachineSettings.leveling = BL_ABL;
     #elif BED_LEVELING_TYPE == 3
       infoMachineSettings.leveling = BL_BBL;
-    #elif BED_LEVELING_TYPE == 4
-      infoMachineSettings.leveling = BL_UBL;
     #elif BED_LEVELING_TYPE == 5
       infoMachineSettings.leveling = BL_MBL;
     #endif

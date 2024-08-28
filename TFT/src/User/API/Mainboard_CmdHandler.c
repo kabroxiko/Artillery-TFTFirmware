@@ -1492,27 +1492,6 @@ void sendQueueCmd(void)
                   setParameter(P_ABL_STATE, 0, v & 1U);  // value will be 1 if v == 1, 0 if v == 2
               }
             }
-            #if BED_LEVELING_TYPE == 4  // if UBL
-              else if (infoMachineSettings.firmwareType == FW_MARLIN)
-              {
-                // if (cmd_seen('A'))
-                // {
-                //   setParameter(P_ABL_STATE, 0, 1);
-                //   storeCmd("M117 UBL active\n");
-                // }
-                // else if (cmd_seen('D'))
-                // {
-                //   setParameter(P_ABL_STATE, 0, 0);
-                //   storeCmd("M117 UBL inactive\n");
-                // }
-                /*
-                   Bed leveling state will be set through "parsACK.c" after receiving confirmation
-                   message from the printer to prevent wrong state and/or value in case of error
-                */
-
-                if (cmd_seen('A') || cmd_seen('D')) storeCmd("M420\n");  // check bed leveling state
-              }
-            #endif
           break;
         #endif
 
