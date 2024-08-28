@@ -62,7 +62,7 @@ void ablStart(void)
   switch (infoMachineSettings.leveling)
   {
     case BL_BBL:  // if Bilinear Bed Leveling
-      storeCmd("G29\n");
+      storeCmd("BED_MESH_CALIBRATE PROFILE=default\n");
       break;
 
     case BL_UBL:  // if Unified Bed Leveling
@@ -76,7 +76,7 @@ void ablStart(void)
       break;
 
     default:  // if any other Auto Bed Leveling
-      storeCmd("G29\n");
+      storeCmd("BED_MESH_CALIBRATE PROFILE=default\n");
       break;
   }
 
