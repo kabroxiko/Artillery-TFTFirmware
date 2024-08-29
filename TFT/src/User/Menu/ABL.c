@@ -10,16 +10,6 @@ void ablUpdateStatus(bool succeeded)
   tempTitle.index = LABEL_ABL_SETTINGS;
   LABELCHAR(tempMsg, LABEL_BL_COMPLETE);
 
-  switch (infoMachineSettings.leveling)
-  {
-    case BL_BBL:
-      tempTitle.index = LABEL_ABL_SETTINGS_BBL;
-      break;
-
-    default:
-      break;
-  }
-
   if (succeeded)  // if bed leveling process successfully terminated, allow to save to EEPROM
   {
     BUZZER_PLAY(SOUND_SUCCESS);
@@ -47,17 +37,7 @@ void ablUpdateStatus(bool succeeded)
 void ablStart(void)
 {
   storeCmd("G28\n");
-
-  switch (infoMachineSettings.leveling)
-  {
-    case BL_BBL:  // if Bilinear Bed Leveling
-      storeCmd("BED_MESH_CALIBRATE PROFILE=default\n");
-      break;
-
-    default:  // if any other Auto Bed Leveling
-      storeCmd("BED_MESH_CALIBRATE PROFILE=default\n");
-      break;
-  }
+  storeCmd("BED_MESH_CALIBRATE PROFILE=default\n");
 
   if (infoMachineSettings.firmwareType != FW_REPRAPFW)
     storeCmd("M118 P0 ABL Completed\n");

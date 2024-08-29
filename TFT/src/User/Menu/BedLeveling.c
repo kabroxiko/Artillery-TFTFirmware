@@ -56,11 +56,6 @@ void menuBedLeveling(void)
 
   switch (infoMachineSettings.leveling)
   {
-    case BL_BBL:
-      bedLevelingItems.title.index = LABEL_ABL_SETTINGS_BBL;
-      bedLevelingItems.items[0].label.index = LABEL_BBL;
-      break;
-
     case BL_MBL:
       bedLevelingItems.title.index = LABEL_MBL_SETTINGS;
       bedLevelingItems.items[0].label.index = LABEL_MBL;

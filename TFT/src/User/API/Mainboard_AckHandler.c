@@ -941,7 +941,7 @@ void parseAck(void)
       if (ack_seen("Y")) setParameter(P_PROBE_OFFSET, AXIS_INDEX_Y, ack_value());
       if (ack_seen("Z") || (ack_seen("Z:"))) setParameter(P_PROBE_OFFSET, AXIS_INDEX_Z, ack_value());
     }
-    // parse G29 (ABL) + M118, ABL completed message (ABL, BBL) (e.g. from ABL menu)
+    // parse G29 (ABL) + M118, ABL completed message (ABL) (e.g. from ABL menu)
     else if (ack_starts_with("ABL Completed"))
     {
       ablUpdateStatus(true);

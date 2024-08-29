@@ -328,10 +328,6 @@ static inline bool processKnownDataFormat(const char * dataRow)
 
       switch (infoMachineSettings.leveling)
       {
-        case BL_BBL:
-          title = (char *)textSelect(LABEL_ABL_SETTINGS_BBL);
-          break;
-
         case BL_MBL:
           title = (char *)textSelect(LABEL_MBL_SETTINGS);
           break;
