@@ -14,7 +14,7 @@ static inline void mblStart(void)
 
   // MBL gcode sequence start
   mustStoreCmd("G28\n");
-  mustStoreCmd("G29 S1\n");  // home and move to first point for Z height adjustment
+  mustStoreCmd("BED_SCREWS_ADJUST\n");  // home and move to first point for Z height adjustment
 
   #ifdef MBL_START_Z
     probeHeightStart(infoSettings.level_z_pos, false);  // raise nozzle
@@ -41,7 +41,7 @@ static inline void mblStop(void)
 static inline void mblAbort(void)
 {
   // MBL gcode sequence stop
-  mustStoreCmd("G29 S5\n");  // reset and disable mesh
+  mustStoreCmd("ABORT\n");  // reset and disable mesh
 
   mblStop();
 
@@ -232,7 +232,7 @@ void menuMBL(void)
         }
         else
         {
-          storeCmd("G29 S2\n");  // save Z height and move to next mesh point
+          storeCmd("ADJUSTED\n");  // save Z height and move to next mesh point
 
           #ifdef MBL_START_Z
             probeHeightStart(infoSettings.level_z_pos, false);  // raise nozzle
