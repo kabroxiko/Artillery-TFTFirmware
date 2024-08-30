@@ -40,5 +40,5 @@ void ablStart(void)
   storeCmd("BED_MESH_CALIBRATE PROFILE=default\n");
 
   if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-    storeCmd("M118 P0 ABL Completed\n");
+    storeCmd("RESPOND TYPE=echo_no_space MSG=\"ABL Completed\"\n");
 }

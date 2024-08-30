@@ -571,11 +571,7 @@ void abortPrint(void)
       break;
 
     case FS_REMOTE_HOST:
-      // - forward a print cancel notification to all hosts (so also the one handling the print) asking to cancel the print
-      // - the host handling the print should respond to this notification with "M118 P0 A1 action:cancel" that will
-      //   trigger setPrintAbort() in parseAck() once the following loop does its job (stopping all blocking operations)
-      //
-      mustStoreCmd("M118 P0 A1 action:notification remote cancel\n");
+      mustStoreCmd("CANCEL_PRINT\n");
       waitForAbort();
 
       loopDetected = false;  // finally, remove lock and exit
@@ -588,7 +584,7 @@ void abortPrint(void)
   //   "Not SD printing" and/or "//action:cancel" are not received from Marlin) once the following
   //   loop does its job (stopping all blocking operations)
   //
-  mustStoreCmd("M118 P0 A1 action:cancel\n");
+  mustStoreCmd("CANCEL_PRINT\n");
   waitForAbort();
 
   // execute post print cancel tasks
@@ -701,9 +697,9 @@ bool pausePrint(bool isPause, PAUSE_TYPE pauseType)
 
     case FS_REMOTE_HOST:
       if (isPause)  // forward a print pause notification to all hosts (so also the one handling the print) asking to pause the print
-        mustStoreCmd("M118 P0 A1 action:notification remote pause\n");
+        mustStoreCmd("PAUSE\n");
       else          // forward a print resume notification to all hosts (so also the one handling the print) asking to resume the print
-        mustStoreCmd("M118 P0 A1 action:notification remote resume\n");
+        mustStoreCmd("RESUME\n");
 
       loopDetected = false;  // finally, remove lock and exit
       return true;
