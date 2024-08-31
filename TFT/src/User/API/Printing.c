@@ -80,17 +80,7 @@ static void abortAndTerminate(void)
 {
   clearQueueAndMore();
 
-  if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-  {
-    sendEmergencyCmd("M524\n");
-  }
-  else  // if RepRap
-  {
-    if (!infoPrinting.paused)
-      request_M25();  // must pause the print before cancelling it
-
-    request_M0();  // M524 is not supported in RepRap firmware
-  }
+  sendEmergencyCmd("M524\n");
 }
 
 static void waitForAbort(void)

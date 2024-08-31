@@ -197,31 +197,16 @@ long request_M23_M36(const char * filename)
   const char * sizeTag;
   char * strPtr;
 
-  if (infoMachineSettings.firmwareType != FW_REPRAPFW)  // all other firmwares except RepRap firmware
-  {
-    resetRequestCommandInfo("File opened",    // the magic to identify the start
-                            "File selected",  // the magic to identify the stop
-                            "open failed",    // the first magic to identify the error response
-                            NULL,             // the second error magic
-                            NULL);            // the third error magic
+  resetRequestCommandInfo("File opened",    // the magic to identify the start
+                          "File selected",  // the magic to identify the stop
+                          "open failed",    // the first magic to identify the error response
+                          NULL,             // the second error magic
+                          NULL);            // the third error magic
 
-    // skip source and first "/" character (e.g. "oMD:/sub_dir/cap2.gcode" -> "sub_dir/cap2.gcode")
-    mustStoreCmd("M23 /%s\n", filename + strlen(getFS()) + 1);
+  // skip source and first "/" character (e.g. "oMD:/sub_dir/cap2.gcode" -> "sub_dir/cap2.gcode")
+  mustStoreCmd("M23 /%s\n", filename + strlen(getFS()) + 1);
 
-    sizeTag = "Size:";
-  }
-  else  // RepRap firmware
-  {
-    resetRequestCommandInfo("{\"err\"",  // the magic to identify the start
-                            "}",         // the magic to identify the stop
-                            "Error:",    // the first magic to identify the error response
-                            NULL,        // the second error magic
-                            NULL);       // the third error magic
-
-    mustStoreCmd("M36 /%s\n", filename);
-
-    sizeTag = "size\":";  // RepRap firmware reports size JSON
-  }
+  sizeTag = "Size:";
 
   waitForResponse();  // wait for response
 
@@ -231,9 +216,6 @@ long request_M23_M36(const char * filename)
 
     return size;
   }
-
-  if (infoMachineSettings.firmwareType == FW_REPRAPFW)
-    mustStoreCmd("M23 /%s\n", filename);  // send M23 for RepRap firmware
 
   // find file size and report it
   strPtr = strstr(requestCommandInfo.cmd_rev_buf, sizeTag);

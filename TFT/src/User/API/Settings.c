@@ -249,15 +249,7 @@ void setupMachine(FW_TYPE fwType)
   if (infoSettings.long_filename != AUTO)
     infoMachineSettings.longFilename = infoSettings.long_filename;
 
-  if (infoMachineSettings.firmwareType == FW_REPRAPFW)  // RRF does not report detailed M115 capabilities
-  { // set only the values that differ from the ones initialized in initMachineSettings() function
-    #if BED_LEVELING_TYPE == 1  // if auto-detect is enabled
-      infoMachineSettings.leveling = BL_ABL;
-    #endif
-
-    mustStoreCmd("M552\n");  // query network state, populate IP if the screen boots up after RRF
-  }
-  else if (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE)  // Smoothieware does not report detailed M115 capabilities
+  if (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE)  // Smoothieware does not report detailed M115 capabilities
   { // set only the values that differ from the ones initialized in initMachineSettings() function
     #if BED_LEVELING_TYPE == 1  // if auto-detect is enabled
       infoMachineSettings.leveling = BL_ABL;

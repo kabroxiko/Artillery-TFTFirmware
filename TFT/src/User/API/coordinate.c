@@ -129,7 +129,7 @@ void coordinateQueryClearSendingWaiting(void)
  */
 void coordinateQuery(uint8_t seconds)
 { // following conditions ordered by importance
-  if (!coordSendingWaiting && infoHost.tx_slots != 0 && infoHost.connected && infoMachineSettings.firmwareType != FW_REPRAPFW)
+  if (!coordSendingWaiting && infoHost.tx_slots != 0 && infoHost.connected)
   {
     if (infoMachineSettings.autoReportPos == 1)  // if auto report is enabled
     {

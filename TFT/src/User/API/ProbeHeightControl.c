@@ -19,10 +19,7 @@ void probeHeightEnable(void)
 
   if (origEndstopsState == ENABLED)  // if software endstops is enabled, disable it temporary
   {
-    if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-      mustStoreCmd(ENDSTOP_CMD, 0);  // disable software endstops to move nozzle lower than Z0 if necessary
-    else
-      mustStoreCmd(ENDSTOP_CMD_RRF, 0, 0);
+    mustStoreCmd(ENDSTOP_CMD, 0);  // disable software endstops to move nozzle lower than Z0 if necessary
   }
 }
 
@@ -32,21 +29,18 @@ void probeHeightDisable(void)
 {
   if (origEndstopsState == ENABLED)  // if software endstops was originally enabled, enable it again
   {
-    if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-      mustStoreCmd(ENDSTOP_CMD, 1);  // enable software endstops
-    else
-      mustStoreCmd(ENDSTOP_CMD_RRF, 1, 1);
+    mustStoreCmd(ENDSTOP_CMD, 1);  // enable software endstops
   }
 
   if (origAblState == ENABLED)  // if ABL was originally enabled, enable it again
-    mustStoreCmd(infoMachineSettings.firmwareType != FW_REPRAPFW ? "M420 S1\n" : "G29 S1\n");  // enable ABL
+    mustStoreCmd("M420 S1\n");  // enable ABL
 }
 
 // home, disable ABL and raise nozzle
 void probeHeightHome(void)
 {
   mustStoreCmd("G28\n");  // home printer
-  mustStoreCmd(infoMachineSettings.firmwareType != FW_REPRAPFW ? "M420 S0\n" : "G29 S2\n");  // disable ABL
+  mustStoreCmd("M420 S0\n");  // disable ABL
   probeHeightStop(infoSettings.probing_z_raise);  // raise nozzle
 }
 
@@ -54,7 +48,7 @@ void probeHeightHome(void)
 void probeHeightHomeAndNoABL(void)
 {
   mustStoreCmd("G28\n");  // home printer
-  mustStoreCmd(infoMachineSettings.firmwareType != FW_REPRAPFW ? "M420 S0\n" : "G29 S2\n");  // disable ABL
+  mustStoreCmd("M420 S0\n");  // disable ABL
 }
 
 // home and raise nozzle

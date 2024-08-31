@@ -114,11 +114,6 @@ void menuMachineSettings(void)
     }
   };
 
-  if (infoMachineSettings.firmwareType == FW_REPRAPFW)
-  {
-    machineSettingsItems.items[2].icon = ICON_NULL;
-    machineSettingsItems.items[2].label.index = LABEL_NULL;
-  }
 
   KEY_VALUES curIndex = KEY_IDLE;
 
@@ -145,8 +140,7 @@ void menuMachineSettings(void)
         break;
 
       case KEY_ICON_2:
-        if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-          OPEN_MENU(menuCustom);
+        OPEN_MENU(menuCustom);
         break;
 
       case KEY_ICON_3:

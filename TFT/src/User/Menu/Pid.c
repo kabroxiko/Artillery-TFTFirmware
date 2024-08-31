@@ -4,7 +4,6 @@
 //#define ENABLE_PID_STATUS_UPDATE_NOTIFICATION
 
 static const char * const pidCmdMarlin[] = PID_CMD_MARLIN;
-static const char * const pidCmdRRF[]    = PID_CMD_RRF;
 
 static int16_t pidHeaterTarget[MAX_HEATER_PID_COUNT] = {0};
 static uint8_t curTool_index = NOZZLE0;
@@ -42,7 +41,7 @@ static void pidRun(void)
 
   if (tool < MAX_HEATER_PID_COUNT)
   {
-    mustStoreCmd("%s S%d\n", (infoMachineSettings.firmwareType != FW_REPRAPFW) ? pidCmdMarlin[tool] : pidCmdRRF[tool], (int)pidHeaterTarget[tool]);  // start PID autotune
+    mustStoreCmd("%s S%d\n", pidCmdMarlin[tool], (int)pidHeaterTarget[tool]);  // start PID autotune
 
     pidStatus = PID_RUNNING;
   }

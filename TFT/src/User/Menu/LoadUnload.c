@@ -144,19 +144,13 @@ void menuLoadUnload(void)
             { // unload
               lastCmd = UNLOAD_STARTED;
 
-              if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-                mustStoreCmd("M702\n");
-              else
-                request_M98("sys/unload.g");
+              mustStoreCmd("M702\n");
             }
             else  // LOAD_REQUESTED
             { // load
               lastCmd = LOAD_STARTED;
 
-              if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-                mustStoreCmd("M701\n");
-              else
-                request_M98("sys/load.g");
+              mustStoreCmd("M701\n");
             }
 
             if (isPrinting() && isPaused())

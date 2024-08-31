@@ -667,7 +667,7 @@ void sendQueueCmd(void)
       {
         case 0:  // M0
         case 1:  // M1
-          if (isPrinting() && infoMachineSettings.firmwareType != FW_REPRAPFW)  // abort printing by "M0" in RepRapFirmware
+          if (isPrinting())  // abort printing by "M0" in RepRapFirmware
           {
             // pause if printing from TFT media and purge M0/M1 command
             if (infoFile.source < FS_ONBOARD_MEDIA)
@@ -1264,8 +1264,6 @@ void sendQueueCmd(void)
           break;
 
         case 376:  // M376 (RepRap firmware)
-          if (infoMachineSettings.firmwareType == FW_REPRAPFW && cmd_seen('H'))
-            setParameter(P_ABL_STATE, 1, cmd_float());
           break;
 
         case 292:  // M292
@@ -1482,16 +1480,6 @@ void sendQueueCmd(void)
 
         #if BED_LEVELING_TYPE > 0  // if bed leveling is enabled
           case 29:  // G29
-            if (infoMachineSettings.firmwareType == FW_REPRAPFW)
-            {
-              if (cmd_seen('S'))
-              {
-                uint8_t v = cmd_value();
-
-                if (v == 1 || v == 2)
-                  setParameter(P_ABL_STATE, 0, v & 1U);  // value will be 1 if v == 1, 0 if v == 2
-              }
-            }
           break;
         #endif
 

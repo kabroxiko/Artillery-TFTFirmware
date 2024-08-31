@@ -67,10 +67,7 @@ void loopBackEnd(void)
   // speed & flow monitor
   loopCheckSpeed();
 
-  if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-    loopCheckHeater();  // temperature monitor
-  else
-    rrfStatusQuery();  // query RRF status
+  loopCheckHeater();  // temperature monitor
 
   // handle a print from (remote) onboard media, if any
   if (infoMachineSettings.onboardSD == ENABLED)

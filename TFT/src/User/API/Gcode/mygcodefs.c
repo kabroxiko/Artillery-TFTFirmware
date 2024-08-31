@@ -11,9 +11,6 @@
  */
 bool mountGcodeSDCard(void)
 {
-  if (infoMachineSettings.firmwareType == FW_REPRAPFW)
-    return true;
-
   return request_M21();
 }
 
@@ -104,12 +101,6 @@ static void addName(bool isFile, char * longPath, const char * shortPath, const 
 bool scanPrintFilesGcodeFs(void)
 {
   clearInfoFile();
-
-  if (infoMachineSettings.firmwareType == FW_REPRAPFW)
-  {
-    rrfScanPrintFilesGcodeFs();
-    return true;
-  }
 
   char * ret = request_M20();             // retrieve file list
   char * data = malloc(strlen(ret) + 1);

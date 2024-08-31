@@ -516,7 +516,7 @@ void parseAck(void)
         // if RepRap or "ok" (e.g. in Marlin) is used as stop magic keyword,
         // proceed with generic OK response handling to update infoHost.tx_slots and infoHost.tx_count
         //
-        if (infoMachineSettings.firmwareType == FW_REPRAPFW || ack_starts_with("ok"))
+        if (ack_starts_with("ok"))
           InfoHost_HandleAckOk(HOST_SLOTS_GENERIC_OK);
       }
 
@@ -528,7 +528,7 @@ void parseAck(void)
     //----------------------------------------
 
     // check for a possible json response and eventually parse and process it
-    else if (infoMachineSettings.firmwareType == FW_REPRAPFW && !requestCommandInfo.inWaitResponse)
+    else if (!requestCommandInfo.inWaitResponse)
     {
       if (strchr(ack_cache, '{') != NULL)
         requestCommandInfo.inJson = true;
@@ -1259,8 +1259,6 @@ void parseAck(void)
 
       if (ack_continue_seen("Marlin"))
         setupMachine(FW_MARLIN);
-      else if (ack_continue_seen("RepRapFirmware"))
-        setupMachine(FW_REPRAPFW);
       else if (ack_continue_seen("Smoothieware"))
         setupMachine(FW_SMOOTHIEWARE);
       else

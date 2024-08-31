@@ -222,12 +222,6 @@ void ParseACKJsonParser::value(const char * value)
         if ((value = strstr(value, (char *)"Z: ")) != NULL ) setParameter(P_STEPS_PER_MM, AXIS_INDEX_Z,  atoi(value + 3));
         if ((value = strstr(value, (char *)"E: ")) != NULL ) setParameter(P_STEPS_PER_MM, AXIS_INDEX_E0, atoi(value + 3));
       }
-      else if ((string_start = strstr(value, (char *)"RepRapFirmware")) != NULL)  // parse M115
-      {
-        setupMachine(FW_REPRAPFW);
-        string_end = strstr(string_start, "ELECTRONICS");
-        infoSetFirmwareName(string_start, string_end-string_start);
-      }
       else if ((string_start = strstr(value, (char *)"access point")) != NULL)  // parse M552
       {
         string_end = strstr(string_start, ",");

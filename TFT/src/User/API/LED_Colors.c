@@ -40,10 +40,7 @@ LED_COLOR ledColor = {0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF};
 
 void LED_SendColor(const LED_COLOR * led)
 {
-  if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-    storeCmd("M150 R%u U%u B%u W%u P%u I%u\n", (*led)[0], (*led)[1], (*led)[2], (*led)[3], (*led)[4], (*led)[5]);
-  else
-    storeCmd("M150 X2 R%u U%u B%u P%u\n", (*led)[0], (*led)[1], (*led)[2], (*led)[4]);
+  storeCmd("M150 R%u U%u B%u W%u P%u I%u\n", (*led)[0], (*led)[1], (*led)[2], (*led)[3], (*led)[4], (*led)[5]);
 }
 
 uint16_t LED_GetRGBColor(LED_COLOR * led)

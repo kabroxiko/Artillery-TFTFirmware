@@ -38,7 +38,5 @@ void ablStart(void)
 {
   storeCmd("G28\n");
   storeCmd("BED_MESH_CALIBRATE PROFILE=default\n");
-
-  if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-    storeCmd("RESPOND TYPE=echo_no_space MSG=\"ABL Completed\"\n");
+  storeCmd("RESPOND TYPE=echo_no_space MSG=\"ABL Completed\"\n");
 }

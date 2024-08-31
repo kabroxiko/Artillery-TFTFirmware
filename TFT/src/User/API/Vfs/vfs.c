@@ -17,6 +17,7 @@ bool isPrintModelIcon(void)
 }
 
 // get FS's ID of current source
+// TODO: Check for oMD
 TCHAR * getFS(void)
 {
   switch (infoFile.source)
@@ -29,7 +30,7 @@ TCHAR * getFS(void)
 
     case FS_ONBOARD_MEDIA:
     case FS_ONBOARD_MEDIA_REMOTE:
-      return infoMachineSettings.firmwareType != FW_REPRAPFW ? "oMD:" : "gcodes";
+      return "oMD:";
 
     case FS_REMOTE_HOST:
       return "Remote printing...";

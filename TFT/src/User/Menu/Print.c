@@ -98,7 +98,7 @@ static inline void gcodeIconDraw(void)
       break;
 
     // if model preview bmp exists, display bmp directly without writing to flash
-    if (infoMachineSettings.firmwareType == FW_REPRAPFW || !model_DirectDisplay(getIconStartPoint(i), infoFile.path))
+    if (!model_DirectDisplay(getIconStartPoint(i), infoFile.path))
     {
       curItem.icon = ICON_FILE;
 
@@ -374,16 +374,6 @@ void menuPrintFromSource(void)
 
 void menuPrint(void)
 {
-  if (infoMachineSettings.firmwareType == FW_REPRAPFW)
-  {
-    list_mode = infoSettings.files_list_mode;
-    infoFile.source = FS_ONBOARD_MEDIA;
-
-    REPLACE_MENU(menuPrintFromSource);
-
-    goto selectEnd;
-  }
-
   MENUITEMS sourceSelItems = {
     // title
     LABEL_PRINT,
