@@ -408,14 +408,11 @@ void parseAck(void)
 
       if (!ack_seen("@"))  // it's RepRapFirmware
       {
-        storeCmd("M92\n");
         storeCmd("M115\n");  // as last command to identify the FW type!
       }
       else if (infoMachineSettings.firmwareType == FW_NOT_DETECTED)  // if never connected to the printer since boot
       {
         storeCmd("M503\n");  // query detailed printer capabilities
-        storeCmd("M92\n");   // steps/mm of extruder is an important parameter for Smart filament runout
-                             // avoid can't getting this parameter due to disabled M503 in Marlin
         storeCmd("M211\n");  // retrieve the software endstops state
         storeCmd("M115\n");  // as last command to identify the FW type!
       }
@@ -1007,8 +1004,8 @@ void parseAck(void)
         setParameter(P_FILAMENT_DIAMETER, 0, getParameter(P_FILAMENT_DIAMETER, 1) > 0.01f ? 1 : 0);
       }
     }
-    // parse and store axis steps-per-unit (steps/mm) (M92), max acceleration (units/s2) (M201) and max feedrate (units/s) (M203)
-    else if (ack_starts_with("M92 ") || ack_starts_with("M201") || ack_starts_with("M203"))  // "M92 " to not trigger if "M928" received
+    // parse and store max acceleration (units/s2) (M201) and max feedrate (units/s) (M203)
+    else if (ack_starts_with("M201") || ack_starts_with("M203"))
     {
       PARAMETER_NAME param = P_STEPS_PER_MM;  // default value
 

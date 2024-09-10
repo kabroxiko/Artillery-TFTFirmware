@@ -13,11 +13,6 @@ typedef struct {
   uint16_t enabled;  // parameterElementCount must be less than 16
 } parameter_member_t;
 
-// Steps/mm (X, Y, Z, E0, E1, E2)
-static const suffix_t M92_suffix[]= {
-  {"X%.4f\n",    VAL_TYPE_FLOAT}, {"Y%.4f\n",    VAL_TYPE_FLOAT}, {"Z%.2f\n", VAL_TYPE_FLOAT},
-  {"T0 E%.2f\n", VAL_TYPE_FLOAT}, {"T1 E%.2f\n", VAL_TYPE_FLOAT}, {"T2 E%.2f\n", VAL_TYPE_FLOAT},
-};
 // Filament Diameter (Enable, E0, E1, E2)
 static const suffix_t M200_suffix[]= {
   {"S%.0f\n",       VAL_TYPE_INT},   {"S1 T0 D%.2f\n", VAL_TYPE_FLOAT}, {"S1 T1 D%.2f\n", VAL_TYPE_FLOAT},
@@ -143,8 +138,6 @@ static const suffix_t G29_suffix[]= {
 };
 
 parameter_member_t parameter_list[] = {
-  // Steps/mm
-  {"M92", M92_suffix, COUNT(M92_suffix)},
   // Filament Diameter
   {"M200", M200_suffix, COUNT(M200_suffix)},
   // MaxAcceleration
@@ -200,7 +193,6 @@ parameter_member_t parameter_list[] = {
 };
 
 typedef struct {
-  float StepsPerMM[COUNT(M92_suffix)];
   float FilamentSetting[COUNT(M200_suffix)];
   float MaxAcceleration[COUNT(M201_suffix)];
   float MaxFeedRate[COUNT(M203_suffix)];
@@ -358,9 +350,6 @@ float getParameter(PARAMETER_NAME name, uint8_t index)
 
   switch (name)
   {
-    case P_STEPS_PER_MM:
-      return infoParameters.StepsPerMM[index];
-
     case P_FILAMENT_DIAMETER:
       return infoParameters.FilamentSetting[index];
 
@@ -454,10 +443,6 @@ void setParameter(PARAMETER_NAME name, uint8_t index, float val)
 
   switch (name)
   {
-    case P_STEPS_PER_MM:
-      infoParameters.StepsPerMM[index] = val;
-      break;
-
     case P_FILAMENT_DIAMETER:
       infoParameters.FilamentSetting[index] = val;
       break;

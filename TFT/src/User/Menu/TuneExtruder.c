@@ -125,7 +125,6 @@ static void menuNewExtruderESteps(void)
 static inline void extrudeFilament(void)
 {
   // check and adopt current E-steps
-  mustStoreCmd("M92\n");
   setParameter(P_STEPS_PER_MM, E_AXIS, 0.0f);  // reset E-steps value
 
   TASK_LOOP_WHILE(getParameter(P_STEPS_PER_MM, E_AXIS) == 0.0f);  // wait until E-steps is updated

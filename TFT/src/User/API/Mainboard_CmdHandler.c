@@ -1120,7 +1120,6 @@ void sendQueueCmd(void)
           break;
         }
 
-        case 92:   // M92 axis steps-per-unit (steps/mm)
         case 201:  // M201 max acceleration (units/s2)
         case 203:  // M203 max feedrate (units/s)
         {
