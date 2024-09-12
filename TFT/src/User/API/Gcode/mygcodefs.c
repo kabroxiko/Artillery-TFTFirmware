@@ -173,7 +173,6 @@ bool scanPrintFilesGcodeFs(void)
     }
     else  // if FOLDER
     {
-      addNotification(DIALOG_TYPE_INFO, "Debug", relativePath, true);
       // examples:
       //
       // "infoFile.path" = "oMD:"
