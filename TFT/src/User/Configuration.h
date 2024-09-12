@@ -1074,22 +1074,6 @@
 #define CUSTOM_GCODE_5 "M501\n"
 #define CUSTOM_LABEL_6 "EEPROM Defaults"
 #define CUSTOM_GCODE_6 "M502\n"
-//#define CUSTOM_LABEL_7 "Custom7"
-//#define CUSTOM_GCODE_7 "M105\n"
-//#define CUSTOM_LABEL_8 "Custom8"
-//#define CUSTOM_GCODE_8 "M105\n"
-//#define CUSTOM_LABEL_9 "Custom9"
-//#define CUSTOM_GCODE_9 "M105\n"
-//#define CUSTOM_LABEL_10 "Custom10"
-//#define CUSTOM_GCODE_10 "M105\n"
-//#define CUSTOM_LABEL_11 "Custom11"
-//#define CUSTOM_GCODE_11 "M105\n"
-//#define CUSTOM_LABEL_12 "Custom12"
-//#define CUSTOM_GCODE_12 "M105\n"
-//#define CUSTOM_LABEL_13 "Custom13"
-//#define CUSTOM_GCODE_13 "M105\n"
-//#define CUSTOM_LABEL_14 "Custom14"
-//#define CUSTOM_GCODE_14 "M105\n"
 
 //================================================================================
 //===================== Start, End & Cancel G-code Commands ======================

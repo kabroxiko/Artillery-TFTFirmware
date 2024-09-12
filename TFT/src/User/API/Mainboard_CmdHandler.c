@@ -972,7 +972,6 @@ void sendQueueCmd(void)
           break;
 
         case 105:  // M105
-        case 155:  // M155
           if (rrfStatusIsMacroBusy())
           {
             sendCmd(true, avoid_terminal);
@@ -983,15 +982,7 @@ void sendQueueCmd(void)
           {
             heatClearSendingWaiting();
 
-            if (cmd_value() == 105)  // if M105
-            {
-              avoid_terminal = !infoSettings.terminal_ack;
-            }
-            else  // if M155
-            {
-              if (cmd_seen('S'))
-                heatSyncUpdateSeconds(cmd_value());
-            }
+            avoid_terminal = !infoSettings.terminal_ack;
           }
           break;
 

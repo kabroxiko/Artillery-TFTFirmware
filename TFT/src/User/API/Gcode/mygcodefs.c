@@ -20,6 +20,7 @@ static inline void rrfScanPrintFilesGcodeFs(void)
   request_M20_rrf(infoFile.path, false, parseJobListResponse);
 }
 
+// TODO: Borrar
 /**
  * When AUTO_REPORT_TEMPERATURES is enabled by M155, The response of M33 may become the following:
  *

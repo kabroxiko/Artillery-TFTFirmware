@@ -193,15 +193,16 @@ bool heaterDisplayIsValid(const uint8_t index)
   return true;
 }
 
+// TODO: Borrar
 void heatSetUpdateSeconds(const uint8_t seconds)
 {
-  if (heat_update_seconds == seconds)
-    return;
+  // if (heat_update_seconds == seconds)
+  //   return;
 
-  heat_update_seconds = seconds;
+  // heat_update_seconds = seconds;
 
-  if (infoMachineSettings.autoReportTemp && !heat_sending_waiting)
-    heat_sending_waiting = storeCmd("M155 S%u\n", heat_update_seconds);
+  // if (infoMachineSettings.autoReportTemp && !heat_sending_waiting)
+  //   heat_sending_waiting = storeCmd("M978 S%u\n", heat_update_seconds);
 }
 
 uint8_t heatGetUpdateSeconds(void)
@@ -229,23 +230,24 @@ void heatClearSendingWaiting(void)
 
 void loopCheckHeater(void)
 {
-  do
-  { // periodically send M105 to query the temperatures, if motherboard does not supports M155 (AUTO_REPORT_TEMPERATURES)
-    // feature to automatically report the temperatures or (if M155 is supported) check temperature auto-report timeout
-    // and resend M155 command in case of timeout expired
+  // TODO: Borrar
+  // do
+  // { // periodically send M105 to query the temperatures, if motherboard does not supports M978 (AUTO_REPORT_TEMPERATURES)
+  //   // feature to automatically report the temperatures or (if M978 is supported) check temperature auto-report timeout
+  //   // and resend M978 command in case of timeout expired
 
-    if (OS_GetTimeMs() < heat_next_update_time)  // if next check time not yet elapsed, do nothing
-      break;
+  //   if (OS_GetTimeMs() < heat_next_update_time)  // if next check time not yet elapsed, do nothing
+  //     break;
 
-    heatSetNextUpdateTime();  // extend next check time
+  //   heatSetNextUpdateTime();  // extend next check time
 
-    // if M105/M155 previously enqueued and not yet sent or pending command
-    // (to avoid collision in gcode response processing), do nothing
-    if (heat_sending_waiting || requestCommandInfoIsRunning())
-      break;
+  //   // if M105/M978 previously enqueued and not yet sent or pending command
+  //   // (to avoid collision in gcode response processing), do nothing
+  //   if (heat_sending_waiting || requestCommandInfoIsRunning())
+  //     break;
 
-    heat_sending_waiting = !infoMachineSettings.autoReportTemp ? storeCmd("M105\n") : storeCmd("M155 S%u\n", heat_update_seconds);
-  } while (0);
+  //   // heat_sending_waiting = !infoMachineSettings.autoReportTemp ? storeCmd("M105\n") : storeCmd("M978 S%u\n", heat_update_seconds);
+  // } while (0);
 
   for (uint8_t i = 0; i < MAX_HEATER_COUNT; i++)
   {
