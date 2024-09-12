@@ -980,8 +980,6 @@ void sendQueueCmd(void)
 
           if (fromTFT)
           {
-            heatClearSendingWaiting();
-
             avoid_terminal = !infoSettings.terminal_ack;
           }
           break;

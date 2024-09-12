@@ -88,7 +88,6 @@ uint8_t heatGetToolIndex(void);                     // get current Tool (extrude
 uint8_t heatGetCurrentHotend(void);                 // get current hotend index in arry T[]
 bool heaterDisplayIsValid(const uint8_t index);     // check whether the index is a valid heater index
 
-void heatClearSendingWaiting(void);                 // called in sendQueueCmd(). Clear sending waiting for temperature query
 void loopCheckHeater(void);                         // called in loopBackEnd(). Loop for check on Heater
 
 #ifdef __cplusplus

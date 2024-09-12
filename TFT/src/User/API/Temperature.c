@@ -13,8 +13,6 @@ static HEATER heater = {{}, NOZZLE0};
 static uint8_t heat_send_waiting = 0;
 static uint8_t heat_feedback_waiting = 0;
 
-static bool  heat_sending_waiting = false;
-
 #define AUTOREPORT_TIMEOUT 3000  // 3 second grace period
 
 // verify that the heater index is valid, and fix the index of multiple in and 1 out tool nozzles
@@ -182,11 +180,6 @@ bool heaterDisplayIsValid(const uint8_t index)
     return false;
 
   return true;
-}
-
-void heatClearSendingWaiting(void)
-{
-  heat_sending_waiting = false;
 }
 
 void loopCheckHeater(void)

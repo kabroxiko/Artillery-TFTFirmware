@@ -22,7 +22,6 @@ void resetPendingQueries(void)
   speedQueryClearSendingWaiting();       // clear sending waiting for speed query
   coordinateQueryClearSendingWaiting();  // clear sending waiting for coordinate query
 
-  heatClearSendingWaiting();             // clear sending waiting for temperature query
   printClearSendingWaiting();            // clear sending waiting for printing query
 
   #ifdef FIL_RUNOUT_PIN
