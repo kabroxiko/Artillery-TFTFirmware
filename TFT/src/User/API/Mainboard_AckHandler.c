@@ -1333,10 +1333,6 @@ void parseAck(void)
       {
         infoMachineSettings.autoReportSDStatus = ack_value();
       }
-      else if (ack_continue_seen("LONG_FILENAME:") && infoSettings.long_filename == AUTO)
-      {
-        infoMachineSettings.longFilename = ack_value();
-      }
       else if (ack_continue_seen("BABYSTEPPING:"))
       {
         infoMachineSettings.babyStepping = ack_value();

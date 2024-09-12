@@ -68,7 +68,6 @@
 #define CONFIG_ONBOARD_SD            "onboard_sd:"
 #define CONFIG_M27_REFRESH_TIME      "M27_refresh_time:"
 #define CONFIG_M27_ALWAYS_ACTIVE     "M27_always_active:"
-#define CONFIG_LONG_FILENAME         "long_filename:"
 #define CONFIG_PAUSE_RETRACT         "pause_retract:"
 #define CONFIG_PAUSE_POS             "pause_pos:"
 #define CONFIG_PAUSE_Z_RAISE         "pause_z_raise:"
@@ -702,10 +701,6 @@ static void parseConfigKey(uint16_t index)
 
     case C_INDEX_M27_ALWAYS_ACTIVE:
       infoSettings.m27_active = getOnOff();
-      break;
-
-    case C_INDEX_LONG_FILENAME:
-      SET_VALID_INT_VALUE(infoSettings.long_filename, 0, 2);
       break;
 
     case C_INDEX_PAUSE_RETRACT:

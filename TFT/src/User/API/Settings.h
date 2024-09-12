@@ -229,7 +229,6 @@ typedef struct
   uint8_t  onboard_sd;
   uint8_t  m27_refresh_time;
   uint8_t  m27_active;
-  uint8_t  long_filename;
   float    pause_retract_len;
   float    resume_purge_len;
   float    pause_pos[AXIS_NUM - 1];  // X, Y
@@ -339,7 +338,6 @@ typedef struct
   uint8_t onboardSD;
   uint8_t multiVolume;
   uint8_t autoReportSDStatus;
-  uint8_t longFilename;
   uint8_t babyStepping;
   uint8_t buildPercent;
   uint8_t softwareEndstops;

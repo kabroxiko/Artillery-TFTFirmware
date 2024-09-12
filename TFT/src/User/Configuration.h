@@ -624,17 +624,6 @@
 #define M27_ALWAYS_ACTIVE 1  // Default: 1
 
 /**
- * Long File Names Support
- * Enable/disable support to long file names.
- *
- * NOTE: Auto-detect option is currently available (supported) by Marlin firmware.
- *       Auto-detect is not available for other firmwares like Smoothieware.
- *
- *   Options: [disable: 0, enable: 1, auto-detect: 2]
- */
-#define LONG_FILENAME 2  // Default: 2
-
-/**
  * Pause/Nozzle Park Settings
  * These settings are used when a print is paused or in any feature which requires moving/parking the nozzle
  * before performing a task like in (Un)Load or Extruder Tuning menus.

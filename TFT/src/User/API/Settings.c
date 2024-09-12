@@ -78,7 +78,6 @@ void initSettings(void)
   infoSettings.onboard_sd             = ONBOARD_SD;  // ENABLED / DISABLED / AUTO
   infoSettings.m27_refresh_time       = M27_REFRESH_TIME;
   infoSettings.m27_active             = M27_ALWAYS_ACTIVE;
-  infoSettings.long_filename          = LONG_FILENAME;  // ENABLED / DISABLED / AUTO
 
   infoSettings.pause_retract_len      = NOZZLE_PAUSE_RETRACT_LENGTH;
   infoSettings.resume_purge_len       = NOZZLE_RESUME_PURGE_LENGTH;
@@ -219,7 +218,6 @@ void initMachineSettings(void)
   infoMachineSettings.onboardSD               = DISABLED;
   infoMachineSettings.multiVolume             = DISABLED;
   infoMachineSettings.autoReportSDStatus      = DISABLED;
-  infoMachineSettings.longFilename            = DISABLED;
   infoMachineSettings.babyStepping            = DISABLED;
   infoMachineSettings.buildPercent            = DISABLED;
   infoMachineSettings.softwareEndstops        = ENABLED;
@@ -243,9 +241,6 @@ void setupMachine(FW_TYPE fwType)
 
   if (infoSettings.onboard_sd != AUTO)
     infoMachineSettings.onboardSD = infoSettings.onboard_sd;
-
-  if (infoSettings.long_filename != AUTO)
-    infoMachineSettings.longFilename = infoSettings.long_filename;
 
   if (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE)  // Smoothieware does not report detailed M115 capabilities
   { // set only the values that differ from the ones initialized in initMachineSettings() function

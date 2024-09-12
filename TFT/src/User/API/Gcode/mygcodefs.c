@@ -31,45 +31,19 @@ static inline void rrfScanPrintFilesGcodeFs(void)
  *
  * So the long name will be parsed "0.00 @:0 B@:0" instead of "1.gcode" if the truncated character is "\n" not string "\nok"
  */
-static void addName(bool isFile, char * longPath, const char * shortPath, const char * relativePath)
+static void addName(bool isFile, char * filename, const char * relativePath)
 {
-  char * longName = NULL;  // initialize to NULL in case long filename is not supported or no long name exists
+  char * strPtr;
 
-  //
-  // get long name, if any
-  //
+  strPtr = strstr(filename, "\nok");  // remove end of M33 command, if any
+  if (strPtr != NULL)
+    *strPtr = '\0';
 
-  if (infoMachineSettings.longFilename == ENABLED)  // if long filename is supported
-  {
-    char * strPtr;
-    char * name;
+  strPtr = strrchr(filename, '/');  // remove path information, if any
+  if (strPtr != NULL)
+    filename = strPtr + 1;  // ditch trailing "/"
 
-    // if filename (not folder name) and long path is already available (e.g. "M20 L" supported by Marlin)
-    //
-    // NOTE: Folder names are currently not properly supported by Marlin, so we use M33 for them
-    //
-    if (isFile && longPath != NULL)
-      name = longPath;
-    else
-      name = request_M33(shortPath);  // retrieve long name, if any
-
-    strPtr = strstr(name, "\nok");  // remove end of M33 command, if any
-    if (strPtr != NULL)
-      *strPtr = '\0';
-
-    strPtr = strrchr(name, '/');  // remove path information, if any
-    if (strPtr != NULL)
-      name = strPtr + 1;  // ditch trailing "/"
-
-    if (strcmp(name, "???") != 0)  // if long name exists
-      longName = name;
-  }
-
-  //
-  // add short name and long name, if any
-  //
-
-  addFile(isFile, relativePath, longName);
+  addFile(isFile, relativePath, filename);
 
   clearRequestCommandInfo();  // finally, free the buffer allocated by M33 (including "name"), if any
 }
@@ -110,7 +84,7 @@ bool scanPrintFilesGcodeFs(void)
 
   char * s = strstr(data, "\r\n") ? "\r\n" : "\n";  // Smoothieware reports with "\r\n", Marlin reports with "\n"
   char * line = strtok(data, s);
-  char * longPath;
+  char * filename;
   char * relativePath;
   char * strPtr;
   uint8_t strLen;
@@ -122,16 +96,16 @@ bool scanPrintFilesGcodeFs(void)
         strcmp(line, "Begin file list") == 0 || strcmp(line, "End file list") == 0 )  // start and stop tag
       continue;
 
-    longPath = NULL;  // initialize to NULL in case long path is not available (e.g. "M20 L" not supported by Marlin)
+    filename = NULL;  // initialize to NULL in case long path is not available (e.g. "M20 L" not supported by Marlin)
 
-    strPtr = strchr(line, ' ');  // get short path removing the file size, if any
+    strPtr = strrchr(line, ' ');  // get short path removing the file size, if any
     if (strPtr != NULL)
     {
       *strPtr = '\0';
 
-      strPtr = strchr(strPtr + 1, ' ');  // get long path jumping after the file size, if any (e.g. "M20 L" supported by Marlin)
+      strPtr = strrchr(strPtr + 1, ' ');  // get long path jumping after the file size, if any (e.g. "M20 L" supported by Marlin)
       if (strPtr != NULL)
-        longPath = strPtr + 1;
+        filename = strPtr + 1;
     }
 
     // old Marlin fw provides "/" at the beginning while latest Marlin fw doesn't, so skip it if present (use a common file path)
@@ -195,7 +169,7 @@ bool scanPrintFilesGcodeFs(void)
       if (infoFile.fileCount >= FILE_NUM)  // gcode file max number is FILE_NUM
         continue;
 
-      addName(true, longPath, line, relativePath);
+      addName(true, filename, relativePath);
     }
     else  // if FOLDER
     {
@@ -234,7 +208,7 @@ bool scanPrintFilesGcodeFs(void)
       }
 
       if (!found)
-        addName(false, longPath, line, relativePath);
+        addName(false, line, relativePath);
     }
   }
 

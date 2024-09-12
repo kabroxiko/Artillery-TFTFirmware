@@ -142,10 +142,7 @@ char * request_M20(void)
                           NULL,               // the second error magic
                           NULL);              // the third error magic
 
-  if (infoMachineSettings.longFilename == ENABLED)  // if long filename is supported
-    mustStoreCmd("M20 L\n");  // L option is supported since Marlin 2.0.9
-  else
-    mustStoreCmd("M20\n");
+  mustStoreCmd("M20\n");
 
   waitForResponse();  // wait for response
 
