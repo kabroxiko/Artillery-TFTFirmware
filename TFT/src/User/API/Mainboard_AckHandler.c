@@ -404,8 +404,6 @@ void parseAck(void)
       if (ack_seen(heaterID[CHAMBER]))
         infoSettings.chamber_en = ENABLED;
 
-      heatSetNextUpdateTime();  // set next temperature query time or timeout
-
       if (!ack_seen("@"))  // it's RepRapFirmware
       {
         storeCmd("M115\n");  // as last command to identify the FW type!
@@ -613,7 +611,6 @@ void parseAck(void)
       }
 
       avoid_terminal = !infoSettings.terminal_ack;
-      heatSetNextUpdateTime();  // set next temperature query time or timeout
     }
     // parse and store M114 E, extruder position. Required "M114_DETAIL" in Marlin
     else if (ack_seen("Count E:"))
@@ -1292,14 +1289,6 @@ void parseAck(void)
       {
         infoMachineSettings.EEPROM = ack_value();
       }
-      // TODO: Borrar
-      // else if (ack_continue_seen("AUTOREPORT_TEMP:"))
-      // {
-      //   infoMachineSettings.autoReportTemp = ack_value();
-
-      //   if (infoMachineSettings.autoReportTemp)
-      //     storeCmd("M978 S%u\n", heatGetUpdateSeconds());
-      // }
       else if (ack_continue_seen("AUTOREPORT_POS:"))
       {
         infoMachineSettings.autoReportPos = ack_value();

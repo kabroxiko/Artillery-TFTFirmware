@@ -196,7 +196,7 @@ void menuDialog(void)
  */
 void showDialog(DIALOG_TYPE type, void (* ok_action)(), void (* cancel_action)(), void (* loop_action)())
 {
-  if ((infoSettings.mode == MODE_MARLIN) || (infoSettings.mode == MODE_BLOCKED_MARLIN))  // if standard/blocked Marlin mode, then exit
+  if ((infoSettings.mode == MODE_BLOCKED_MARLIN))  // if standard/blocked Marlin mode, then exit
     return;
 
   popup_redraw = true;

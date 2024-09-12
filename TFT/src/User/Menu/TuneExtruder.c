@@ -174,8 +174,6 @@ void menuTuneExtruder(void)
   int16_t actCurrent;
   int16_t actTarget;
 
-  heatSetUpdateSeconds(TEMPERATURE_QUERY_FAST_SECONDS);
-
   tuneExtruderItems.items[KEY_ICON_5] = itemDegreeSteps[degreeSteps_index];
 
   menuDrawPage(&tuneExtruderItems);
@@ -273,8 +271,4 @@ void menuTuneExtruder(void)
 
     loopProcess();
   }
-
-  // set slow update time if not waiting for target temperature
-  if (heatHasWaiting() == false)
-    heatSetUpdateSeconds(TEMPERATURE_QUERY_SLOW_SECONDS);
 }

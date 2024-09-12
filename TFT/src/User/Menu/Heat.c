@@ -37,8 +37,6 @@ void menuHeat(void)
   int16_t actTarget;
   int16_t setTarget;
 
-  heatSetUpdateSeconds(TEMPERATURE_QUERY_FAST_SECONDS);
-
   heatItems.items[KEY_ICON_4] = itemTool[tool_index];
   heatItems.items[KEY_ICON_5] = itemDegreeSteps[degreeSteps_index];
 
@@ -121,8 +119,4 @@ void menuHeat(void)
 
   if (WITHIN(tool_index, NOZZLE0, NOZZLE5))
     last_nozzle_index = tool_index;  // save last used hotend index
-
-  // set slow update time if not waiting for target temperature
-  if (heatHasWaiting() == false)
-    heatSetUpdateSeconds(TEMPERATURE_QUERY_SLOW_SECONDS);
 }

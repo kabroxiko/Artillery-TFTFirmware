@@ -328,7 +328,6 @@ typedef struct
 {
   FW_TYPE firmwareType;
   uint8_t EEPROM;
-  uint8_t autoReportTemp;
   uint8_t autoReportPos;
   BL_TYPE leveling;
   uint8_t zProbe;

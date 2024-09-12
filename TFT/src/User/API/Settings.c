@@ -208,7 +208,6 @@ void initMachineSettings(void)
   // some settings are assumes as active unless reported disabled by marlin
   infoMachineSettings.firmwareType            = FW_NOT_DETECTED;  // set fimware type to not_detected to avoid repeated ABL gcode on mode change
   infoMachineSettings.EEPROM                  = ENABLED;
-  infoMachineSettings.autoReportTemp          = DISABLED;
   infoMachineSettings.autoReportPos           = DISABLED;
   infoMachineSettings.leveling                = BL_DISABLED;
   infoMachineSettings.zProbe                  = ENABLED;

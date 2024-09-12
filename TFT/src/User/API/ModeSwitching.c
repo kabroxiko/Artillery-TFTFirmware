@@ -33,23 +33,9 @@ void Mode_Switch(void)
           uint32_t startUpTime = OS_GetTimeMs();
 
           LOGO_ReadDisplay();
-          heatSetUpdateSeconds(TEMPERATURE_QUERY_FAST_SECONDS);
-          heatSetNextUpdateTime();  // send "M105" after a delay, because of mega2560 will be hanged when received data at startup
-
           TASK_LOOP_WHILE(OS_GetTimeMs() - startUpTime < BTT_BOOTSCREEN_TIME);  // display logo BTT_BOOTSCREEN_TIME ms
-
-          heatSetUpdateSeconds(TEMPERATURE_QUERY_SLOW_SECONDS);
           modeFreshBoot = false;
         }
-      #endif
-      break;
-
-    case MODE_MARLIN:
-      #ifdef HAS_EMULATOR
-        if (infoSettings.serial_always_on == ENABLED)
-          heatSetNextUpdateTime();  // send "M105" after a delay, because of mega2560 will be hanged when received data at startup
-
-        REPLACE_MENU(menuMarlinMode);
       #endif
       break;
   }

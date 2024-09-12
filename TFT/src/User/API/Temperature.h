@@ -9,8 +9,6 @@ extern "C" {
 #include <stdint.h>
 #include "Settings.h"
 
-#define TEMPERATURE_QUERY_FAST_SECONDS 1  // "M105" temperature query delay in heat menu or while heating.
-#define TEMPERATURE_QUERY_SLOW_SECONDS 3  // temperature query delay when idle
 #define TEMPERATURE_RANGE              2  // temperature difference to treat temperature reached target
 #define NOZZLE_TEMP_LAG                5  // nozzle max allowed lag
 
@@ -90,11 +88,6 @@ uint8_t heatGetToolIndex(void);                     // get current Tool (extrude
 uint8_t heatGetCurrentHotend(void);                 // get current hotend index in arry T[]
 bool heaterDisplayIsValid(const uint8_t index);     // check whether the index is a valid heater index
 
-void heatSetUpdateSeconds(const uint8_t seconds);   // set temperature query update time interval
-uint8_t heatGetUpdateSeconds(void);                 // get temperature query seconds
-void heatSyncUpdateSeconds(const uint8_t seconds);  // set temperature query seconds
-
-void heatSetNextUpdateTime(void);                   // called in parseAck(). Set next temperature query time or timeout
 void heatClearSendingWaiting(void);                 // called in sendQueueCmd(). Clear sending waiting for temperature query
 void loopCheckHeater(void);                         // called in loopBackEnd(). Loop for check on Heater
 

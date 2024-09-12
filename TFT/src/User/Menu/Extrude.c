@@ -57,8 +57,6 @@ void menuExtrude(void)
   if (eAxisBackup.relative == false)  // set extruder to relative
     mustStoreCmd("M83\n");
 
-  heatSetUpdateSeconds(TEMPERATURE_QUERY_FAST_SECONDS);
-
   while (MENU_IS(menuExtrude))
   {
     key_num = menuKeyGetValue();
@@ -171,8 +169,4 @@ void menuExtrude(void)
     if (eAxisBackup.relative == false)
       mustStoreCmd("M82\n");  // set extruder to absolute
   }
-
-  // set slow update time if not waiting for target temperature
-  if (heatHasWaiting() == false)
-    heatSetUpdateSeconds(TEMPERATURE_QUERY_SLOW_SECONDS);
 }
