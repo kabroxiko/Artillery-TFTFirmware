@@ -1013,18 +1013,6 @@ void sendQueueCmd(void)
           setCmdLineNumberBase(cmd_seen('N') ? (uint32_t)cmd_value() : 0);
           break;
 
-        case 114:  // M114
-          if (fromTFT)
-          {
-            if (!cmd_seen('E'))
-              coordinateQueryClearSendingWaiting();
-            #ifdef FIL_RUNOUT_PIN
-              else
-                FIL_PosE_ClearSendingWaiting();
-            #endif
-          }
-          break;
-
         case 117:  // M117
           if (cmd_seen_from(cmd_base_index, "Time Left"))  // parsing printing time left
           {

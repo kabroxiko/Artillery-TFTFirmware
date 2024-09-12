@@ -1289,10 +1289,6 @@ void parseAck(void)
       {
         infoMachineSettings.EEPROM = ack_value();
       }
-      else if (ack_continue_seen("AUTOREPORT_POS:"))
-      {
-        infoMachineSettings.autoReportPos = ack_value();
-      }
       else if (ack_continue_seen("AUTOLEVEL:") && infoMachineSettings.leveling == BL_DISABLED)
       {
         infoMachineSettings.leveling = ack_value();

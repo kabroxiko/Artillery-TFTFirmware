@@ -109,6 +109,4 @@ void probeHeightQueryCoord(void)
     return;
 
   nextUpdateTime = OS_GetTimeMs() + PROBE_REFRESH_TIME;
-
-  coordinateQuery(0);  // query position manually for delay less than 1 second
 }

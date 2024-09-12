@@ -57,8 +57,6 @@ static inline void updateGantry(void)
 {
   if (nextScreenUpdate(GANTRY_REFRESH_TIME))
   {
-    coordinateQuery(0);  // query position manually for delay less than 1 second
-
     drawXYZ();
   }
 }
@@ -97,7 +95,6 @@ void menuMove(void)
   float amount = moveLenSteps[item_moveLen_index];
 
   mustStoreCmd("G91\n");
-  mustStoreCmd("M114\n");
 
   // keys position table
   uint8_t table[TOTAL_AXIS][2] =

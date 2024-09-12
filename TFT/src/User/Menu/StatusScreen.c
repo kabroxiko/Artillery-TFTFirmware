@@ -283,8 +283,6 @@ static inline void statusToggleTool(void)
 
     statusDraw();
 
-    // gcode queries must be call after drawStatus
-    coordinateQuery(MS_TO_SEC(TOOL_TOGGLE_TIME));
     speedQuery();
     ctrlFanQuery();
   }
@@ -367,6 +365,4 @@ void menuStatus(void)
 
     loopProcess();
   }
-
-  coordinateQueryTurnOff();  // disable position auto report, if any
 }

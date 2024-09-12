@@ -122,7 +122,6 @@ the following options must be enabled in Marlin firmware.
 
 `EEPROM_SETTINGS` (in Configuration.h)<br>
 `BABYSTEPPING` (in Configuration_adv.h)<br>
-`AUTO_REPORT_TEMPERATURES` (in Configuration_adv.h)<br>
 `AUTO_REPORT_POSITION` (in Configuration_adv.h)<br>
 `EXTENDED_CAPABILITIES_REPORT` (in Configuration_adv.h)<br>
 `M115_GEOMETRY_REPORT` (in Configuration_adv.h)<br>

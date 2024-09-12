@@ -371,7 +371,6 @@ static void completePrint(void)
     case FS_ONBOARD_MEDIA_REMOTE:
       infoHost.status = HOST_STATUS_IDLE;
       request_M27(0);
-      coordinateQueryTurnOff();  // disable position auto report, if any
       break;
 
     case FS_REMOTE_HOST:

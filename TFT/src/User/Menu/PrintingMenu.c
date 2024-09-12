@@ -358,9 +358,6 @@ static inline void toggleInfo(void)
 
     speedQuery();
 
-    if (infoFile.source >= FS_ONBOARD_MEDIA)
-      coordinateQuery(MS_TO_SEC(TOGGLE_TIME));
-
     if (!infoPrintSummary.hasFilamentData && isPrinting())
       updatePrintUsedFilament();
   }

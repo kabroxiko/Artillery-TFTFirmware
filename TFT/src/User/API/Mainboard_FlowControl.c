@@ -20,7 +20,6 @@ void resetPendingQueries(void)
 
   ctrlFanQueryClearSendingWaiting();     // clear sending waiting for controller fan query
   speedQueryClearSendingWaiting();       // clear sending waiting for speed query
-  coordinateQueryClearSendingWaiting();  // clear sending waiting for coordinate query
 
   printClearSendingWaiting();            // clear sending waiting for printing query
 

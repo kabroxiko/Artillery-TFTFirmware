@@ -19,9 +19,6 @@ static bool relative_e = false;
 // false after M18/M84 disable stepper or power up, true after G28
 static bool position_known = false;
 
-static uint8_t coordUpdateSeconds = 0;
-static bool coordSendingWaiting = false;
-
 bool coorGetRelative(void)
 {
   return relative_mode;
@@ -115,47 +112,4 @@ float coordinateGetAxis(AXIS axis)
     return coordinateGetAxisActual(axis);
   else
     return coordinateGetAxisTarget(axis);
-}
-
-void coordinateQueryClearSendingWaiting(void)
-{
-  coordSendingWaiting = false;
-}
-
-/**
- * @brief Query gantry position
- * @param seconds: Pass 0 to query manually or disable auto report. Pass delay in seconds
- *                 for auto query if available in marlin
- */
-void coordinateQuery(uint8_t seconds)
-{ // following conditions ordered by importance
-  if (!coordSendingWaiting && infoHost.tx_slots != 0 && infoHost.connected)
-  {
-    if (infoMachineSettings.autoReportPos == 1)  // if auto report is enabled
-    {
-      if (seconds == 0)  // if manual querying is requested (if query interval is 0)
-        coordSendingWaiting = storeCmd("M114\n");
-
-      if (seconds != coordUpdateSeconds)  // if query interval is changed
-      {
-        if (storeCmd("M154 S%d\n", seconds))  // turn on or off (if query interval is 0) auto report
-          coordUpdateSeconds = seconds;       // if gcode will be sent, avoid to enable auto report again on next
-      }                                       // function call if already enabled for that query interval
-    }
-    else  // if auto report is disabled
-    {
-      coordSendingWaiting = storeCmd("M114\n");
-    }
-  }
-}
-
-void coordinateQueryTurnOff(void)
-{
-  coordSendingWaiting = false;
-
-  if (infoMachineSettings.autoReportPos == 1)  // if auto report is enabled, turn it off
-  {
-    storeCmd("M154 S0\n");
-    coordUpdateSeconds = 0;
-  }
 }
