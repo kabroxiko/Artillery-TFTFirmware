@@ -585,9 +585,9 @@ void parseAck(void)
     // Pushed / polled / on printing parsed responses
     //----------------------------------------
 
-    // parse and store M105 or auto reported (M978) temperature response,
+    // parse and store M105 or auto reported (M155) temperature response,
     // e.g. "ok T:16.13 /0.00 B:16.64 /0.00 @:0 B@:0\n" for M105,
-    // e.g. "T:16.13 /0.00 B:16.64 /0.00 @:0 B@:0\n" for auto reported (M978)
+    // e.g. "T:16.13 /0.00 B:16.64 /0.00 @:0 B@:0\n" for auto reported (M155)
     else if ((ack_seen("@") && ack_seen("T:")) || ack_seen("T0:"))
     {
       uint8_t heaterIndex = NOZZLE0;
