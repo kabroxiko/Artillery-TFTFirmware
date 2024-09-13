@@ -17,15 +17,7 @@ typedef enum
   ALL_PORTS = -2,
   SUP_PORTS = -1,
   PORT_1 = 0,
-  #ifdef SERIAL_PORT_2
-    PORT_2,
-  #endif
-  #ifdef SERIAL_PORT_3
-    PORT_3,
-  #endif
-  #ifdef SERIAL_PORT_4
-    PORT_4,
-  #endif
+
   SERIAL_PORT_COUNT
 } SERIAL_PORT_INDEX;  // serial port index for all enabled serial ports (this is not the actual physical serial port number)
 
@@ -86,12 +78,6 @@ static inline bool Serial_DataAvailableTX(uint8_t port)
 //
 //   - return value: number of bytes stored in buf
 uint16_t Serial_Get(uint8_t port, char * buf, uint16_t bufSize);
-
-#ifdef SERIAL_PORT_2
-  // retrieve messages from all the enabled supplementary ports storing them
-  // in the command queue (in Mainboard_CmdHandler.c) for further processing
-  void Serial_GetFromUART(void);
-#endif
 
 #ifdef __cplusplus
 }

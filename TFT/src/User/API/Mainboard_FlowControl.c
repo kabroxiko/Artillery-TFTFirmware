@@ -42,11 +42,6 @@ void loopBackEnd(void)
   // parse the received slave response information
   parseAck();
 
-  // retrieve and store (in command queue) the gcodes received from other UART, such as ESP3D etc.
-  #ifdef SERIAL_PORT_2
-    Serial_GetFromUART();
-  #endif
-
   // handle USB communication
   #ifdef USB_FLASH_DRIVE_SUPPORT
     USB_LoopProcess();

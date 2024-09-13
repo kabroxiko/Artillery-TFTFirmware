@@ -1427,26 +1427,5 @@ void parseAck(void)
   parse_end:
     if (!avoid_terminal && MENU_IS(menuTerminal))
       terminalCache(ack_cache, ack_len, ack_port_index, SRC_TERMINAL_ACK);
-
-    #ifdef SERIAL_PORT_2
-      if (ack_port_index == PORT_1)
-      {
-        if (infoHost.tx_count == 0 && !ack_starts_with("ok"))
-        { // if the ACK message is not related to a gcode originated by the TFT and it is not "ok", it is a spontaneous
-          // ACK message so pass it to all the supplementary serial ports (since these messages came unrequested)
-          Serial_Forward(SUP_PORTS, ack_cache);
-        }
-      }
-      else
-      { // if the ACK message is related to a gcode originated by a supplementary serial port,
-        // forward the message to that supplementary serial port
-        Serial_Forward(ack_port_index, ack_cache);
-
-        // if no pending gcode (all "ok" have been received), reset ACK port index to avoid wrong relaying (in case no
-        // more commands will be sent by Mainboard_CmdHandler.c) of any successive spontaneous ACK message
-        if (infoHost.tx_count == 0)
-          ack_port_index = PORT_1;
-      }
-    #endif
   }
 }

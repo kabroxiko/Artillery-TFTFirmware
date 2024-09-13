@@ -2,26 +2,11 @@
 #include "includes.h"
 
 #define SERIAL_PORT_RX_QUEUE_SIZE   NOBEYOND(256, RAM_SIZE * 64, 4096)  // ACK messages reading queue from mainboard
-#define SERIAL_PORT_2_RX_QUEUE_SIZE 512
-#define SERIAL_PORT_3_RX_QUEUE_SIZE 512
-#define SERIAL_PORT_4_RX_QUEUE_SIZE 512
 
 #define SERIAL_PORT_TX_QUEUE_SIZE   256  // gcodes writing queue to mainboard
-#define SERIAL_PORT_2_TX_QUEUE_SIZE 256
-#define SERIAL_PORT_3_TX_QUEUE_SIZE 256
-#define SERIAL_PORT_4_TX_QUEUE_SIZE 256
 
 const SERIAL_PORT_INFO serialPort[SERIAL_PORT_COUNT] = {
   {SERIAL_PORT    , SERIAL_PORT_RX_QUEUE_SIZE  , SERIAL_PORT_TX_QUEUE_SIZE  , "" , "1 - Printer"},
-  #ifdef SERIAL_PORT_2
-    {SERIAL_PORT_2, SERIAL_PORT_2_RX_QUEUE_SIZE, SERIAL_PORT_2_TX_QUEUE_SIZE, "2", "2 - WiFi"},
-  #endif
-  #ifdef SERIAL_PORT_3
-    {SERIAL_PORT_3, SERIAL_PORT_3_RX_QUEUE_SIZE, SERIAL_PORT_3_TX_QUEUE_SIZE, "3", "3 - UART3"},
-  #endif
-  #ifdef SERIAL_PORT_4
-    {SERIAL_PORT_4, SERIAL_PORT_4_RX_QUEUE_SIZE, SERIAL_PORT_4_TX_QUEUE_SIZE, "4", "4 - UART4"}
-  #endif
 };
 
 const uint32_t baudrateValues[BAUDRATE_COUNT] = {
@@ -41,22 +26,6 @@ void Serial_Init(SERIAL_PORT_INDEX portIndex)
 
     Serial_Config(serialPort[PORT_1].port, serialPort[PORT_1].cacheSizeRX, serialPort[PORT_1].cacheSizeTX, baudrateValues[infoSettings.serial_port[PORT_1]]);
   }
-
-  #ifdef SERIAL_PORT_2
-    // if ALL_PORTS, SUP_PORTS or specific supplementary port
-    //
-    for (SERIAL_PORT_INDEX tmpIndex = PORT_2; tmpIndex < SERIAL_PORT_COUNT; tmpIndex++)
-    {
-      // the supplementary serial ports should be enabled according to config.ini.
-      // Disable the serial port when it is not in use and/or not connected to a device (floating) to
-      // avoid to receive and process wrong data due to possible electromagnetic interference (EMI)
-
-      // if serial port is enabled...
-      if (infoSettings.serial_port[tmpIndex] > 0 && (portIndex == tmpIndex || portIndex < PORT_1))
-        Serial_Config(serialPort[tmpIndex].port, serialPort[tmpIndex].cacheSizeRX, serialPort[tmpIndex].cacheSizeTX,
-                      baudrateValues[infoSettings.serial_port[tmpIndex]]);
-    }
-  #endif
 }
 
 void Serial_DeInit(SERIAL_PORT_INDEX portIndex)
@@ -66,16 +35,6 @@ void Serial_DeInit(SERIAL_PORT_INDEX portIndex)
 
   if (portIndex == PORT_1 || portIndex == ALL_PORTS)  // if primary or all serial ports, deinitialize the primary serial port first
     Serial_DeConfig(serialPort[PORT_1].port);
-
-  #ifdef SERIAL_PORT_2
-    // if ALL_PORTS, SUP_PORTS or specific supplementary port
-    //
-    for (SERIAL_PORT_INDEX tmpIndex = PORT_2; tmpIndex < SERIAL_PORT_COUNT; tmpIndex++)
-    {
-      if (portIndex == tmpIndex || portIndex < PORT_1)
-        Serial_DeConfig(serialPort[tmpIndex].port);
-    }
-  #endif
 }
 
 void Serial_Forward(SERIAL_PORT_INDEX portIndex, const char * msg)
@@ -93,10 +52,6 @@ void Serial_Forward(SERIAL_PORT_INDEX portIndex, const char * msg)
 
   if (portIndex == ALL_PORTS)         // if ALL_PORTS, forward the message to all the enabled serial ports
     portIndex = PORT_1;
-  #ifdef SERIAL_PORT_2
-    else if (portIndex == SUP_PORTS)  // if SUP_PORTS, forward the message to all the enabled supplementary serial ports
-      portIndex = PORT_2;
-  #endif
   else                                // if specific port, forward the message only to that specific serial port, if enabled
     portCount = portIndex + 1;
 
@@ -196,29 +151,3 @@ uint16_t Serial_Get(uint8_t port, char * buf, uint16_t bufSize)
 
   return msgSize;  // return the number of bytes stored in buf
 }
-
-#ifdef SERIAL_PORT_2
-
-void Serial_GetFromUART(void)
-{
-  CMD cmd;
-
-  // scan all the supplementary serial ports
-  for (SERIAL_PORT_INDEX portIndex = PORT_2; portIndex < SERIAL_PORT_COUNT; portIndex++)
-  {
-    // retrieve data only if serial port is enabled
-    if (infoSettings.serial_port[portIndex] > 0
-      #ifdef SERIAL_DEBUG_PORT
-        && serialPort[portIndex].port != SERIAL_DEBUG_PORT  // do not forward data to serial debug port
-      #endif
-      )
-    {
-      while (Serial_DataAvailableRX(serialPort[portIndex].port) && Serial_Get(serialPort[portIndex].port, cmd, CMD_MAX_SIZE) != 0)
-      {
-        handleCmd(cmd, portIndex);
-      }
-    }
-  }
-}
-
-#endif
