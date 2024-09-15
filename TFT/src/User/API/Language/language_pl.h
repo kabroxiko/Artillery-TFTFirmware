@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Ekran"
 #define STRING_UI_SETTINGS            "IU"
 #define STRING_SOUND                  "Dźwięk"
-#define STRING_MARLIN_MODE_SETTINGS   "Tr. Marlin"
 #define STRING_MACHINE_SETTINGS       "Drukarka"
 #define STRING_PARAMETER_SETTINGS     "Ustawienia"
 #define STRING_FEATURE_SETTINGS       "Opcje"

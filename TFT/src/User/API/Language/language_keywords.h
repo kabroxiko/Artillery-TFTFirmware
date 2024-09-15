@@ -269,7 +269,6 @@ extern "C" {
 #define LANG_KEY_SCREEN_SETTINGS        "label_screen_settings:"
 #define LANG_KEY_UI_SETTINGS            "label_ui_settings:"
 #define LANG_KEY_SOUND                  "label_sound:"
-#define LANG_KEY_MARLIN_MODE_SETTINGS   "label_marlin_mode_settings:"
 #define LANG_KEY_MACHINE_SETTINGS       "label_machine_settings:"
 #define LANG_KEY_PARAMETER_SETTINGS     "label_parameter_settings:"
 #define LANG_KEY_FEATURE_SETTINGS       "label_feature_settings:"

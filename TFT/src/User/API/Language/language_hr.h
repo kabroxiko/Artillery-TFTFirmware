@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Zaslon"
 #define STRING_UI_SETTINGS            "UI"
 #define STRING_SOUND                  "Zvuk"
-#define STRING_MARLIN_MODE_SETTINGS   "MarlinSet"
 #define STRING_MACHINE_SETTINGS       "Printer"
 #define STRING_PARAMETER_SETTINGS     "Parametri"
 #define STRING_FEATURE_SETTINGS       "Funkcije"

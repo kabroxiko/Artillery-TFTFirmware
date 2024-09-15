@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Tela"
 #define STRING_UI_SETTINGS            "UI"
 #define STRING_SOUND                  "Som"
-#define STRING_MARLIN_MODE_SETTINGS   "MarlinMode"
 #define STRING_MACHINE_SETTINGS       "Impressora"
 #define STRING_PARAMETER_SETTINGS     "Parâmetros"
 #define STRING_FEATURE_SETTINGS       "Config."

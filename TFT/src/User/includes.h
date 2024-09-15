@@ -22,7 +22,6 @@
 #include "lcd_dma.h"
 #include "lcd.h"
 #include "Serial.h"
-#include "spi_slave.h"  // it uses infoSettings. HAL should be independent by that!
 #include "spi.h"
 #include "timer_pwm.h"
 #include "uart.h"
@@ -35,7 +34,6 @@
 // User/HAL
 #include "buzzer.h"
 #include "Knob_LED.h"
-#include "LCD_Encoder.h"
 #include "LCD_Init.h"
 #include "sd.h"
 #include "sw_spi.h"
@@ -59,11 +57,9 @@
 // User/API/UI
 #include "CharIcon.h"
 #include "GUI.h"
-#include "HD44780_Emulator.h"  // it uses infoSettings
 #include "ListItem.h"          // it uses infoSettings
 #include "ListManager.h"
 #include "Numpad.h"            // it uses infoSettings
-#include "ST7920_Emulator.h"   // it uses infoSettings
 #include "ui_draw.h"
 
 // User/API
@@ -124,7 +120,6 @@
 #include "LoadUnload.h"
 #include "MachineSettings.h"
 #include "MainPage.h"
-#include "MarlinMode.h"
 #include "MBL.h"
 #include "MeshEditor.h"
 #include "MeshTuner.h"

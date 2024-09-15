@@ -104,11 +104,6 @@ void HW_Init(void)
     LCD_Enc_Init();
   #endif
 
-  #if ENC_ACTIVE_SIGNAL
-    if (infoSettings.marlin_type == LCD12864)
-      LCD_Enc_InitActiveSignal();
-  #endif
-
   if (readIsTSCExist() == false)  // read settings parameter
   {
     LCD_RefreshDirection(infoSettings.rotated_ui);
@@ -144,10 +139,6 @@ void HW_InitMode(uint8_t mode)
       #endif
     #endif
 
-    #if ENC_ACTIVE_SIGNAL  // set encoder inactive signal if Touch mode is active
-      if (infoSettings.marlin_type == LCD12864)
-        LCD_Enc_SetActiveSignal(0);
-    #endif
   }
   else
   {
@@ -171,9 +162,5 @@ void HW_InitMode(uint8_t mode)
       #endif
     #endif
 
-    #if ENC_ACTIVE_SIGNAL  // set encoder active signal if Marlin mode is active
-      if (infoSettings.marlin_type == LCD12864)
-        LCD_Enc_SetActiveSignal(1);
-    #endif
   }
 }

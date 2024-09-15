@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Kijelző"
 #define STRING_UI_SETTINGS            "Felület"
 #define STRING_SOUND                  "Hangok"
-#define STRING_MARLIN_MODE_SETTINGS   "Marlin mód"
 #define STRING_MACHINE_SETTINGS       "Gép"
 #define STRING_PARAMETER_SETTINGS     "Tényezők"
 #define STRING_FEATURE_SETTINGS       "Funkciók"

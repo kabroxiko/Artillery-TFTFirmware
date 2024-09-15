@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Ekran"
 #define STRING_UI_SETTINGS            "UI"
 #define STRING_SOUND                  "Ses"
-#define STRING_MARLIN_MODE_SETTINGS   "MarlinMode"
 #define STRING_MACHINE_SETTINGS       "Makine"
 #define STRING_PARAMETER_SETTINGS     "Parametre Ayarları"
 #define STRING_FEATURE_SETTINGS       "Özellik"

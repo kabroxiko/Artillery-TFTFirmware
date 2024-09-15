@@ -10,9 +10,6 @@ enum
   #ifdef LCD_LED_PWM_CHANNEL
     KEY_INDEX_BRIGHTNESS,
   #endif
-  #ifdef HAS_EMULATOR
-    KEY_INDEX_EMULATOR,
-  #endif
 };
 
 #define ITEM_NOTIFICATION_TYPE_NUM 3
@@ -30,202 +27,6 @@ static const char * const itemSortBy[SORT_BY_COUNT] = {
   "Name ▲",
   "Name ▼",
 };
-
-#ifdef HAS_EMULATOR
-
-#define ITEM_MARLIN_TYPE_NUM 2
-static const char * const labelMarlinType[ITEM_MARLIN_TYPE_NUM] = {
-  // item value text(only for custom value)
-  "128x64",
-  "20x4"
-};
-
-static void menuEmulatorFontColor(void)
-{
-  LABEL title = {LABEL_FONT_COLOR};
-  LISTITEM totalItems[LCD_COLOR_COUNT];
-  uint16_t curIndex = KEY_IDLE;
-  uint8_t curItem = 0;
-
-  // fill items
-  for (uint8_t i = 0; i < COUNT(totalItems); i++)
-  {
-    if (infoSettings.marlin_font_color == lcd_colors[i])
-    {
-      totalItems[i].icon = CHARICON_CHECKED;
-      curItem = i;
-    }
-    else
-    {
-      totalItems[i].icon = CHARICON_UNCHECKED;
-    }
-
-    totalItems[i].itemType = LIST_LABEL;
-    totalItems[i].titlelabel = lcd_color_names[i];
-  }
-
-  uint16_t curPage = curItem / LISTITEM_PER_PAGE;
-
-  listViewCreate(title, totalItems, COUNT(totalItems), &curPage, true, NULL, NULL);
-
-  while (MENU_IS(menuEmulatorFontColor))
-  {
-    curIndex = listViewGetSelectedIndex();
-
-    if (curIndex < COUNT(totalItems))
-    {
-      if (curIndex < (uint16_t)LCD_COLOR_COUNT && curIndex != curItem)  // has changed
-      {
-        totalItems[curItem].icon = CHARICON_UNCHECKED;
-
-        listViewRefreshItem(curItem);  // refresh unchecked status
-
-        curItem = curIndex;
-        totalItems[curItem].icon = CHARICON_CHECKED;
-
-        listViewRefreshItem(curItem);  // refresh checked status
-
-        infoSettings.marlin_font_color = lcd_colors[curItem];
-      }
-    }
-
-    loopProcess();
-  }
-
-  saveSettings();  // save settings
-}
-
-static void menuEmulatorBGColor(void)
-{
-  LABEL title = {LABEL_BG_COLOR};
-  LISTITEM totalItems[LCD_COLOR_COUNT];
-  uint16_t curIndex = KEY_IDLE;
-  uint8_t curItem = 0;
-
-  // fill items
-  for (uint8_t i = 0; i < COUNT(totalItems); i++)
-  {
-    if (infoSettings.marlin_bg_color == lcd_colors[i])
-    {
-      totalItems[i].icon = CHARICON_CHECKED;
-      curItem = i;
-    }
-    else
-    {
-      totalItems[i].icon = CHARICON_UNCHECKED;
-    }
-
-    totalItems[i].itemType = LIST_LABEL;
-    totalItems[i].titlelabel = lcd_color_names[i];
-  }
-
-  uint16_t curPage = curItem / LISTITEM_PER_PAGE;
-
-  listViewCreate(title, totalItems, COUNT(totalItems), &curPage, true, NULL, NULL);
-
-  while (MENU_IS(menuEmulatorBGColor))
-  {
-    curIndex = listViewGetSelectedIndex();
-
-    if (curIndex < COUNT(totalItems))
-    {
-      if (curIndex < (uint16_t)LCD_COLOR_COUNT && curIndex != curItem)  // has changed
-      {
-        totalItems[curItem].icon = CHARICON_UNCHECKED;
-
-        listViewRefreshItem(curItem);  // refresh unchecked status
-
-        curItem = curIndex;
-        totalItems[curItem].icon = CHARICON_CHECKED;
-
-        listViewRefreshItem(curItem);  // refresh checked status
-
-        infoSettings.marlin_bg_color = lcd_colors[curItem];
-      }
-    }
-
-    loopProcess();
-  }
-
-  saveSettings();  // save settings
-}
-
-static void menuMarlinModeSettings(void)
-{
-  LABEL title = {LABEL_MARLIN_MODE_SETTINGS};
-  LISTITEM marlinModeitems[] = {
-  // icon                       item type         item title               item value text(only for custom value)
-    {CHARICON_FONT_COLOR,       LIST_CUSTOMVALUE, LABEL_FONT_COLOR,        LABEL_CUSTOM},
-    {CHARICON_BACKGROUND_COLOR, LIST_CUSTOMVALUE, LABEL_BG_COLOR,          LABEL_CUSTOM},
-    {CHARICON_TOGGLE_ON,        LIST_TOGGLE,      LABEL_MARLIN_FULLSCREEN, LABEL_NULL},
-    {CHARICON_TOGGLE_ON,        LIST_TOGGLE,      LABEL_MARLIN_SHOW_TITLE, LABEL_NULL},
-    {CHARICON_BLANK,            LIST_CUSTOMVALUE, LABEL_MARLIN_TYPE,       LABEL_DYNAMIC},
-  };
-
-  for (uint8_t i = 0; i < LCD_COLOR_COUNT; i++)
-  {
-    if (infoSettings.marlin_font_color == lcd_colors[i])
-      marlinModeitems[0].valueLabel = lcd_color_names[i];
-
-    if (infoSettings.marlin_bg_color == lcd_colors[i])
-      marlinModeitems[1].valueLabel = lcd_color_names[i];
-  }
-
-  marlinModeitems[2].icon = iconToggle[infoSettings.marlin_fullscreen];
-  marlinModeitems[3].icon = iconToggle[infoSettings.marlin_show_title];
-
-  setDynamicTextValue(4, (char *)labelMarlinType[infoSettings.marlin_type]);
-
-  uint16_t curIndex = KEY_IDLE;
-
-  listViewCreate(title, marlinModeitems, COUNT(marlinModeitems), NULL, true, NULL, NULL);
-
-  while (MENU_IS(menuMarlinModeSettings))
-  {
-    curIndex = listViewGetSelectedIndex();
-
-    switch (curIndex)
-    {
-      case 0:
-        OPEN_MENU(menuEmulatorFontColor);
-        break;
-
-      case 1:
-        OPEN_MENU(menuEmulatorBGColor);
-        break;
-
-      case 2:
-        TOGGLE_BIT(infoSettings.marlin_fullscreen, 0);
-        marlinModeitems[2].icon = iconToggle[infoSettings.marlin_fullscreen];
-
-        listViewRefreshItem(curIndex);
-        break;
-
-      case 3:
-        TOGGLE_BIT(infoSettings.marlin_show_title, 0);
-        marlinModeitems[3].icon = iconToggle[infoSettings.marlin_show_title];
-
-        listViewRefreshItem(curIndex);
-        break;
-
-      case 4:
-        infoSettings.marlin_type = (infoSettings.marlin_type + 1) % ITEM_MARLIN_TYPE_NUM;
-        setDynamicTextValue(curIndex, (char *)labelMarlinType[infoSettings.marlin_type]);
-
-        listViewRefreshItem(curIndex);
-        break;
-
-      default:
-        break;
-    }
-
-    loopProcess();
-  }
-
-  saveSettings();  // save settings
-}
-
-#endif  // HAS_EMULATOR
 
 static void menuLanguage(void)
 {
@@ -552,12 +353,6 @@ void menuScreenSettings(void)
     screenSettingsItems.items[KEY_INDEX_BRIGHTNESS].label.index = LABEL_LCD_BRIGHTNESS;
   #endif
 
-  #ifdef ST7920_EMULATOR
-    // LCD12864 background color
-    screenSettingsItems.items[KEY_INDEX_EMULATOR].icon = ICON_MARLIN_MODE;
-    screenSettingsItems.items[KEY_INDEX_EMULATOR].label.index = LABEL_MARLIN_MODE_SETTINGS;
-  #endif
-
   uint16_t curIndex = KEY_IDLE;
 
   menuDrawPage(&screenSettingsItems);
@@ -602,12 +397,6 @@ void menuScreenSettings(void)
       #ifdef LCD_LED_PWM_CHANNEL
         case KEY_INDEX_BRIGHTNESS:
           OPEN_MENU(menuBrightnessSettings);
-          break;
-      #endif
-
-      #ifdef ST7920_EMULATOR
-        case KEY_INDEX_EMULATOR:
-          OPEN_MENU(menuMarlinModeSettings);
           break;
       #endif
 

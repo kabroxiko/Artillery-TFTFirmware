@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Екран"
 #define STRING_UI_SETTINGS            "UI"
 #define STRING_SOUND                  "Звуки"
-#define STRING_MARLIN_MODE_SETTINGS   "MarlinMode"
 #define STRING_MACHINE_SETTINGS       "Принтер"
 #define STRING_PARAMETER_SETTINGS     "Параметри"
 #define STRING_FEATURE_SETTINGS       "Опції"

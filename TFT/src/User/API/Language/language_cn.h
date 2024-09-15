@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "屏幕设置"
 #define STRING_UI_SETTINGS            "UI"
 #define STRING_SOUND                  "声音"
-#define STRING_MARLIN_MODE_SETTINGS   "Marlin模式"
 #define STRING_MACHINE_SETTINGS       "机器设置"
 #define STRING_PARAMETER_SETTINGS     "参数设置"
 #define STRING_FEATURE_SETTINGS       "功能设置"

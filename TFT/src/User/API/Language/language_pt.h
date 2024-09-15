@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Ecra"
 #define STRING_UI_SETTINGS            "UI"
 #define STRING_SOUND                  "Sound"
-#define STRING_MARLIN_MODE_SETTINGS   "MarlinMode"
 #define STRING_MACHINE_SETTINGS       "Impressora"
 #define STRING_PARAMETER_SETTINGS     "Parâmetro"
 #define STRING_FEATURE_SETTINGS       "Extras"

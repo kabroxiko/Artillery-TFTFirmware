@@ -198,41 +198,14 @@
 //   #define LCD_PINS_D4             EXPA2_09_PIN  // EXPA1_05_PIN  //CLK
 //
 
-// ST7920 Emulator SPI pins
-//#define ST7920_EMULATOR  // uncomment to enable Marlin mode
-#ifdef ST7920_EMULATOR
-  #define ST7920_SPI _SPI3
+// Power Supply Auto Shutdown Detection pin
+#ifndef PS_ON_PIN
+  #define PS_ON_PIN PB0
 #endif
 
-// LCD Encoder pins + Marlin mode
-#if defined(ST7920_EMULATOR) && !defined(GD32F3XX)
-  // Free JTAG (PB3/PB4) for SPI3 and free SWDIO, PA13, PA14 for encoder pins
-  #define DISABLE_DEBUG() RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE); \
-                          GPIO_PinRemapConfig(GPIO_Remap_SWJ_Disable, ENABLE)
-
-  #define LCD_ENCA_PIN  PA13    // map ENCA pin to JTAG DIO pin
-  #define LCD_ENCB_PIN  PA14    // map ENCB pin to JTAG CLK pin
-
-  #define SPI3_PIN_SMART_USAGE  // if enabled, it avoids any SPI3 CS pin usage and free the MISO (PB4 pin) for encoder pins
-  #ifdef SPI3_PIN_SMART_USAGE
-    #define LCD_BTN_PIN PB4     // map BTN pin to PB4 pin
-  #else
-    #define LCD_BTN_PIN PB0     // map BTN pin to PB0 pin
-
-    #define SPI3_CS_PIN PB1     // CS pin used for SPI3 slave mode mapped to PB1 pin
-  #endif
-#endif
-
-#if !defined(ST7920_EMULATOR) || defined(SPI3_PIN_SMART_USAGE)
-  // Power Supply Auto Shutdown Detection pin
-  #ifndef PS_ON_PIN
-    #define PS_ON_PIN PB0
-  #endif
-
-  // Filament Runout Detection pin
-  #ifndef FIL_RUNOUT_PIN
-    #define FIL_RUNOUT_PIN PB1
-  #endif
+// Filament Runout Detection pin
+#ifndef FIL_RUNOUT_PIN
+  #define FIL_RUNOUT_PIN PB1
 #endif
 
 // Buzzer PWM pin

@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Οθόνη"
 #define STRING_UI_SETTINGS            "UI"
 #define STRING_SOUND                  "Sound"
-#define STRING_MARLIN_MODE_SETTINGS   "MarlinMode"
 #define STRING_MACHINE_SETTINGS       "Μηχανήματος"
 #define STRING_PARAMETER_SETTINGS     "Ρυθμίσεις παραμέτρων"
 #define STRING_FEATURE_SETTINGS       "Χαρακτηριστικών"

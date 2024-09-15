@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Pantalla"
 #define STRING_UI_SETTINGS            "UI"
 #define STRING_SOUND                  "Sound"
-#define STRING_MARLIN_MODE_SETTINGS   "MarlinMode"
 #define STRING_MACHINE_SETTINGS       "Máquina"
 #define STRING_PARAMETER_SETTINGS     "Parámetro"
 #define STRING_FEATURE_SETTINGS       "Añadidos"

@@ -262,7 +262,6 @@
 #define STRING_SCREEN_SETTINGS        "Displej"
 #define STRING_UI_SETTINGS            "Parametry"
 #define STRING_SOUND                  "Zvuk"
-#define STRING_MARLIN_MODE_SETTINGS   "Marlin Mod"
 #define STRING_MACHINE_SETTINGS       "Tiskárna"
 #define STRING_PARAMETER_SETTINGS     "Parametry"
 #define STRING_FEATURE_SETTINGS       "Vlastnosti"
