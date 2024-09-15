@@ -560,51 +560,6 @@ static void parseConfigKey(uint16_t index)
       SET_VALID_INT_VALUE(infoSettings.layer_disp_type, 0, 2);
       break;
 
-    //----------------------------Marlin Mode Settings (only for TFT24 V1.1 & TFT28/TFT35/TFT43/TFT50/TFT70 V3.0)
-
-    #ifdef HAS_EMULATOR
-
-      case C_INDEX_MODE:
-        SET_VALID_INT_VALUE(infoSettings.mode, 0, MAX_MODE_COUNT - 1);
-        break;
-
-      case C_INDEX_SERIAL_ALWAYS_ON:
-        infoSettings.serial_always_on = getOnOff();
-        break;
-
-      case C_INDEX_MARLIN_BG_COLOR:
-        config_set_color(&infoSettings.marlin_bg_color);
-        break;
-
-      case C_INDEX_MARLIN_FONT_COLOR:
-        config_set_color(&infoSettings.marlin_font_color);
-        break;
-
-      case C_INDEX_MARLIN_FULLSCREEN:
-        infoSettings.marlin_fullscreen = getOnOff();
-        break;
-
-      case C_INDEX_MARLIN_SHOW_TITLE:
-        infoSettings.marlin_show_title = getOnOff();
-        break;
-
-      case C_INDEX_MARLIN_TITLE:
-      {
-        char * pchr = strchr(cur_line, ':') + 1;
-        int utf8len = getUTF8Length((uint8_t *)pchr);
-        int bytelen = strlen(pchr) + 1;
-
-        if (inLimit(utf8len, NAME_MIN_LENGTH, MAX_STRING_LENGTH) && inLimit(bytelen, NAME_MIN_LENGTH, MAX_GCODE_LENGTH))
-          strcpy(configStringsStore->marlin_title, pchr);
-        break;
-      }
-
-      case C_INDEX_MARLIN_TYPE:
-        SET_VALID_INT_VALUE(infoSettings.marlin_type, 0, MODE_TYPE_COUNT - 1);
-        break;
-
-    #endif  // ST7920_EMULATOR || LCD2004_EMULATOR
-
     //----------------------------Printer / Machine Settings
 
     case C_INDEX_HOTEND_COUNT:

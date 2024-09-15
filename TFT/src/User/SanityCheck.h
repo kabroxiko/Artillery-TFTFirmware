@@ -51,16 +51,6 @@ extern "C" {
   #define TERMINAL_COLOR_SCHEME 0
 #endif
 
-#ifndef ST7920_EMULATOR
-  #if defined(_PIN_TFT35_V2_0_H_) || defined(_PIN_TFT35_V1_0_H_)
-    #ifdef DEFAULT_MODE
-      #undef DEFAULT_MODE
-    #endif
-    #define DEFAULT_MODE 1  // just set hardcoded here
-    //#warning "DEFAULT_MODE supports only Touch Mode. Please update/check your configuration"
-  #endif
-#endif
-
 #ifndef MARLIN_TITLE
   #define MARLIN_TITLE "Marlin Mode"
 #endif

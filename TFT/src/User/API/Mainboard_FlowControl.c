@@ -71,21 +71,6 @@ void loopBackEnd(void)
     FIL_BE_CheckRunout();
   #endif
 
-  // check changes in encoder steps
-  #if LCD_ENCODER_SUPPORT
-    #ifdef HAS_EMULATOR
-      if (MENU_IS_NOT(menuMarlinMode))
-    #endif
-    {
-      LCD_Enc_CheckSteps();
-    }
-  #endif
-
-  // check mode switching
-  #ifdef HAS_EMULATOR
-    Mode_CheckSwitching();
-  #endif
-
   // handle screenshot capture
   #ifdef SCREEN_SHOT_TO_SD
     loopScreenShot();

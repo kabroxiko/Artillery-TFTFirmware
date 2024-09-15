@@ -385,11 +385,6 @@ bool startPrintFromRemoteHost(const char * filename)
 {
   infoHost.status = HOST_STATUS_PRINTING;  // always set first
 
-  #ifdef HAS_EMULATOR
-    if (MENU_IS(menuMarlinMode))  // do not process any printing info if Marlin Mode is active
-      return false;
-  #endif
-
   // if printing from TFT media or onboard media, exit
   if (infoPrinting.printing && infoFile.source <= FS_ONBOARD_MEDIA)
     return false;
@@ -912,10 +907,6 @@ void printClearSendingWaiting(void)
 
 void loopPrintFromOnboard(void)
 {
-  #ifdef HAS_EMULATOR
-    if (MENU_IS(menuMarlinMode)) return;
-  #endif
-
   if (!infoPrinting.printing) return;
   if (infoFile.source < FS_ONBOARD_MEDIA || infoFile.source > FS_ONBOARD_MEDIA_REMOTE) return;  // if not printing from (remote) onboard media
   if (infoMachineSettings.autoReportSDStatus == ENABLED) return;

@@ -1175,20 +1175,10 @@ void loopCheckBackPress(void)
 {
   static bool longPress = false;
 
-  #ifdef HAS_EMULATOR
-    static bool backHeld = false;
-  #endif
-
   if (!TS_IsPressed())
   {
     longPress = false;
-
-    #ifdef HAS_EMULATOR
-      backHeld = false;
-    #else
-      Touch_Enc_ReadPen(0);  // reset TSC press timer
-    #endif
-
+    Touch_Enc_ReadPen(0);  // reset TSC press timer
     return;
   }
 
@@ -1200,15 +1190,6 @@ void loopCheckBackPress(void)
 
   if ((infoMenu.cur == 0) || (MENU_IS(menuMode)))
     return;
-
-  #ifdef HAS_EMULATOR
-    if (backHeld == true)  // prevent mode selection or screenshot if Back button is held
-    {
-      backHeld = Touch_Enc_ReadPen(0);
-
-      return;
-    }
-  #endif
 
   if (longPress == false && Touch_Enc_ReadPen(LONG_TOUCH))  // check if longpress already handled and check if TSC is pressed and held
   {
@@ -1227,10 +1208,6 @@ void loopCheckBackPress(void)
     if (tempKey != KEY_IDLE && getCurMenuItems()->items[tempKey].label.index == LABEL_BACK)  // check if Back button is held
     {
       BUZZER_PLAY(SOUND_OK);
-
-      #ifdef HAS_EMULATOR
-        backHeld = true;
-      #endif
 
       infoMenu.menu[1] = infoMenu.menu[infoMenu.cur];  // prepare menu tree for jump to 0
       infoMenu.cur = 1;
