@@ -61,7 +61,7 @@ static void clearQueueAndMore(void)
 void breakAndContinue(void)
 {
   clearQueueAndMore();
-  sendEmergencyCmd("M108\n");
+  // sendEmergencyCmd("M108\n");
 }
 
 void resumeAndPurge(void)
@@ -97,7 +97,7 @@ static void waitForAbort(void)
   TASK_LOOP_WHILE(!infoPrinting.aborted,
                   if ((rIndex = Serial_GetReadingIndexRX(SERIAL_PORT)) != rIndex_old)
                   {
-                    sendEmergencyCmd("M108\n");
+                    // sendEmergencyCmd("M108\n");
                     rIndex_old = rIndex;
                   }
                  );
