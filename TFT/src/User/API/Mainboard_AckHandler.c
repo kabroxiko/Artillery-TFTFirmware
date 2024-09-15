@@ -636,12 +636,12 @@ void parseAck(void)
       }
     }
     // parse and store feed rate percentage
-    else if (ack_seen("FR:") || (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE && ack_seen("Speed factor at ")))
+    else if (ack_seen("SPEED_FACTOR:") || (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE && ack_seen("Speed factor at ")))
     {
       speedSetCurPercent(0, ack_value());
     }
     // parse and store flow rate percentage
-    else if (ack_seen("Flow:") || (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE && ack_seen("Flow rate at ")))
+    else if (ack_seen("EXTRUDE_FACTOR:") || (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE && ack_seen("Flow rate at ")))
     {
       speedSetCurPercent(1, ack_value());
     }
