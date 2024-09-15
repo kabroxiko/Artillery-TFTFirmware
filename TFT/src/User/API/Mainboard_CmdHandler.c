@@ -448,7 +448,6 @@ void handleCmd(CMD cmd, const SERIAL_PORT_INDEX portIndex)
   {
     switch (strtol(&cmdPtr[1], NULL, 10))
     {
-      case 108:  // M108
       case 112:  // M112
       case 410:  // M410
       case 876:  // M876
