@@ -80,7 +80,7 @@ static void abortAndTerminate(void)
 {
   clearQueueAndMore();
 
-  sendEmergencyCmd("M524\n");
+  sendEmergencyCmd("CANCEL_PRINT\n");
 }
 
 static void waitForAbort(void)
@@ -534,7 +534,7 @@ void endPrint(void)
 
 void abortPrint(void)
 {
-  // used to avoid a possible loop in case an abort gcode (e.g. M524) is present in
+  // used to avoid a possible loop in case an abort gcode (e.g. CANCEL_PRINT) is present in
   // the queue infoCmd and the function loopProcess() is invoked by this function
   static bool loopDetected = false;
 

@@ -426,7 +426,7 @@ void handleCmdLineNumberMismatch(const uint32_t lineNumber)
 }
 
 // check if the received gcode is an emergency command or not
-// (M108, M112, M410, M524, M876) and parse it accordingly.
+// (M108, M112, M410, CANCEL_PRINT, M876) and parse it accordingly.
 // Otherwise, store the gcode on command queue
 void handleCmd(CMD cmd, const SERIAL_PORT_INDEX portIndex)
 {
@@ -436,6 +436,13 @@ void handleCmd(CMD cmd, const SERIAL_PORT_INDEX portIndex)
   char * cmdPtr = stripCmd(cmd);  // e.g. "  N1   G28*18\n" -> "G28*18\n"
 
   // check if the received gcode is an emergency command and parse it accordingly
+  if (cmdPtr == "CANCEL_PRINT") {
+    abortPrint();
+
+    if (portIndex != PORT_1)  // if gcode is not generated from TFT
+      Serial_Forward(portIndex, "ok\n");
+    return;
+  }
 
   if (cmdPtr[0] == 'M')
   {
@@ -446,13 +453,6 @@ void handleCmd(CMD cmd, const SERIAL_PORT_INDEX portIndex)
       case 410:  // M410
       case 876:  // M876
         sendEmergencyCmd(cmd, portIndex);
-        return;
-
-      case 524:  // M524
-        abortPrint();
-
-        if (portIndex != PORT_1)  // if gcode is not generated from TFT
-          Serial_Forward(portIndex, "ok\n");
         return;
     }
   }
