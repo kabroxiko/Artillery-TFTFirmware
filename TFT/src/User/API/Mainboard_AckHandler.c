@@ -21,11 +21,11 @@ static const ECHO knownEcho[] = {
   {ECHO_NOTIFY_NONE, "busy: processing"},
   {ECHO_NOTIFY_NONE, "Now fresh file:"},
   {ECHO_NOTIFY_NONE, "Now doing file:"},
-  {ECHO_NOTIFY_NONE, "echo:;"},                   // M503
-  {ECHO_NOTIFY_NONE, "echo:  G"},                 // M503
-  {ECHO_NOTIFY_NONE, "echo:  M"},                 // M503
-  {ECHO_NOTIFY_TOAST, "echo:Active Mesh"},        // M503
-  {ECHO_NOTIFY_TOAST, "echo:EEPROM can"},         // M503
+  {ECHO_NOTIFY_NONE, "echo:;"},                   // REPORT_SETTINGS
+  {ECHO_NOTIFY_NONE, "echo:  G"},                 // REPORT_SETTINGS
+  {ECHO_NOTIFY_NONE, "echo:  M"},                 // REPORT_SETTINGS
+  {ECHO_NOTIFY_TOAST, "echo:Active Mesh"},        // REPORT_SETTINGS
+  {ECHO_NOTIFY_TOAST, "echo:EEPROM can"},         // REPORT_SETTINGS
   {ECHO_NOTIFY_NONE, "Cap:"},                     // M115
   {ECHO_NOTIFY_NONE, "Config:"},                  // M360
   {ECHO_NOTIFY_TOAST, "Settings Stored"},         // M500
@@ -410,7 +410,7 @@ void parseAck(void)
       }
       else if (infoMachineSettings.firmwareType == FW_NOT_DETECTED)  // if never connected to the printer since boot
       {
-        storeCmd("M503\n");  // query detailed printer capabilities
+        storeCmd("REPORT_SETTINGS\n");  // query detailed printer capabilities
         storeCmd("M211\n");  // retrieve the software endstops state
         storeCmd("M115\n");  // as last command to identify the FW type!
       }
@@ -646,7 +646,7 @@ void parseAck(void)
       speedSetCurPercent(1, ack_value());
     }
     // parse and store M106, fan speed
-    else if (ack_starts_with("M106"))
+    else if (ack_starts_with("FAN_SPEED"))
     {
       fanSetCurSpeed(ack_continue_seen("P") ? ack_value() : 0, ack_seen("S") ? ack_value() : 100);
     }
@@ -852,7 +852,7 @@ void parseAck(void)
         popupReminder(DIALOG_TYPE_INFO, (uint8_t *)"Repeatability Test", (uint8_t *)tmpMsg);
       }
     }
-    // parse and store M211 or M503, software endstops state (e.g. from Probe Offset, MBL, Mesh Editor menus)
+    // parse and store M211 or REPORT_SETTINGS, software endstops state (e.g. from Probe Offset, MBL, Mesh Editor menus)
     else if (ack_starts_with("M211") || ack_seen("Soft endstops"))
     {
       uint8_t curValue = infoMachineSettings.softwareEndstops;
@@ -922,12 +922,12 @@ void parseAck(void)
     {
       setParameter(P_ABL_STATE, 1, ack_value());
     }
-    // parse and store M420 V1 T1 or G29 S0 (mesh. Z offset:) or M503 (G29 S4 Zxx), MBL Z offset value (e.g. from Babystep menu)
+    // parse and store M420 V1 T1 or G29 S0 (mesh. Z offset:) or REPORT_SETTINGS (G29 S4 Zxx), MBL Z offset value (e.g. from Babystep menu)
     else if (ack_seen("mesh. Z offset:") || ack_seen("G29 S4 Z"))
     {
       setParameter(P_MBL_OFFSET, 0, ack_value());
     }
-    // parse and store M290 (Probe Offset) or M503 (M851), probe offset value (e.g. from Babystep menu) and
+    // parse and store M290 (Probe Offset) or REPORT_SETTINGS (M851), probe offset value (e.g. from Babystep menu) and
     // X an Y probe offset for LevelCorner position limit
     else if (ack_seen("Probe Offset") || ack_starts_with("M851"))
     {
@@ -983,7 +983,7 @@ void parseAck(void)
     #endif
 
     //----------------------------------------
-    // Parameter / M503 / M115 parsed responses
+    // Parameter / REPORT_SETTINGS / M115 parsed responses
     //----------------------------------------
 
     // parse and store filament diameter
@@ -1002,14 +1002,14 @@ void parseAck(void)
       }
     }
     // parse and store max acceleration (units/s2) (M201) and max feedrate (units/s) (M203)
-    else if (ack_starts_with("M201") || ack_starts_with("M203"))
+    else if (ack_starts_with("MAX_ACCELERATION") || ack_starts_with("MAX_FEEDRATE"))
     {
       PARAMETER_NAME param = P_STEPS_PER_MM;  // default value
 
       // using consecutive "if" instead of "if else if" on the following two lines just to reduce code
       // instead of optimizing performance (code typically not executed during a print)
-      if (ack_starts_with("M201")) param = P_MAX_ACCELERATION;
-      if (ack_starts_with("M203")) param = P_MAX_FEED_RATE;
+      if (ack_starts_with("MAX_ACCELERATION")) param = P_MAX_ACCELERATION;
+      if (ack_starts_with("MAX_FEEDRATE"))     param = P_MAX_FEED_RATE;
 
       if (ack_seen("X")) setParameter(param, AXIS_INDEX_X, ack_value());
       if (ack_seen("Y")) setParameter(param, AXIS_INDEX_Y, ack_value());
@@ -1036,9 +1036,9 @@ void parseAck(void)
       if (ack_seen("J")) setParameter(P_JUNCTION_DEVIATION, 0, ack_value());
     }
     // parse and store home offset (M206) and hotend offset (M218)
-    else if (ack_starts_with("M206 X") || ack_starts_with("M218 T1 X"))
+    else if (ack_starts_with("HOME_OFFSET X") || ack_starts_with("M218 T1 X"))
     {
-      PARAMETER_NAME param = ack_starts_with("M206") ? P_HOME_OFFSET : P_HOTEND_OFFSET;
+      PARAMETER_NAME param = ack_starts_with("HOME_OFFSET") ? P_HOME_OFFSET : P_HOTEND_OFFSET;
 
       if (ack_seen("X")) setParameter(param, AXIS_INDEX_X, ack_value());
       if (ack_seen("Y")) setParameter(param, AXIS_INDEX_Y, ack_value());
@@ -1151,8 +1151,8 @@ void parseAck(void)
       if (ack_seen("Y")) setParameter(param, AXIS_INDEX_Y, ack_value());
       if (ack_seen("Z")) setParameter(param, AXIS_INDEX_Z, ack_value());
     }
-    // parse and store ABL on/off state & Z fade value on M503
-    else if (ack_starts_with("M420 S"))
+    // parse and store ABL on/off state & Z fade value on REPORT_SETTINGS
+    else if (ack_starts_with("AUTO_BED_LEVELING S"))
     {
                                   setParameter(P_ABL_STATE, 0, ack_value());
       if (ack_continue_seen("Z")) setParameter(P_ABL_STATE, 1, ack_value());

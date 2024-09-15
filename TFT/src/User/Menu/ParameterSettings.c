@@ -292,7 +292,7 @@ void menuParameterSettings(void)
 
           if (curParameter < PARAMETERS_COUNT)
           {
-            mustStoreCmd("M503 S0\n");
+            mustStoreCmd("REPORT_SETTINGS\n");
 
             OPEN_MENU(menuShowParameter);
           }

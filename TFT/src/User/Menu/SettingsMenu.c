@@ -153,7 +153,7 @@ void menuSettings(void)
         break;
 
       case KEY_ICON_1:
-        mustStoreCmd("M503 S0\n");
+        mustStoreCmd("REPORT_SETTINGS\n");
 
         OPEN_MENU(menuMachineSettings);
         break;
