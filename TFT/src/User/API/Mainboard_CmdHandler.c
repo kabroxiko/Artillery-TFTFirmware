@@ -436,7 +436,7 @@ void handleCmd(CMD cmd, const SERIAL_PORT_INDEX portIndex)
   char * cmdPtr = stripCmd(cmd);  // e.g. "  N1   G28*18\n" -> "G28*18\n"
 
   // check if the received gcode is an emergency command and parse it accordingly
-  if (cmdPtr == "CANCEL_PRINT")) {
+  if (strcmp(cmd, "CANCEL_PRINT")) {
     abortPrint();
 
     if (portIndex != PORT_1)  // if gcode is not generated from TFT
