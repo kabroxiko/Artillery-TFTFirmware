@@ -2,17 +2,8 @@
 #include "includes.h"
 
 #define PROGRESS_BAR_RAW_X0   (START_X)                                 // X0 aligned to first icon
-#ifdef PORTRAIT_MODE
-  #define PROGRESS_BAR_RAW_X1 (START_X + 3 * ICON_WIDTH + 2 * SPACE_X)  // X1 aligned to last icon
-#else
-  #define PROGRESS_BAR_RAW_X1 (START_X + 4 * ICON_WIDTH + 3 * SPACE_X)  // X1 aligned to last icon
-#endif
-
-#ifdef MARKED_PROGRESS_BAR
-  #define PROGRESS_BAR_DELTA_X ((PROGRESS_BAR_RAW_X1 - PROGRESS_BAR_RAW_X0) % 10)  // use marked progress bar. Width rounding factor multiple of 10 slices
-#else
-  #define PROGRESS_BAR_DELTA_X 2                                                   // use standard progress bar. Reserve a 2 pixels width for vertical borders
-#endif
+#define PROGRESS_BAR_RAW_X1 (START_X + 4 * ICON_WIDTH + 3 * SPACE_X)  // X1 aligned to last icon
+#define PROGRESS_BAR_DELTA_X 2                                                   // use standard progress bar. Reserve a 2 pixels width for vertical borders
 
 // progress bar rounded and aligned to center of icons
 #define PROGRESS_BAR_X0          (PROGRESS_BAR_RAW_X0 + PROGRESS_BAR_DELTA_X - PROGRESS_BAR_DELTA_X / 2)
@@ -21,13 +12,8 @@
 #define PROGRESS_BAR_FULL_WIDTH  (PROGRESS_BAR_X1 - PROGRESS_BAR_X0)  // 100% progress bar width
 #define PROGRESS_BAR_SLICE_WIDTH (PROGRESS_BAR_FULL_WIDTH / 10)       // 10% progress bar width
 
-#ifdef PORTRAIT_MODE
-  static const GUI_RECT progressBar = {PROGRESS_BAR_X0, TITLE_END_Y + 1,
-                                       PROGRESS_BAR_X1, PS_ICON_START_Y - PS_ICON_SPACE_Y - 1};
-#else
-  static const GUI_RECT progressBar = {PROGRESS_BAR_X0, PS_ICON_START_Y + PS_ICON_HEIGHT * 2 + PS_ICON_SPACE_Y * 2 + 1,
-                                       PROGRESS_BAR_X1, ICON_START_Y + ICON_HEIGHT + SPACE_Y - PS_ICON_SPACE_Y - 1};
-#endif
+static const GUI_RECT progressBar = {PROGRESS_BAR_X0, PS_ICON_START_Y + PS_ICON_HEIGHT * 2 + PS_ICON_SPACE_Y * 2 + 1,
+                                     PROGRESS_BAR_X1, ICON_START_Y + ICON_HEIGHT + SPACE_Y - PS_ICON_SPACE_Y - 1};
 
 #define TOGGLE_TIME     2000     // 1 seconds is 1000
 #define LAYER_DELTA     0.1      // minimal layer height change to update the layer display (avoid congestion in vase mode)
@@ -104,11 +90,7 @@ static void setLayerNumberTxt(char * layer_number_txt)
 
   if (layerNumber > 0)
   {
-    if (layerCount > 0
-      #ifndef TFT70_V3_0
-        && layerCount < 1000  // there's no space to display layer number & count if the layer count is above 999
-      #endif
-      )
+    if (layerCount > 0 && layerCount < 1000 ) // there's no space to display layer number & count if the layer count is above 999
     {
       sprintf(layer_number_txt, " %u/%u ", layerNumber, layerCount);
     }
@@ -536,10 +518,8 @@ void menuPrinting(void)
   menuDrawPage(&printingItems);
   drawLiveInfo();
 
-  #ifndef PORTRAIT_MODE
-    if (lastPrinting == false)
-      drawPrintInfo();
-  #endif
+  if (lastPrinting == false)
+    drawPrintInfo();
 
   while (MENU_IS(menuPrinting))
   {
@@ -648,12 +628,6 @@ void menuPrinting(void)
     if (lastPrinting != isPrinting())
     {
       lastPrinting = isPrinting();
-
-      #ifdef PORTRAIT_MODE
-        if (lastPrinting == false)
-          printSummaryPopup();
-      #endif
-
       return;  // it will restart this interface if directly return this function without modify the value of infoMenu
     }
 

@@ -7,19 +7,8 @@
   #include "stm32f10x.h"
 #endif
 
-// Portrait Mode support
-// Comment the following line in case the TFT variant supports Portrait Mode
-//#undef PORTRAIT_MODE
-
 // LCD resolution, font and icon size
-#ifndef TFT_RESOLUTION
-  #define TFT_RESOLUTION
-  #ifdef PORTRAIT_MODE
-    #include "./Resolution/TFT_240X320.h"
-  #else
-    #include "./Resolution/TFT_320X240.h"
-  #endif
-#endif
+#include "./Resolution/TFT_320X240.h"
 
 // Update folder for fonts and icons
 #ifndef UPDATE_DIR

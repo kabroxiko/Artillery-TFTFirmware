@@ -1,46 +1,24 @@
 #include "StatusScreen.h"
 #include "includes.h"
 
-#ifdef TFT70_V3_0
-  #define KEY_SPEEDMENU         KEY_ICON_3
-  #define KEY_FLOWMENU          (KEY_SPEEDMENU + 1)
-  #define KEY_MAINMENU          (KEY_FLOWMENU + 1)
-  #define SET_SPEEDMENUINDEX(x) setSpeedItemIndex(x)
-#else
-  #define KEY_SPEEDMENU         KEY_ICON_3
-  #define KEY_MAINMENU          (KEY_SPEEDMENU + 1)
-  #define SET_SPEEDMENUINDEX(x)
-#endif
+#define KEY_SPEEDMENU         KEY_ICON_3
+#define KEY_MAINMENU          (KEY_SPEEDMENU + 1)
+#define SET_SPEEDMENUINDEX(x)
 
-#ifdef PORTRAIT_MODE
-  #define XYZ_STATUS "X:%.2f Y:%.2f Z:%.2f"
-#else
-  #define XYZ_STATUS "   X: %.2f   Y: %.2f   Z: %.2f   "
-#endif
+#define XYZ_STATUS "   X: %.2f   Y: %.2f   Z: %.2f   "
 
 #define TOOL_TOGGLE_TIME 2000  // 1 seconds is 1000
 
 // text position rectangles for Live icons
 static const GUI_POINT ss_title_point   = {SS_ICON_WIDTH - BYTE_WIDTH / 2, SS_ICON_NAME_Y0};
 static const GUI_POINT ss_val_point     = {SS_ICON_WIDTH / 2, SS_ICON_VAL_Y0};
-#ifdef TFT70_V3_0
-  static const GUI_POINT ss_val_point_2 = {SS_ICON_WIDTH / 2, SS_ICON_VAL_Y0_2};
-#endif
 
 // info box msg area
-#ifdef PORTRAIT_MODE
-  const  GUI_RECT msgRect = {START_X + 0.5 * ICON_WIDTH + 0 * SPACE_X + 2, ICON_START_Y + 0 * ICON_HEIGHT + 0 * SPACE_Y + STATUS_MSG_BODY_YOFFSET,
-                             START_X + 2.5 * ICON_WIDTH + 1 * SPACE_X - 2, ICON_START_Y + 1 * ICON_HEIGHT + 0 * SPACE_Y - STATUS_MSG_BODY_BOTTOM};
+const  GUI_RECT msgRect = {START_X + 1 * ICON_WIDTH + 1 * SPACE_X + 2, ICON_START_Y + 1 * ICON_HEIGHT + 1 * SPACE_Y + STATUS_MSG_BODY_YOFFSET,
+                           START_X + 3 * ICON_WIDTH + 2 * SPACE_X - 2, ICON_START_Y + 2 * ICON_HEIGHT + 1 * SPACE_Y - STATUS_MSG_BODY_BOTTOM};
 
-  const GUI_RECT recGantry = {START_X - 3,                                SS_ICON_HEIGHT + ICON_START_Y + STATUS_GANTRY_YOFFSET,
-                              START_X + 3 + 3 * ICON_WIDTH + 2 * SPACE_X, ICON_HEIGHT + SPACE_Y + ICON_START_Y - STATUS_GANTRY_YOFFSET};
-#else
-  const  GUI_RECT msgRect = {START_X + 1 * ICON_WIDTH + 1 * SPACE_X + 2, ICON_START_Y + 1 * ICON_HEIGHT + 1 * SPACE_Y + STATUS_MSG_BODY_YOFFSET,
-                             START_X + 3 * ICON_WIDTH + 2 * SPACE_X - 2, ICON_START_Y + 2 * ICON_HEIGHT + 1 * SPACE_Y - STATUS_MSG_BODY_BOTTOM};
-
-  const GUI_RECT recGantry = {START_X,                                SS_ICON_HEIGHT + ICON_START_Y + STATUS_GANTRY_YOFFSET,
-                              START_X + 4 * ICON_WIDTH + 3 * SPACE_X, ICON_HEIGHT + SPACE_Y + ICON_START_Y - STATUS_GANTRY_YOFFSET};
-#endif
+const GUI_RECT recGantry = {START_X,                                SS_ICON_HEIGHT + ICON_START_Y + STATUS_GANTRY_YOFFSET,
+                            START_X + 4 * ICON_WIDTH + 3 * SPACE_X, ICON_HEIGHT + SPACE_Y + ICON_START_Y - STATUS_GANTRY_YOFFSET};
 
 static const MENUITEMS statusItems = {
   // title
@@ -51,22 +29,15 @@ static const MENUITEMS statusItems = {
     {ICON_STATUS_BED,              LABEL_NULL},
     {ICON_STATUS_FAN,              LABEL_NULL},
     {ICON_STATUS_SPEED,            LABEL_NULL},
-    #ifdef TFT70_V3_0
-      {ICON_STATUS_FLOW,             LABEL_NULL},
-      {ICON_MAINMENU,                LABEL_MAINMENU},
-    #else
-      {ICON_MAINMENU,                LABEL_MAINMENU},
-      {ICON_NULL,                    LABEL_NULL},
-    #endif
+    {ICON_MAINMENU,                LABEL_MAINMENU},
+    {ICON_NULL,                    LABEL_NULL},
     {ICON_NULL,                    LABEL_NULL},
     {ICON_PRINT,                   LABEL_PRINT},
   }
 };
 
 static const uint8_t bedIcons[2]     = {ICON_STATUS_BED, ICON_STATUS_CHAMBER};
-#ifndef TFT70_V3_0
-  static const uint8_t speedIcons[2] = {ICON_STATUS_SPEED, ICON_STATUS_FLOW};
-#endif
+static const uint8_t speedIcons[2] = {ICON_STATUS_SPEED, ICON_STATUS_FLOW};
 static const char * const speedID[2] = SPEED_ID;
 
 static int8_t lastConnectionStatus = -1;
@@ -116,59 +87,23 @@ static void statusDraw(void)
   lvIcon.lines[1].fn_color = SS_VAL_COLOR;
   lvIcon.lines[1].text_mode = GUI_TEXTMODE_TRANS;  // default value
 
-  #ifndef TFT70_V3_0
-    lvIcon.enabled[2] = false;
-  #else
-    lvIcon.enabled[2] = true;
-    lvIcon.lines[2].h_align = CENTER;
-    lvIcon.lines[2].v_align = CENTER;
-    lvIcon.lines[2].pos = ss_val_point_2;
-    lvIcon.lines[2].font = SS_ICON_VAL_FONT_SIZE_2;
-    lvIcon.lines[2].fn_color = SS_VAL_COLOR_2;
-    lvIcon.lines[2].text_mode = GUI_TEXTMODE_TRANS;  // default value
-  #endif
+  lvIcon.enabled[2] = false;
 
-  #ifdef TFT70_V3_0
-    char tempstr2[45];
+  // TOOL / EXT
+  lvIcon.iconIndex = ICON_STATUS_NOZZLE;
+  lvIcon.lines[0].text = (uint8_t *)heatShortID[currentTool];
+  sprintf(tempstr, "%3d/%-3d", heatGetCurrentTemp(currentTool), heatGetTargetTemp(currentTool));
+  lvIcon.lines[1].text = (uint8_t *)tempstr;
 
-    // TOOL / EXT
-    lvIcon.iconIndex = ICON_STATUS_NOZZLE;
-    lvIcon.lines[0].text = (uint8_t *)heatShortID[currentTool];
-    sprintf(tempstr, "%3d℃", heatGetCurrentTemp(currentTool));
-    sprintf(tempstr2, "%3d℃", heatGetTargetTemp(currentTool));
-    lvIcon.lines[1].text = (uint8_t *)tempstr;
-    lvIcon.lines[2].text = (uint8_t *)tempstr2;
+  showLiveInfo(0, &lvIcon, false);
 
-    showLiveInfo(0, &lvIcon, false);
+  // BED
+  lvIcon.iconIndex = bedIcons[currentBCIndex];
+  lvIcon.lines[0].text = (uint8_t *)heatShortID[BED + currentBCIndex];
+  sprintf(tempstr, "%3d/%-3d", heatGetCurrentTemp(BED + currentBCIndex), heatGetTargetTemp(BED + currentBCIndex));
+  lvIcon.lines[1].text = (uint8_t *)tempstr;
 
-    // BED / CHAMBER
-    lvIcon.iconIndex = bedIcons[currentBCIndex];
-    lvIcon.lines[0].text = (uint8_t *)heatShortID[BED + currentBCIndex];
-    sprintf(tempstr, "%3d℃", heatGetCurrentTemp(BED + currentBCIndex));
-    sprintf(tempstr2, "%3d℃", heatGetTargetTemp(BED + currentBCIndex));
-    lvIcon.lines[1].text = (uint8_t *)tempstr;
-    lvIcon.lines[2].text = (uint8_t *)tempstr2;
-
-    showLiveInfo(1, &lvIcon, infoSettings.chamber_en == 1);
-
-    lvIcon.enabled[2] = false;
-  #else
-    // TOOL / EXT
-    lvIcon.iconIndex = ICON_STATUS_NOZZLE;
-    lvIcon.lines[0].text = (uint8_t *)heatShortID[currentTool];
-    sprintf(tempstr, "%3d/%-3d", heatGetCurrentTemp(currentTool), heatGetTargetTemp(currentTool));
-    lvIcon.lines[1].text = (uint8_t *)tempstr;
-
-    showLiveInfo(0, &lvIcon, false);
-
-    // BED
-    lvIcon.iconIndex = bedIcons[currentBCIndex];
-    lvIcon.lines[0].text = (uint8_t *)heatShortID[BED + currentBCIndex];
-    sprintf(tempstr, "%3d/%-3d", heatGetCurrentTemp(BED + currentBCIndex), heatGetTargetTemp(BED + currentBCIndex));
-    lvIcon.lines[1].text = (uint8_t *)tempstr;
-
-    showLiveInfo(1, &lvIcon, infoSettings.chamber_en == 1);
-  #endif
+  showLiveInfo(1, &lvIcon, infoSettings.chamber_en == 1);
 
   // FAN
   lvIcon.iconIndex = ICON_STATUS_FAN;
@@ -183,41 +118,15 @@ static void statusDraw(void)
 
   showLiveInfo(2, &lvIcon, false);
 
-  #ifdef TFT70_V3_0
-    // SPEED
-    lvIcon.iconIndex = ICON_STATUS_SPEED;
-    lvIcon.lines[0].text = (uint8_t *)speedID[0];
-    sprintf(tempstr, "%3d%%", speedGetCurPercent(0));
-    lvIcon.lines[1].text = (uint8_t *)tempstr;
+  // SPEED / FLOW
+  lvIcon.iconIndex = speedIcons[currentSpeedID];
+  lvIcon.lines[0].text = (uint8_t *)speedID[currentSpeedID];
+  sprintf(tempstr, "%3d%%", speedGetCurPercent(currentSpeedID));
+  lvIcon.lines[1].text = (uint8_t *)tempstr;
 
-    showLiveInfo(3, &lvIcon, false);
-
-    // FLOW
-    lvIcon.iconIndex = ICON_STATUS_FLOW;
-    lvIcon.lines[0].text = (uint8_t *)speedID[1];
-    sprintf(tempstr, "%3d%%", speedGetCurPercent(1));
-    lvIcon.lines[1].text = (uint8_t *)tempstr;
-
-    showLiveInfo(4, &lvIcon, false);
-  #else
-    // SPEED / FLOW
-    lvIcon.iconIndex = speedIcons[currentSpeedID];
-    lvIcon.lines[0].text = (uint8_t *)speedID[currentSpeedID];
-    sprintf(tempstr, "%3d%%", speedGetCurPercent(currentSpeedID));
-    lvIcon.lines[1].text = (uint8_t *)tempstr;
-
-    showLiveInfo(3, &lvIcon, true);
-  #endif
+  showLiveInfo(3, &lvIcon, true);
 
   sprintf(tempstr, XYZ_STATUS, coordinateGetAxisActual(X_AXIS), coordinateGetAxisActual(Y_AXIS), coordinateGetAxisActual(Z_AXIS));
-
-  #ifdef PORTRAIT_MODE
-    int paddingWidth = ((recGantry.x1 - recGantry.x0) - (strlen(tempstr) * BYTE_WIDTH)) / 2;
-
-    GUI_SetColor(GANTRY_XYZ_BG_COLOR);
-    GUI_FillRect(recGantry.x0, recGantry.y0, recGantry.x0 + paddingWidth, recGantry.y1);  // left padding
-    GUI_FillRect(recGantry.x1 - paddingWidth, recGantry.y0, recGantry.x1, recGantry.y1);  // right padding
-  #endif
 
   GUI_SetTextMode(GUI_TEXTMODE_NORMAL);
   GUI_SetColor(GANTRY_XYZ_FONT_COLOR);
@@ -335,17 +244,8 @@ void menuStatus(void)
 
       case KEY_SPEEDMENU:
         SET_SPEEDMENUINDEX(0);
-
         OPEN_MENU(menuSpeed);
         break;
-
-      #ifdef TFT70_V3_0
-        case KEY_FLOWMENU:
-          SET_SPEEDMENUINDEX(1);
-
-          OPEN_MENU(menuSpeed);
-          break;
-      #endif
 
       case KEY_MAINMENU:
         OPEN_MENU(menuMain);

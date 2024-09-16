@@ -12,12 +12,7 @@
 #define Y_MOVE_GCODE        "G0 Y%.2f F%d\n"  // Y axis gcode
 #define Z_MOVE_GCODE        "G0 Z%.2f F%d\n"  // Z axis gcode
 #define GANTRY_REFRESH_TIME 500               // 1 second is 1000
-
-#ifdef PORTRAIT_MODE
-  #define OFFSET 0
-#else
-  #define OFFSET 1
-#endif
+#define OFFSET 1
 
 static const char * const xyzMoveCmd[] = {X_MOVE_GCODE, Y_MOVE_GCODE, Z_MOVE_GCODE};
 

@@ -96,15 +96,7 @@ extern const LABEL lcd_color_names[LCD_COLOR_COUNT];
 // colors scheme for live text (name and value) in Status Screen menu
 #define SS_NAME_COLOR    WHITE
 
-#if !defined(TFT70_V3_0) && !defined(LIVE_TEXT_COMMON_COLOR)
-  #define SS_VAL_COLOR   BLACK
-#else
-  #define SS_VAL_COLOR   SS_NAME_COLOR
-#endif
-
-#ifdef TFT70_V3_0
-  #define SS_VAL_COLOR_2 ORANGE
-#endif
+#define SS_VAL_COLOR   BLACK
 
 // colors scheme for live text in List Item menu
 #define LI_KEY_PRESSED_COLOR WHITE
