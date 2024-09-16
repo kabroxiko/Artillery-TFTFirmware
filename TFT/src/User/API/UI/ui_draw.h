@@ -7,7 +7,6 @@ extern "C" {
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "variants.h"  // for PORTRAIT_MODE etc.
 #include "GUI.h"       // for GUI_POINT etc.
 
 #define SPACE_X          ((LCD_WIDTH - ICON_WIDTH * 4) / 4)

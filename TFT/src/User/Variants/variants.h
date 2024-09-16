@@ -14,9 +14,6 @@
 #define HX8558  (1 << 4)
 
 #include "pin_ARTILLERY_TFT_CONTROLLER_V1_2.h"
-#include "pin_MKS_TFT32_V1_4.h"
-
-#define LCD_ENCODER_SUPPORT (defined(LCD_ENCA_PIN) && defined(LCD_ENCB_PIN) && defined(LCD_BTN_PIN))
 
 #define LCD_DRIVER_IS(n)  ((TFTLCD_DRIVER) == (n))
 #define LCD_DRIVER_HAS(n) (((TFTLCD_DRIVER) & (n)) == (n))

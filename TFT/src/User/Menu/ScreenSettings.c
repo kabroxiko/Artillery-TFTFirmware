@@ -331,10 +331,10 @@ void menuScreenSettings(void)
     LABEL_SCREEN_SETTINGS,
     // icon                          label
     {
-      {ICON_ROTATE_UI,               LABEL_ROTATED_UI},
       {ICON_TOUCHSCREEN_ADJUST,      LABEL_TOUCHSCREEN_ADJUST},
       {ICON_LANGUAGE,                LABEL_LANGUAGE},
       {ICON_FEATURE_SETTINGS,        LABEL_UI_SETTINGS},
+      {ICON_NULL,                    LABEL_NULL},
       {ICON_NULL,                    LABEL_NULL},
       {ICON_NULL,                    LABEL_NULL},
       {ICON_NULL,                    LABEL_NULL},
@@ -364,19 +364,11 @@ void menuScreenSettings(void)
     switch (curIndex)
     {
       case KEY_ICON_0:
-        TOGGLE_BIT(infoSettings.rotated_ui, 0);
-        LCD_RefreshDirection(infoSettings.rotated_ui);
-
         TS_Calibrate();
         menuDrawPage(&screenSettingsItems);
         break;
 
       case KEY_ICON_1:
-        TS_Calibrate();
-        menuDrawPage(&screenSettingsItems);
-        break;
-
-      case KEY_ICON_2:
         if (getFlashSignStatus(lang_sign))
           OPEN_MENU(menuLanguage);
         else
@@ -384,7 +376,7 @@ void menuScreenSettings(void)
                         (uint8_t *)"To change Language first flash a Language pack ini file.");
         break;
 
-      case KEY_ICON_3:
+      case KEY_ICON_2:
         OPEN_MENU(menuUISettings);
         break;
 

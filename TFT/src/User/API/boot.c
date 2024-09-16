@@ -178,7 +178,7 @@ static inline bool updateIcon(char * rootDir)
   GUI_DispString(5, PADDING, (uint8_t *)"Updating Logo");
   GUI_ClearPrect(&iconUpdateRect);
 
-  GET_FULL_PATH(curBmpPath, rootDir, BMP_UPDATE_DIR "/Logo" STR_PORTRAIT ".bmp");
+  GET_FULL_PATH(curBmpPath, rootDir, BMP_UPDATE_DIR "/Logo.bmp");
   bmpState = bmpDecode(curBmpPath, LOGO_ADDR);
 
   if (bmpState == BMP_SUCCESS)

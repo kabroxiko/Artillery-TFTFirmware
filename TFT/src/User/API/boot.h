@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-#include "variants.h"  // for PORTRAIT_MODE
 
 #define W25QXX_SECTOR_SIZE (0x1000)  // 4096-4K
 
@@ -47,9 +46,7 @@ extern "C" {
 #define SMALL_ICON_ADDR(num)  ((num) * SMALL_ICON_MAX_SIZE + SMALL_ICON_START_ADDR)
 #define FLASH_USED            (INFOBOX_ADDR + INFOBOX_MAX_SIZE)              // currently small icons are not used
 
-#define STR_PORTRAIT
-
-#define FIRMWARE_NAME       STRINGIFY(HARDWARE) "." STRINGIFY(SOFTWARE_VERSION) STR_PORTRAIT
+#define FIRMWARE_NAME       STRINGIFY(HARDWARE) "." STRINGIFY(SOFTWARE_VERSION)
 #define FIRMWARE_NAME_SHORT STRINGIFY(HARDWARE_SHORT) STRINGIFY(SOFTWARE_VERSION_SHORT)
 #define BMP_UPDATE_DIR      UPDATE_DIR "/bmp"
 #define FONT_UPDATE_DIR     UPDATE_DIR "/font"
