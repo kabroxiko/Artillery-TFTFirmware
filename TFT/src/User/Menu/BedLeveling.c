@@ -65,15 +65,6 @@ void menuBedLeveling(void)
       break;
   }
 
-  if (infoMachineSettings.firmwareType == FW_MARLIN)
-  {
-    levelStateOld = levelStateNew = getParameter(P_ABL_STATE, 0);
-    blUpdateState(&bedLevelingItems, levelStateNew);  // update icon & label 3
-
-    bedLevelingItems.items[4].icon = ICON_Z_FADE;
-    bedLevelingItems.items[4].label.index = LABEL_ABL_Z;
-  }
-
   if (infoMachineSettings.zProbe == ENABLED)
   {
     bedLevelingItems.items[5].icon = ICON_PROBE_OFFSET;

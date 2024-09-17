@@ -242,13 +242,6 @@ void setupMachine(FW_TYPE fwType)
   if (infoSettings.onboard_sd != AUTO)
     infoMachineSettings.onboardSD = infoSettings.onboard_sd;
 
-  if (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE)  // Smoothieware does not report detailed M115 capabilities
-  { // set only the values that differ from the ones initialized in initMachineSettings() function
-    #if BED_LEVELING_TYPE == 1  // if auto-detect is enabled
-      infoMachineSettings.leveling = BL_ABL;
-    #endif
-  }
-
   if (infoMachineSettings.leveling != BL_DISABLED && infoMachineSettings.EEPROM == 1 && infoSettings.auto_load_leveling == 1)
     mustStoreCmd("M420 S1\n");
 

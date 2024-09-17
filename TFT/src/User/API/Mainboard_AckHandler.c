@@ -286,7 +286,7 @@ static inline void hostActionCommands(void)
   }
   else if (ack_seen(":pause") || ack_seen(":paused"))
   {
-    if (infoMachineSettings.firmwareType == FW_MARLIN && ack_seen(":paused"))
+    if (infoMachineSettings.firmwareType == FW_KLIPPER && ack_seen(":paused"))
     { // if paused with ADVANCED_PAUSE_FEATURE enabled in Marlin (:paused),
       // disable Resume/Pause button in the Printing menu
       hostDialog = true;
@@ -636,12 +636,12 @@ void parseAck(void)
       }
     }
     // parse and store feed rate percentage
-    else if (ack_seen("SPEED_FACTOR:") || (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE && ack_seen("Speed factor at ")))
+    else if (ack_seen("SPEED_FACTOR:"))
     {
       speedSetCurPercent(0, ack_value());
     }
     // parse and store flow rate percentage
-    else if (ack_seen("EXTRUDE_FACTOR:") || (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE && ack_seen("Flow rate at ")))
+    else if (ack_seen("EXTRUDE_FACTOR:"))
     {
       speedSetCurPercent(1, ack_value());
     }
@@ -871,17 +871,6 @@ void parseAck(void)
     {
       pidUpdateStatus(PID_FAILED);
     }
-    // parse M303, PID autotune finished message in case of Smoothieware
-    else if ((infoMachineSettings.firmwareType == FW_SMOOTHIEWARE) && ack_seen("PID Autotune Complete!"))
-    {
-      //ack_index += 84; -> need length check
-      pidUpdateStatus(PID_SUCCESS);
-    }
-    // parse M303, PID autotune failed message in case of Smoothieware
-    else if ((infoMachineSettings.firmwareType == FW_SMOOTHIEWARE) && ack_seen("// WARNING: Autopid did not resolve within"))
-    {
-      pidUpdateStatus(PID_FAILED);
-    }
     // parse M306, model predictive temperature control tuning end message (interrupted or finished)
     else if (ack_seen("MPC Autotune"))
     {
@@ -994,12 +983,6 @@ void parseAck(void)
       uint8_t i = (ack_seen("T")) ? ack_value() : 0;
 
       if (ack_seen("D")) setParameter(P_FILAMENT_DIAMETER, 1 + i, ack_value());
-
-      if (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE)
-      {
-        // filament_diameter > 0.01 to enable volumetric extrusion. Otherwise (<= 0.01), disable volumetric extrusion
-        setParameter(P_FILAMENT_DIAMETER, 0, getParameter(P_FILAMENT_DIAMETER, 1) > 0.01f ? 1 : 0);
-      }
     }
     // parse and store max acceleration (units/s2) (M201) and max feedrate (units/s) (M203)
     else if (ack_starts_with("MAX_ACCELERATION") || ack_starts_with("MAX_FEEDRATE"))
@@ -1075,57 +1058,6 @@ void parseAck(void)
       if (ack_seen("P")) setParameter(param, 0, ack_value());
       if (ack_seen("I")) setParameter(param, 1, ack_value());
       if (ack_seen("D")) setParameter(param, 2, ack_value());
-    }
-    // parse and store model predictive temperature control (only for Marlin)
-    else if (ack_starts_with("M306") && infoMachineSettings.firmwareType == FW_MARLIN)
-    {
-      if (ack_continue_seen("E"))
-      {
-        uint8_t index = ack_value();
-
-        if (ack_continue_seen("P"))
-          setMpcHeaterPower(index, ack_value());
-
-        if (ack_continue_seen("H"))
-          setMpcFilHeatCapacity(index, ack_value());
-      }
-    }
-    // parse and store input shaping parameters (only for Marlin)
-    else if (ack_starts_with("M593") && infoMachineSettings.firmwareType == FW_MARLIN)
-    {
-      // M593 accepts its parameters in any order,
-      // if both X and Y axis are missing than the rest
-      // of the parameters are referring to each axis
-
-      enum
-      {
-        SET_NONE = 0B00,
-        SET_X = 0B01,
-        SET_Y = 0B10,
-        SET_BOTH = 0B11
-      } setAxis = SET_NONE;
-
-      float pValue;
-
-      if (ack_seen("X")) setAxis |= SET_X;
-      if (ack_seen("Y")) setAxis |= SET_Y;
-      if (setAxis == SET_NONE) setAxis = SET_BOTH;
-
-      if (ack_seen("F"))
-      {
-        pValue = ack_value();
-
-        if (setAxis & SET_X) setParameter(P_INPUT_SHAPING, 0, pValue);
-        if (setAxis & SET_Y) setParameter(P_INPUT_SHAPING, 2, pValue);
-      }
-
-      if (ack_seen("D"))
-      {
-        pValue = ack_value();
-
-        if (setAxis & SET_X) setParameter(P_INPUT_SHAPING, 1, pValue);
-        if (setAxis & SET_Y) setParameter(P_INPUT_SHAPING, 3, pValue);
-      }
     }
     // parse and store Delta configuration / Delta tower angle (M665) and Delta endstop adjustments (M666)
     //
@@ -1251,12 +1183,7 @@ void parseAck(void)
       uint16_t string_start = ack_index;
       uint16_t string_end = string_start;
 
-      if (ack_continue_seen("Marlin"))
-        setupMachine(FW_MARLIN);
-      else if (ack_continue_seen("Smoothieware"))
-        setupMachine(FW_SMOOTHIEWARE);
-      else
-        setupMachine(FW_UNKNOWN);
+      setupMachine(FW_KLIPPER);
 
       if (ack_seen("FIRMWARE_URL:"))  // for Smoothieware
         string_end = ack_index - sizeof("FIRMWARE_URL:");
@@ -1386,26 +1313,6 @@ void parseAck(void)
       else if (!processKnownEcho())  // if no known echo was found and processed, then popup the echo message
       {
         ackPopupInfo(magic_echo);
-      }
-    }
-    else if (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE)
-    {
-      if (ack_seen("ZProbe triggered before move"))  // smoothieboard ZProbe triggered before move, aborting command
-      {
-        ackPopupInfo("ZProbe triggered before move.\nAborting Print!");
-      }
-      // parse and store volumetric extrusion M200 response of Smoothieware
-      else if (ack_seen("Volumetric extrusion is disabled"))
-      {
-        setParameter(P_FILAMENT_DIAMETER, 0, 0);
-        setParameter(P_FILAMENT_DIAMETER, 1, 0.0f);
-      }
-      // parse and store volumetric extrusion M200 response of Smoothieware
-      else if (ack_seen("Filament Diameter:"))
-      {
-        setParameter(P_FILAMENT_DIAMETER, 1, ack_value());
-        // filament_diameter > 0.01 to enable volumetric extrusion. Otherwise (<= 0.01), disable volumetric extrusion
-        setParameter(P_FILAMENT_DIAMETER, 0, getParameter(P_FILAMENT_DIAMETER, 1) > 0.01f ? 1 : 0);
       }
     }
     // check for motherboard reset (external, software, etc)

@@ -309,10 +309,7 @@ typedef struct
 typedef enum
 {
   FW_NOT_DETECTED,
-  FW_MARLIN,
-  FW_KLIPPER,
-  FW_SMOOTHIEWARE,
-  FW_UNKNOWN,
+  FW_KLIPPER
 } FW_TYPE;
 
 // Bed Leveling type

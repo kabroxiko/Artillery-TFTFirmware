@@ -23,7 +23,7 @@ float babystepResetValue(void)
 {
   if (babystep_value != BABYSTEP_DEFAULT_VALUE)  // if already default value, nothing to do
   {
-    char * babyStepCmd = (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE) ? BABYSTEP_CMD_SMW : BABYSTEP_CMD;
+    char * babyStepCmd = BABYSTEP_CMD;
     uint32_t step_count;
     float last_unit;
     int8_t direction = 1;
@@ -58,7 +58,7 @@ float babystepUpdateValue(float unit)
   {
     babystep_value += unit;
 
-    mustStoreCmd((infoMachineSettings.firmwareType == FW_SMOOTHIEWARE) ? BABYSTEP_CMD_SMW : BABYSTEP_CMD, unit);
+    mustStoreCmd(BABYSTEP_CMD, unit);
   }
 
   return babystep_value;

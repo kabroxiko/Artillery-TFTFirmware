@@ -31,12 +31,6 @@ void menuBLTouch(void)
   KEY_VALUES key_num = KEY_IDLE;
   BLT_HS_MODE hsModeOld = HS_DISABLED;  // just to force icon 5 update in case HS Mode is supported
 
-  if (infoMachineSettings.firmwareType == FW_MARLIN)
-  {
-    mustStoreCmd("M401 H\n");       // get BLTouch HS Mode state (bltHSmode will be updated in parseAck())
-    mustStoreCmd(SERVO_GCODE, 90);  // if "M401 H" is not supported the probe will be deployed so it needs to be stowed back
-  }
-
   menuDrawPage(&BLTouchItems);
 
   while (MENU_IS(menuBLTouch))

@@ -700,11 +700,6 @@ void sendQueueCmd(void)
 
           if (cmd_seen('D')) setParameter(P_FILAMENT_DIAMETER, 1 + i, cmd_float());
 
-          if (infoMachineSettings.firmwareType == FW_SMOOTHIEWARE)
-          {
-            // filament_diameter > 0.01 to enable volumetric extrusion. Otherwise (<= 0.01), disable volumetric extrusion
-            setParameter(P_FILAMENT_DIAMETER, 0, getParameter(P_FILAMENT_DIAMETER, 1) > 0.01f ? 1 : 0);
-          }
           break;
         }
 
@@ -862,51 +857,6 @@ void sendQueueCmd(void)
             return;
           }
           break;
-
-        //case 420:  // M420
-        //  // ABL state and Z fade height will be set through parsACK.c after receiving confirmation
-        //  // message from the printer to prevent wrong state and/or value in case of error
-        //  break;
-
-        case 593:  // M593 Input Shaping (only for Marlin)
-        {
-          if (infoMachineSettings.firmwareType == FW_MARLIN)
-          {
-            // M593 accepts its parameters in any order,
-            // if both X and Y axis are missing than the rest
-            // of the parameters are referring to each axis
-
-            enum
-            {
-              SET_NONE = 0B00,
-              SET_X = 0B01,
-              SET_Y = 0B10,
-              SET_BOTH = 0B11
-            } setAxis = SET_NONE;
-
-            float pValue;
-
-            if (cmd_seen('X')) setAxis |= SET_X;
-            if (cmd_seen('Y')) setAxis |= SET_Y;
-            if (setAxis == SET_NONE) setAxis = SET_BOTH;
-
-            if (cmd_seen('F'))
-            {
-              pValue = cmd_float();
-
-              if (setAxis & SET_X) setParameter(P_INPUT_SHAPING, 0, pValue);
-              if (setAxis & SET_Y) setParameter(P_INPUT_SHAPING, 2, pValue);
-            }
-
-            if (cmd_seen('D'))
-            {
-              pValue = cmd_float();
-
-              if (setAxis & SET_X) setParameter(P_INPUT_SHAPING, 1, pValue);
-              if (setAxis & SET_Y) setParameter(P_INPUT_SHAPING, 3, pValue);
-            }
-          }
-        }
 
         case 569:  // M569 TMC stepping mode
         {
@@ -1073,16 +1023,8 @@ void sendQueueCmd(void)
         case 90:  // G90, set absolute position mode, in Marlin this includes the extruder position unless overridden by M83
           coorSetRelative(false);
 
-          if (infoMachineSettings.firmwareType == FW_MARLIN)
-            eSetRelative(false);
-          break;
-
         case 91:  // G91, set relative position mode, in Marlin this includes the extruder position unless overridden by M82
           coorSetRelative(true);
-
-          if (infoMachineSettings.firmwareType == FW_MARLIN)
-            eSetRelative(true);
-          break;
 
         case 92:  // G92
         {
