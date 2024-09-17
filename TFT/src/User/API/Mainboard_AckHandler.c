@@ -1179,36 +1179,21 @@ void parseAck(void)
     // parse M115 capability report
     else if (ack_seen("FIRMWARE_NAME:"))
     {
+      setupMachine(FW_KLIPPER);
+
       char * string = &ack_cache[ack_index];
       uint16_t string_start = ack_index;
       uint16_t string_end = string_start;
 
-      setupMachine(FW_KLIPPER);
-
-      if (ack_seen("FIRMWARE_URL:"))  // for Smoothieware
-        string_end = ack_index - sizeof("FIRMWARE_URL:");
-      else if (ack_seen("SOURCE_CODE_URL:"))  // for Marlin
-        string_end = ack_index - sizeof("SOURCE_CODE_URL:");
-
+      if (ack_seen("FIRMWARE_VERSION:"))
+        string_end = ack_index - sizeof("FIRMWARE_VERSION:");
       infoSetFirmwareName(string, string_end - string_start);  // set firmware name
 
-      if (ack_seen("MACHINE_TYPE:"))
-      {
-        string = &ack_cache[ack_index];
-        string_start = ack_index;
+      string = &ack_cache[ack_index];
+      string_start = ack_index;
+      infoSetFirmwareVersion(string, string_end - string_start);  // set firmware version
 
-        if (ack_seen("KINEMATICS:"))  // as of MarlinFirmware/Marlin@3fd175a
-          string_end = ack_index - sizeof("KINEMATICS:");
-        else if (ack_seen("EXTRUDER_COUNT:"))
-        {
-          if (MIXING_EXTRUDER == 0)
-            infoSettings.ext_count = ack_value();
-
-          string_end = ack_index - sizeof("EXTRUDER_COUNT:");
-        }
-
-        infoSetMachineType(string, string_end - string_start);  // set printer name
-      }
+      infoSetMachineType("Artillery Genius Pro", strlen("Artillery Genius Pro"));  // set printer name
     }
     else if (ack_starts_with("Cap:"))
     {
