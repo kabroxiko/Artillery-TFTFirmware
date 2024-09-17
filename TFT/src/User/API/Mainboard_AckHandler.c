@@ -276,10 +276,6 @@ static inline void hostActionCommands(void)
       }
     }
   }
-  else if (ack_seen(":print_start"))  // print started from remote host (e.g. OctoPrint etc.)
-  {
-    startPrintingFromRemoteHost(NULL);  // start print originated and hosted by remote host and open Printing menu
-  }
   else if (ack_seen(":print_end"))  // print ended from remote host (e.g. OctoPrint etc.)
   {
     endPrint();
@@ -680,6 +676,11 @@ void parseAck(void)
     {
       popupDialog(DIALOG_TYPE_QUESTION, (uint8_t *)"Printer is Paused", (uint8_t *)"Paused for user\ncontinue?",
                   LABEL_CONFIRM, LABEL_NULL, breakAndContinue, NULL, NULL);
+    }
+    // print started from remote host (e.g. OctoPrint etc.)
+    else if (ack_starts_with("File opened:"))
+    {
+      startPrintingFromRemoteHost(NULL);  // start print originated and hosted by remote host and open Printing menu
     }
     // parse host action commands. Required "HOST_ACTION_COMMANDS" and other settings in Marlin
     else if (ack_starts_with("//action:"))
