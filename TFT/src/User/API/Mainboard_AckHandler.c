@@ -678,7 +678,7 @@ void parseAck(void)
                   LABEL_CONFIRM, LABEL_NULL, breakAndContinue, NULL, NULL);
     }
     // parse host action commands. Required "HOST_ACTION_COMMANDS" and other settings in Marlin
-    else if (ack_starts_with("//action:"))
+    else if (ack_starts_with("// action:"))
     {
       hostActionCommands();
     }
@@ -1191,7 +1191,7 @@ void parseAck(void)
 
       infoSetMachineType("Artillery Genius Pro", strlen("Artillery Genius Pro"));  // set printer name
     }
-    else if (ack_starts_with("Cap:"))
+    else if (ack_starts_with("// Cap:"))
     {
       if (ack_continue_seen("EEPROM:"))
       {
