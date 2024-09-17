@@ -338,7 +338,8 @@ static inline void toggleInfo(void)
 
     reDrawPrintingValue(ICON_POS_SPD, LIVE_INFO_ICON | LIVE_INFO_TOP_ROW | LIVE_INFO_BOTTOM_ROW);
 
-    // speedQuery();
+    speedGetCurPercent(0);
+    speedGetCurPercent(1);
 
     if (!infoPrintSummary.hasFilamentData && isPrinting())
       updatePrintUsedFilament();

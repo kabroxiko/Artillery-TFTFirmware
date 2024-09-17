@@ -19,7 +19,6 @@ uint16_t speedGetCurPercent(const uint8_t tool);
 
 void loopCheckSpeed(void);                 // called in loopBackEnd(). Loop for check on speed
 void speedQueryClearSendingWaiting(void);  // called in sendQueueCmd(). Clear sending waiting for speed query
-void speedQuery(void);                     // query for speed
 
 #ifdef __cplusplus
 }

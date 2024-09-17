@@ -60,14 +60,3 @@ void speedQueryClearSendingWaiting(void)
 {
   speedSendingWaiting = false;
 }
-
-void speedQuery(void)
-{ // following conditions ordered by importance
-  if (!speedSendingWaiting && infoHost.tx_slots != 0 && infoHost.connected)
-  {
-    speedSendingWaiting = storeCmd("M220\n");
-
-    if (infoSettings.ext_count > 0)
-      speedSendingWaiting |= storeCmd("M221\n");  // speedSendingWaiting set to "true" if at least one command will be sent
-  }
-}

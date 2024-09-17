@@ -192,7 +192,9 @@ static inline void statusToggleTool(void)
 
     statusDraw();
 
-    // speedQuery();
+    speedGetCurPercent(0);
+    speedGetCurPercent(1);
+
     ctrlFanQuery();
   }
 }

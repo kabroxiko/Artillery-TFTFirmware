@@ -43,7 +43,8 @@ void menuSpeed(void)
   KEY_VALUES key_num = KEY_IDLE;
   LASTSPEED lastSpeed;
 
-  // speedQuery();
+  speedGetCurPercent(0);
+  speedGetCurPercent(1);
 
   speedSetPercent(item_index, speedGetCurPercent(item_index));
   lastSpeed = (LASTSPEED) {speedGetCurPercent(item_index), speedGetSetPercent(item_index)};
