@@ -677,11 +677,6 @@ void parseAck(void)
       popupDialog(DIALOG_TYPE_QUESTION, (uint8_t *)"Printer is Paused", (uint8_t *)"Paused for user\ncontinue?",
                   LABEL_CONFIRM, LABEL_NULL, breakAndContinue, NULL, NULL);
     }
-    // print started from remote host (e.g. OctoPrint etc.)
-    else if (ack_starts_with("File opened:"))
-    {
-      startPrintingFromRemoteHost(NULL);  // start print originated and hosted by remote host and open Printing menu
-    }
     // parse host action commands. Required "HOST_ACTION_COMMANDS" and other settings in Marlin
     else if (ack_starts_with("//action:"))
     {
@@ -700,7 +695,7 @@ void parseAck(void)
       infoPrintSummary.hasFilamentData = true;
     }
     // parse and store M23, select SD file
-    else if (infoMachineSettings.onboardSD == ENABLED && ack_starts_with("File opened:"))
+    else if (ack_starts_with("File opened:") || (infoMachineSettings.onboardSD == ENABLED && ack_starts_with("File opened:")))
     {
       // NOTE: this block is not reached in case of printing from onboard media because startPrint() in Printing.c will
       //       call request_M23_M36() that will be managed in parseAck() by the block "Onboard media response handling"
