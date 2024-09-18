@@ -632,17 +632,17 @@ void parseAck(void)
       }
     }
     // parse and store feed rate percentage
-    else if (ack_seen("SPEED_FACTOR:"))
+    else if (ack_seen("// SPEED_FACTOR:"))
     {
       speedSetCurPercent(0, ack_value());
     }
     // parse and store flow rate percentage
-    else if (ack_seen("EXTRUDE_FACTOR:"))
+    else if (ack_seen("// EXTRUDE_FACTOR:"))
     {
       speedSetCurPercent(1, ack_value());
     }
     // parse and store M106, fan speed
-    else if (ack_starts_with("FAN_SPEED"))
+    else if (ack_starts_with("// FAN_SPEED"))
     {
       fanSetCurSpeed(ack_continue_seen("P") ? ack_value() : 0, ack_seen("S") ? ack_value() : 100);
     }
@@ -981,14 +981,14 @@ void parseAck(void)
       if (ack_seen("D")) setParameter(P_FILAMENT_DIAMETER, 1 + i, ack_value());
     }
     // parse and store max acceleration (units/s2) (M201) and max feedrate (units/s) (M203)
-    else if (ack_starts_with("MAX_ACCELERATION") || ack_starts_with("MAX_FEEDRATE"))
+    else if (ack_starts_with("// MAX_ACCELERATION") || ack_starts_with("// MAX_FEEDRATE"))
     {
       PARAMETER_NAME param = P_STEPS_PER_MM;  // default value
 
       // using consecutive "if" instead of "if else if" on the following two lines just to reduce code
       // instead of optimizing performance (code typically not executed during a print)
-      if (ack_starts_with("MAX_ACCELERATION")) param = P_MAX_ACCELERATION;
-      if (ack_starts_with("MAX_FEEDRATE"))     param = P_MAX_FEED_RATE;
+      if (ack_starts_with("// MAX_ACCELERATION")) param = P_MAX_ACCELERATION;
+      if (ack_starts_with("// MAX_FEEDRATE"))     param = P_MAX_FEED_RATE;
 
       if (ack_seen("X")) setParameter(param, AXIS_INDEX_X, ack_value());
       if (ack_seen("Y")) setParameter(param, AXIS_INDEX_Y, ack_value());
@@ -1015,9 +1015,9 @@ void parseAck(void)
       if (ack_seen("J")) setParameter(P_JUNCTION_DEVIATION, 0, ack_value());
     }
     // parse and store home offset (M206) and hotend offset (M218)
-    else if (ack_starts_with("HOME_OFFSET X") || ack_starts_with("M218 T1 X"))
+    else if (ack_starts_with("// HOME_OFFSET X") || ack_starts_with("M218 T1 X"))
     {
-      PARAMETER_NAME param = ack_starts_with("HOME_OFFSET") ? P_HOME_OFFSET : P_HOTEND_OFFSET;
+      PARAMETER_NAME param = ack_starts_with("// HOME_OFFSET") ? P_HOME_OFFSET : P_HOTEND_OFFSET;
 
       if (ack_seen("X")) setParameter(param, AXIS_INDEX_X, ack_value());
       if (ack_seen("Y")) setParameter(param, AXIS_INDEX_Y, ack_value());
@@ -1080,7 +1080,7 @@ void parseAck(void)
       if (ack_seen("Z")) setParameter(param, AXIS_INDEX_Z, ack_value());
     }
     // parse and store ABL on/off state & Z fade value on REPORT_SETTINGS
-    else if (ack_starts_with("AUTO_BED_LEVELING S"))
+    else if (ack_starts_with("// AUTO_BED_LEVELING S"))
     {
                                   setParameter(P_ABL_STATE, 0, ack_value());
       if (ack_continue_seen("Z")) setParameter(P_ABL_STATE, 1, ack_value());
