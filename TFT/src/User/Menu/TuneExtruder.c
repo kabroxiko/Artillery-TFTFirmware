@@ -133,12 +133,8 @@ static inline void extrudeFilament(void)
   mustStoreScript("G28\nG90\n");
 
   // raise Z axis to pause height
-  #if DELTA_PROBE_TYPE != 0
-    mustStoreCmd("G0 Z200 F%d\n", infoSettings.pause_feedrate[FEEDRATE_Z]);
-  #else
-    mustStoreCmd("G0 Z%.3f F%d\n", coordinateGetAxisActual(Z_AXIS) + infoSettings.pause_z_raise,
-                 infoSettings.pause_feedrate[FEEDRATE_Z]);
-  #endif
+  mustStoreCmd("G0 Z%.3f F%d\n", coordinateGetAxisActual(Z_AXIS) + infoSettings.pause_z_raise,
+               infoSettings.pause_feedrate[FEEDRATE_Z]);
 
   // move to pause location
   mustStoreCmd("G0 X%.3f Y%.3f F%d\n", infoSettings.pause_pos[X_AXIS], infoSettings.pause_pos[Y_AXIS],

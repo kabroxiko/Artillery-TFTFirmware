@@ -1273,14 +1273,6 @@
  */
 #define LOAD_UNLOAD_M701_M702  // Default: uncommented (enabled)
 
-/**
- * Delta Probe Type
- * Probe type in case of a Delta printer.
- * Set to 0 in case of not Delta printer.
- *   Options: [disable: 0, fixed-probe: 1, removable-probe: 2]
- */
-#define DELTA_PROBE_TYPE 0  // Default: 0
-
 //================================================================================
 //================================= UI Settings ==================================
 //================================================================================

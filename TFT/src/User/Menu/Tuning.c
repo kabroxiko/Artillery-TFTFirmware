@@ -11,11 +11,7 @@ void menuTuning(void)
       {ICON_MPC_PID,                 LABEL_MPC},
       {ICON_MPC_PID,                 LABEL_PID},
       {ICON_TUNE_EXTRUDER,           LABEL_TUNE_EXTRUDER},
-      #if DELTA_PROBE_TYPE == 0  // if not Delta printer
-        {ICON_PROBE_OFFSET,            LABEL_H_OFFSET},
-      #else
-        {ICON_NULL,                    LABEL_NULL},
-      #endif
+      {ICON_PROBE_OFFSET,            LABEL_H_OFFSET},
       {ICON_NULL,                    LABEL_NULL},
       {ICON_NULL,                    LABEL_NULL},
       {ICON_NULL,                    LABEL_NULL},
@@ -67,27 +63,23 @@ void menuTuning(void)
         {
           OPEN_MENU(menuTuneExtruder);
         }
-        #if DELTA_PROBE_TYPE == 0  // if not Delta printer
-          else
-          {
-            storeCmd("M206\n");
+        else
+        {
+          storeCmd("M206\n");
 
-            zOffsetSetMenu(false);  // use Home Offset menu
-            OPEN_MENU(menuZOffset);
-          }
-        #endif
+          zOffsetSetMenu(false);  // use Home Offset menu
+          OPEN_MENU(menuZOffset);
+        }
         break;
 
       case KEY_ICON_3:
-        #if DELTA_PROBE_TYPE == 0  // if not Delta printer
-          if (hasMPC() && infoSettings.bed_en)
-          {
-            storeCmd("M206\n");
+        if (hasMPC() && infoSettings.bed_en)
+        {
+          storeCmd("M206\n");
 
-            zOffsetSetMenu(false);  // use Home Offset menu
-            OPEN_MENU(menuZOffset);
-          }
-        #endif
+          zOffsetSetMenu(false);  // use Home Offset menu
+          OPEN_MENU(menuZOffset);
+        }
         break;
 
       case KEY_ICON_7:

@@ -1,15 +1,6 @@
 #include "UnifiedMove.h"
 #include "includes.h"
 
-#if DELTA_PROBE_TYPE != 0  // if Delta printer
-
-static void deltaCalibration(void)
-{
-  mustStoreCmd("G33\n");
-}
-
-#endif
-
 void menuUnifiedMove(void)
 {
   MENUITEMS UnifiedMoveItems = {
@@ -22,11 +13,7 @@ void menuUnifiedMove(void)
       {ICON_EXTRUDE,                 LABEL_EXTRUDE},
       {ICON_DISABLE_STEPPERS,        LABEL_DISABLE_STEPPERS},
       {ICON_BABYSTEP,                LABEL_BABYSTEP},
-      #if DELTA_PROBE_TYPE == 0  // if not Delta printer
-        {ICON_MANUAL_LEVEL,            LABEL_LEVELING},
-      #else
-        {ICON_DELTA_CALIBRATE,         LABEL_CALIBRATION},
-      #endif
+      {ICON_MANUAL_LEVEL,            LABEL_LEVELING},
       {ICON_NULL,                    LABEL_NULL},
       {ICON_BACK,                    LABEL_BACK},
     }
@@ -69,15 +56,7 @@ void menuUnifiedMove(void)
         break;
 
       case KEY_ICON_5:
-        #if DELTA_PROBE_TYPE == 0  // if not Delta printer
-          OPEN_MENU(menuManualLeveling);
-        #else
-          #if DELTA_PROBE_TYPE != 2  // if not removable probe
-            deltaCalibration();
-          #else  // if removable probe
-            popupDialog(DIALOG_TYPE_ALERT, LABEL_WARNING, LABEL_CONNECT_PROBE, LABEL_CONTINUE, LABEL_CANCEL, deltaCalibration, NULL, NULL);
-          #endif
-        #endif
+        OPEN_MENU(menuManualLeveling);
         break;
 
       case KEY_ICON_6:

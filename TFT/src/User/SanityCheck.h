@@ -271,18 +271,6 @@ extern "C" {
   #define BED_LEVELING_TYPE 1
 #endif
 
-#ifdef DELTA_PROBE_TYPE
-  #if DELTA_PROBE_TYPE > 2
-    #error "DELTA_PROBE_TYPE cannot be greater than 2"
-  #endif
-
-  #if DELTA_PROBE_TYPE < 0
-    #error "DELTA_PROBE_TYPE cannot be less than 0"
-  #endif
-#else
-  #define DELTA_PROBE_TYPE 0
-#endif
-
 #ifdef KEYBOARD_COLOR_LAYOUT
   #if KEYBOARD_COLOR_LAYOUT > 2
     #error "KEYBOARD_COLOR_LAYOUT cannot be greater than 2"

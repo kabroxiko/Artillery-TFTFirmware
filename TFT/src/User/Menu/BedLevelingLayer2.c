@@ -31,30 +31,28 @@ void menuBedLevelingLayer2(void)
       break;
   }
 
-  #if DELTA_PROBE_TYPE != 2  // if not removable probe
-    if (infoMachineSettings.zProbe == ENABLED)
+  if (infoMachineSettings.zProbe == ENABLED)
+  {
+    bedLevelingLayer2Items.items[3].icon = ICON_LEVEL_CORNER;
+    bedLevelingLayer2Items.items[3].label.index = LABEL_LEVEL_CORNER;
+
+    if (infoSettings.touchmi_sensor != 0)
     {
-      bedLevelingLayer2Items.items[3].icon = ICON_LEVEL_CORNER;
-      bedLevelingLayer2Items.items[3].label.index = LABEL_LEVEL_CORNER;
-
-      if (infoSettings.touchmi_sensor != 0)
-      {
-        bedLevelingLayer2Items.items[4].icon = ICON_NOZZLE;
-        bedLevelingLayer2Items.items[4].label.index = LABEL_TOUCHMI;
-      }
-      else
-      {
-        bedLevelingLayer2Items.items[4].icon = ICON_BLTOUCH;
-        bedLevelingLayer2Items.items[4].label.index = LABEL_BLTOUCH;
-      }
-
-      if (infoSettings.z_steppers_alignment != 0)
-      {
-        bedLevelingLayer2Items.items[5].icon = ICON_Z_ALIGN;
-        bedLevelingLayer2Items.items[5].label.index = LABEL_Z_ALIGN;
-      }
+      bedLevelingLayer2Items.items[4].icon = ICON_NOZZLE;
+      bedLevelingLayer2Items.items[4].label.index = LABEL_TOUCHMI;
     }
-  #endif
+    else
+    {
+      bedLevelingLayer2Items.items[4].icon = ICON_BLTOUCH;
+      bedLevelingLayer2Items.items[4].label.index = LABEL_BLTOUCH;
+    }
+
+    if (infoSettings.z_steppers_alignment != 0)
+    {
+      bedLevelingLayer2Items.items[5].icon = ICON_Z_ALIGN;
+      bedLevelingLayer2Items.items[5].label.index = LABEL_Z_ALIGN;
+    }
+  }
 
   menuDrawPage(&bedLevelingLayer2Items);
 
@@ -67,11 +65,7 @@ void menuBedLevelingLayer2(void)
       case KEY_ICON_0:
         if (infoMachineSettings.leveling < BL_MBL)  // if ABL
         {
-          #if DELTA_PROBE_TYPE != 2  // if not removable probe
-            ablStart();
-          #else  // if removable probe
-            popupDialog(DIALOG_TYPE_ALERT, LABEL_WARNING, LABEL_CONNECT_PROBE, LABEL_CONTINUE, LABEL_CANCEL, ablStart, NULL, NULL);
-          #endif
+          ablStart();
         }
         else  // if MBL
         {
@@ -80,22 +74,18 @@ void menuBedLevelingLayer2(void)
         break;
 
       case KEY_ICON_3:
-        #if DELTA_PROBE_TYPE != 2  // if not removable probe
-          if (infoMachineSettings.zProbe == ENABLED)
-            OPEN_MENU(menuLevelCorner);
-        #endif
+        if (infoMachineSettings.zProbe == ENABLED)
+          OPEN_MENU(menuLevelCorner);
         break;
 
       case KEY_ICON_4:
-        #if DELTA_PROBE_TYPE != 2  // if not removable probe
-          if (infoMachineSettings.zProbe == ENABLED)
-          {
-            if (infoSettings.touchmi_sensor != 0)
-              OPEN_MENU(menuTouchMi);
-            else
-              OPEN_MENU(menuBLTouch);
-          }
-        #endif
+        if (infoMachineSettings.zProbe == ENABLED)
+        {
+          if (infoSettings.touchmi_sensor != 0)
+            OPEN_MENU(menuTouchMi);
+          else
+            OPEN_MENU(menuBLTouch);
+        }
         break;
 
       case KEY_ICON_5:

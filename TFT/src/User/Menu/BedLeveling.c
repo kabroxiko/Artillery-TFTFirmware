@@ -15,23 +15,6 @@ static void blUpdateState(MENUITEMS * menu, const uint8_t bedLevelState)
   }
 }
 
-#if DELTA_PROBE_TYPE == 2  // if Delta printer with removable probe
-
-static void deltaMeshEditor(void)
-{
-  OPEN_MENU(menuMeshEditor);
-}
-
-static void deltaZOffset(void)
-{
-  storeCmd("M851\n");
-
-  zOffsetSetMenu(true);  // use Probe Offset menu
-  OPEN_MENU(menuZOffset);
-}
-
-#endif
-
 void menuBedLeveling(void)
 {
   MENUITEMS bedLevelingItems = {
@@ -80,25 +63,11 @@ void menuBedLeveling(void)
     switch (key_num)
     {
       case KEY_ICON_0:
-        #if DELTA_PROBE_TYPE == 0
-          OPEN_MENU(menuBedLevelingLayer2);
-        #else
-          {
-            #if DELTA_PROBE_TYPE != 2  // if not removable probe
-              ablStart();
-            #else  // if removable probe
-              popupDialog(DIALOG_TYPE_ALERT, LABEL_WARNING, LABEL_CONNECT_PROBE, LABEL_CONTINUE, LABEL_CANCEL, ablStart, NULL, NULL);
-            #endif
-          }
-        #endif
+        OPEN_MENU(menuBedLevelingLayer2);
         break;
 
       case KEY_ICON_1:
-        #if DELTA_PROBE_TYPE != 2
-          OPEN_MENU(menuMeshEditor);
-        #else
-          popupDialog(DIALOG_TYPE_ALERT, LABEL_WARNING, LABEL_DISCONNECT_PROBE, LABEL_CONTINUE, LABEL_CANCEL, deltaMeshEditor, NULL, NULL);
-        #endif
+        OPEN_MENU(menuMeshEditor);
         break;
 
       case KEY_ICON_2:
@@ -130,14 +99,9 @@ void menuBedLeveling(void)
       case KEY_ICON_5:
         if (infoMachineSettings.zProbe == ENABLED)
         {
-          #if DELTA_PROBE_TYPE != 2
-            storeCmd("M851\n");
-
-            zOffsetSetMenu(true);  // use Probe Offset menu
-            OPEN_MENU(menuZOffset);
-          #else
-            popupDialog(DIALOG_TYPE_ALERT, LABEL_WARNING, LABEL_DISCONNECT_PROBE, LABEL_CONTINUE, LABEL_CANCEL, deltaZOffset, NULL, NULL);
-          #endif
+          storeCmd("M851\n");
+          zOffsetSetMenu(true);  // use Probe Offset menu
+          OPEN_MENU(menuZOffset);
         }
         break;
 
