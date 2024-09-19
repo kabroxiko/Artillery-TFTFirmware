@@ -1161,7 +1161,6 @@
 
 // PID autotune
 #define PID_CMD_MARLIN      {"M303 E0 C8 U1", "M303 E1 C8 U1", "M303 E2 C8 U1", "M303 E3 C8 U1", "M303 E4 C8 U1", "M303 E5 C8 U1", "M303 E-1 C8 U1", ""}
-#define PID_CMD_RRF         {"M303 T0",       "M303 T1",       "M303 T2",       "M303 T3",       "M303 T4",       "M303 T5",       "M303 H0",        ""}
 #define PID_PROCESS_TIMEOUT (15 * 60000)  // Timeout in MilliSeconds (1 minute = 60000 MilliSeconds). Default: 15 * 60000
 
 // Heat
