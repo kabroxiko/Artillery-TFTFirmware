@@ -137,7 +137,6 @@
 #include "Print.h"
 #include "PrintingMenu.h"
 #include "PrintRestore.h"
-#include "RRFMacros.h"
 #include "ScreenSettings.h"
 #include "SelectMode.h"
 #include "SettingsMenu.h"

@@ -1,6 +1,5 @@
 #include "mygcodefs.h"
 #include "includes.h"
-#include "RRFM20Parser.hpp"
 
 /**
  * Send M21 (Init SD) and wait for the result (false = Error, true = OK)
@@ -12,12 +11,6 @@
 bool mountGcodeSDCard(void)
 {
   return request_M21();
-}
-
-static inline void rrfScanPrintFilesGcodeFs(void)
-{
-  // TODO detect files_sort_by and set with_ts appropriately once M20 S3 works
-  request_M20_rrf(infoFile.path, false, parseJobListResponse);
 }
 
 // TODO: Borrar

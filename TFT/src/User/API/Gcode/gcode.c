@@ -1,6 +1,5 @@
 #include "gcode.h"
 #include "includes.h"
-#include "RRFStatusControl.h"
 
 REQUEST_COMMAND_INFO requestCommandInfo = {0};
 
@@ -272,35 +271,4 @@ void request_M125(void)
 void request_M0(void)
 {
   mustStoreCmd("M0\n");
-}
-
-void request_M98(const char * filename)
-{
-  CMD command;
-
-  snprintf(command, CMD_MAX_SIZE, "M98 P/%s\n", filename);
-  rrfStatusSetMacroBusy();
-
-  mustStoreCmd(command);
-
-  // prevent a race condition when rrfStatusQuery returns !busy before executing the macro
-  TASK_LOOP_WHILE(isEnqueued(command));
-
-  rrfStatusQueryFast();
-
-  // wait for macro to complete
-  TASK_LOOP_WHILE(rrfStatusIsBusy());
-
-  rrfStatusQueryNormal();
-}
-
-// nextdir path must start with "macros" or "gcodes"
-void request_M20_rrf(const char * nextdir, bool with_ts, FP_STREAM_HANDLER handler)
-{
-  resetRequestCommandInfo("{", "}", "Error:", NULL, NULL);
-  requestCommandInfo.stream_handler = handler;
-
-  mustStoreCmd("M20 S%d P\"/%s\"\n", with_ts ? 3 : 2, nextdir);
-
-  waitForResponse();  // wait for response
 }
