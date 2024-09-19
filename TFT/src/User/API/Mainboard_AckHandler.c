@@ -642,9 +642,9 @@ void parseAck(void)
       speedSetCurPercent(1, ack_value());
     }
     // parse and store M106, fan speed
-    else if (ack_starts_with("// FAN_SPEED"))
+    else if (ack_starts_with("// FAN_SPEED:"))
     {
-      fanSetCurSpeed(ack_continue_seen("P") ? ack_value() : 0, ack_seen("S") ? ack_value() : 100);
+      fanSetCurSpeed(ack_continue_seen("P") ? ack_value() : 0, ack_continue_seen("S") ? ack_value() : 100);
     }
     #ifdef BUZZER_PIN
       // parse M300 sound coming from mainboard, play on TFT
@@ -981,18 +981,21 @@ void parseAck(void)
       if (ack_seen("D")) setParameter(P_FILAMENT_DIAMETER, 1 + i, ack_value());
     }
     // parse and store max acceleration (units/s2) (M201) and max feedrate (units/s) (M203)
-    else if (ack_starts_with("// MAX_ACCELERATION") || ack_starts_with("// MAX_FEEDRATE"))
+    else if (ack_starts_with("// MAX_ACCELERATION:") || ack_starts_with("// MAX_FEEDRATE:"))
     {
       PARAMETER_NAME param = P_STEPS_PER_MM;  // default value
 
       // using consecutive "if" instead of "if else if" on the following two lines just to reduce code
       // instead of optimizing performance (code typically not executed during a print)
-      if (ack_starts_with("// MAX_ACCELERATION")) param = P_MAX_ACCELERATION;
-      if (ack_starts_with("// MAX_FEEDRATE"))     param = P_MAX_FEED_RATE;
+      if (ack_starts_with("// MAX_ACCELERATION:")) param = P_MAX_ACCELERATION;
+      if (ack_starts_with("// MAX_FEEDRATE:"))     param = P_MAX_FEED_RATE;
 
       if (ack_seen("X")) setParameter(param, AXIS_INDEX_X, ack_value());
       if (ack_seen("Y")) setParameter(param, AXIS_INDEX_Y, ack_value());
       if (ack_seen("Z")) setParameter(param, AXIS_INDEX_Z, ack_value());
+      // addToast(DIALOG_TYPE_INFO, getParameter(param, AXIS_INDEX_X));
+      // addToast(DIALOG_TYPE_INFO, getParameter(param, AXIS_INDEX_Y));
+      // addToast(DIALOG_TYPE_INFO, getParameter(param, AXIS_INDEX_Z));
 
       uint8_t i = (ack_seen("T")) ? ack_value() : 0;
 
@@ -1080,7 +1083,7 @@ void parseAck(void)
       if (ack_seen("Z")) setParameter(param, AXIS_INDEX_Z, ack_value());
     }
     // parse and store ABL on/off state & Z fade value on REPORT_SETTINGS
-    else if (ack_starts_with("// AUTO_BED_LEVELING S"))
+    else if (ack_starts_with("// AUTO_BED_LEVELING: S"))
     {
                                   setParameter(P_ABL_STATE, 0, ack_value());
       if (ack_continue_seen("Z")) setParameter(P_ABL_STATE, 1, ack_value());
