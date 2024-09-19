@@ -512,7 +512,7 @@ void sendQueueCmd(void)
       {
         case 0:  // M0
         case 1:  // M1
-          if (isPrinting())  // abort printing by "M0" in RepRapFirmware
+          if (isPrinting())  // abort printing by "M0"
           {
             // pause if printing from TFT media and purge M0/M1 command
             if (infoFile.source < FS_ONBOARD_MEDIA)
