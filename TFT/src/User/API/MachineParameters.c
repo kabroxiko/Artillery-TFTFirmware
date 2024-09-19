@@ -87,23 +87,6 @@ static const suffix_t M593_suffix[]= {
   {"X F%.3f\n", VAL_TYPE_FLOAT}, {"X D%.3f\n", VAL_TYPE_FLOAT}, {"Y F%.3f\n", VAL_TYPE_FLOAT},
   {"Y D%.3f\n", VAL_TYPE_FLOAT},
 };
-// Delta Configuration (Height, Segment per sec, Radius, Diagonal Rod)
-static const suffix_t M665_hsrl_suffix[]= {
-  {"H%.4f\n", VAL_TYPE_FLOAT}, {"S%.4f\n", VAL_TYPE_FLOAT}, {"R%.4f\n", VAL_TYPE_FLOAT},
-  {"L%.4f\n", VAL_TYPE_FLOAT},
-};
-// Delta Tower Angle (Tx, Ty, Tz)
-static const suffix_t M665_xyz_suffix[]= {
-  {"X%.4f\n", VAL_TYPE_NEG_FLOAT}, {"Y%.4f\n", VAL_TYPE_NEG_FLOAT}, {"Z%.4f\n", VAL_TYPE_NEG_FLOAT},
-};
-// Delta Diagonal Rod Trim (Dx, Dy, Dz)
-static const suffix_t M665_abc_suffix[]= {
-  {"A%.4f\n", VAL_TYPE_NEG_FLOAT}, {"B%.4f\n", VAL_TYPE_NEG_FLOAT}, {"C%.4f\n", VAL_TYPE_NEG_FLOAT},
-};
-// Delta Endstop Adjustments (Ex, Ey, Ez)
-static const suffix_t M666_suffix[]= {
-  {"X%.4f\n", VAL_TYPE_NEG_FLOAT}, {"Y%.4f\n", VAL_TYPE_NEG_FLOAT}, {"Z%.4f\n", VAL_TYPE_NEG_FLOAT},
-};
 // Probe offset (X, Y, Z)
 static const suffix_t M851_suffix[]= {
   {"X%.2f\n", VAL_TYPE_NEG_FLOAT}, {"Y%.2f\n", VAL_TYPE_NEG_FLOAT}, {"Z%.2f\n", VAL_TYPE_NEG_FLOAT},
@@ -170,14 +153,6 @@ parameter_member_t parameter_list[] = {
   {"M569", M569_suffix, COUNT(M569_suffix)},
   // Input Shape
   {"M593", M593_suffix, COUNT(M593_suffix)},
-  // Delta Configuration
-  {"M665", M665_hsrl_suffix, COUNT(M665_hsrl_suffix)},
-  // Delta Tower Angle
-  {"M665", M665_xyz_suffix, COUNT(M665_xyz_suffix)},
-  // Delta Diagonal Rod Trim
-  {"M665", M665_abc_suffix, COUNT(M665_abc_suffix)},
-  // Delta Endstop Adjustments
-  {"M666", M666_suffix, COUNT(M666_suffix)},
   // Probe offset
   {"M851", M851_suffix, COUNT(M851_suffix)},
   // Linear Advance
@@ -209,10 +184,6 @@ typedef struct {
   float ABLState[COUNT(M420_suffix)];
   float StealthChop[COUNT(M569_suffix)];
   float InputShaping[COUNT(M593_suffix)];
-  float DeltaConfiguration[COUNT(M665_hsrl_suffix)];
-  float DeltaTowerAngle[COUNT(M665_xyz_suffix)];
-  float DeltaDiagonalRod[COUNT(M665_abc_suffix)];
-  float DeltaEndstop[COUNT(M666_suffix)];
   float ProbeOffset[COUNT(M851_suffix)];
   float LinAdvance[COUNT(M900_suffix)];
   float Current[COUNT(M906_suffix)];
@@ -241,10 +212,6 @@ char * const stealthChopDisplayID[] = {"X " ONOFF_DISPLAY_ID, "X2 " ONOFF_DISPLA
                                        "Z " ONOFF_DISPLAY_ID, "Z2 " ONOFF_DISPLAY_ID, "Z3 " ONOFF_DISPLAY_ID, "Z4 " ONOFF_DISPLAY_ID,
                                        "E0 "ONOFF_DISPLAY_ID, "E1 "ONOFF_DISPLAY_ID, "E2 "ONOFF_DISPLAY_ID};
 char * const inputShapingDisplayID[] = {"X -> F:", "X -> D:", "Y -> F:", "Y -> D:"};
-char * const deltaConfigurationDisplayID[] = {"Height", "Segment/sec.", "Radius", "Diagonal Rod"};
-char * const deltaTowerAngleDisplayID[] = {"Tx", "Ty", "Tz"};
-char * const deltaDiagonalRodDisplayID[] = {"Dx", "Dy", "Dz"};
-char * const deltaEndstopDisplayID[] = {"Ex", "Ey", "Ez"};
 char * const linAdvDisplayID[] = {"K-Factor E0", "K-Factor E1", "K-Factor E2"};
 
 // param attributes configurable labels

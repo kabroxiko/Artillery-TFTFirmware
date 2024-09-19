@@ -636,7 +636,6 @@
  * Pause XY Position
  * NOTES:
  *   - It MUST BE a value >= 0 for a Cartesian printer.
- *   - It MUST BE a value <= 0 for a Delta printer.
  *
  *   Format: [pause_pos: X<position> Y<position>]
  *   Unit: [position in mm]
@@ -742,7 +741,6 @@
  *
  * NOTES:
  *   - It MUST BE a value >= 0 (e.g. 20) for a Cartesian printer to avoid crashing into the bed.
- *   - It MUST BE a value <= 0 (e.g. -50) for a Delta printer to avoid crashing into the top of the tower.
  *
  *   Unit: [distance in mm]
  *   Value range: [min: -2000.0, max: 2000.0]
@@ -877,11 +875,6 @@
 //================================================================================
 //==================== Power Loss Recovery & BTT UPS Settings ====================
 //================================================================================
-
-/**
- * Most suitable for Delta printers since most printers will
- * crash into printed model when homing after power loss.
- */
 
 /**
  * Power Loss Recovery Mode
