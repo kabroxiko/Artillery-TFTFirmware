@@ -297,8 +297,6 @@ Templates for configuration file are available on [`Copy to SD Card root directo
 
 The configuration file is named `config.ini`.
 
-**NOTE:** RepRap firmware users have to make their changes using the `config_rrf.ini` template file and renaming it to `config.ini`.
-
 #### Optional - Language Files
 
 Optional language files are available on [`Copy to SD Card root directory to update/Language Packs`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/Language%20Packs) folder.
@@ -307,13 +305,11 @@ Language files use the naming convention `language_*.ini` (e.g. `language_it.ini
 
 ### Configuration
 
-The firmware configuration can be modified by changing the `config.ini` (or the renamed `config_rrf.ini`) file using a simple text editor (make sure to use UTF encoding).
+The firmware configuration can be modified by changing the `config.ini` file using a simple text editor (make sure to use UTF encoding).
 
 A configuration can be uploaded without the need to upload the firmware or the TFT folder again, as long as the firmware and the configuration file are from the same version (see [Configuration Update](#configuration-update)).
 
 #### Editing the Configuration File
-
-**NOTE:** RepRap firmware users have to make their changes using the `config_rrf.ini` template file and renaming it to `config.ini`.
 
 To edit the `config.ini` file, follow the instructions here: [Detailed Instructions](config_instructions.md).
 
@@ -631,35 +627,6 @@ Thumbnail image sizes are:
 If this setting is not visible within the Prusa-Slicer you need to enable _Expert Settings Mode_:
 
 ![ps-expert-settings](https://user-images.githubusercontent.com/54359396/121323041-c7e07300-c90f-11eb-9644-e12e31f7b5f9.png)
-
-### TFT Screen Configuration and Support for RRF
-
-#### Overview
-
-The most recent version of the standard bigtreetech TFT firmware has built in support for RepRap firmware. The pre-built images have this enabled by default.
-
-#### Loading the Firmware
-
-There is now an RRF config file. It needs to be renamed from `config_rrf.ini` to `config.ini` for updating the configuration of the TFT for RRF.
-
-#### Configuration Changes
-
-Add the following line to your `config.g` to enable the screen: `M575 P1 S2 B57600`.
-
-#### Implemented Features
-
-- Auto detect fw type + separate config.ini for easier setup
-- Temperature/movement/cooling status monitoring and control
-- Print status monitoring with mid-print tuning/pausing
-- Macro support
-- Print from onboard/external SD card
-- Please see [RRF further tweaks #2278](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/issues/2278) for more information.
-
-#### Menu System for Macros
-
-- Thumbnail and menu system support for onboard G-codes
-- Load/unload menu
-- PID tune menu
 
 ### Setup of BTT TFT35 E3 V3 with MKS SGEN L Mainboards
 
