@@ -93,10 +93,6 @@ extern char * const bedPidDisplayID[];
 extern char * const ablStateDisplayID[];
 extern char * const stealthChopDisplayID[];
 extern char * const inputShapingDisplayID[];
-extern char * const deltaConfigurationDisplayID[];
-extern char * const deltaTowerAngleDisplayID[];
-extern char * const deltaDiagonalRodDisplayID[];
-extern char * const deltaEndstopDisplayID[];
 extern char * const linAdvDisplayID[];
 
 // param attributes configurable labels

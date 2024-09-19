@@ -147,5 +147,4 @@ X_ICON (Z_ALIGN)
 X_ICON (MESH_EDITOR)
 X_ICON (BRIGHTNESS)
 X_ICON (MESH_VALID)
-X_ICON (DELTA_CALIBRATE)
 // After changing/adding/removing an icon, change the ICON_FLASH_SIGN in Settings.h
