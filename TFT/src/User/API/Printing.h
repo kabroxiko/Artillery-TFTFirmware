@@ -23,7 +23,6 @@ extern "C" {
 typedef enum
 {
   PROG_FILE = 0,  // file execution progress ()
-  PROG_RRF,       // progress from RRF ("fraction_printed")
   PROG_TIME,      // time based progress (elapsed/total)
   PROG_SLICER,    // progress from slicer (M73)
 } PROG_FROM;
@@ -91,7 +90,7 @@ uint32_t getPrintDataCur(void);
 void setPrintProgressData(float cur, float size);
 
 //
-// used for print based on M73 Pxx or RRF
+// used for print based on M73 Pxx
 //
 void setPrintProgressPercentage(uint8_t percentage);
 
