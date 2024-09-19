@@ -900,28 +900,6 @@ void sendQueueCmd(void)
           }
           break;
 
-        case 665:  // Delta configuration / Delta tower angle
-        case 666:  // Delta endstop adjustments
-        {
-          PARAMETER_NAME param = (cmd_value() == 665) ? P_DELTA_TOWER_ANGLE : P_DELTA_ENDSTOP;
-
-          if (param < P_DELTA_ENDSTOP)  // options not supported by M666
-          {
-            if (cmd_seen('H')) setParameter(P_DELTA_CONFIGURATION, 0, cmd_float());
-            if (cmd_seen('S')) setParameter(P_DELTA_CONFIGURATION, 1, cmd_float());
-            if (cmd_seen('R')) setParameter(P_DELTA_CONFIGURATION, 2, cmd_float());
-            if (cmd_seen('L')) setParameter(P_DELTA_CONFIGURATION, 3, cmd_float());
-            if (cmd_seen('A')) setParameter(P_DELTA_DIAGONAL_ROD, AXIS_INDEX_X, cmd_float());
-            if (cmd_seen('B')) setParameter(P_DELTA_DIAGONAL_ROD, AXIS_INDEX_Y, cmd_float());
-            if (cmd_seen('C')) setParameter(P_DELTA_DIAGONAL_ROD, AXIS_INDEX_Z, cmd_float());
-          }
-
-          if (cmd_seen('X')) setParameter(param, AXIS_INDEX_X, cmd_float());
-          if (cmd_seen('Y')) setParameter(param, AXIS_INDEX_Y, cmd_float());
-          if (cmd_seen('Z')) setParameter(param, AXIS_INDEX_Z, cmd_float());
-          break;
-        }
-
         case 710:  // M710 controller fan
           if (cmd_seen('S'))
             fanSetCurSpeed(MAX_COOLING_FAN_COUNT, cmd_value());

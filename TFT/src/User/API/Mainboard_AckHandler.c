@@ -949,23 +949,6 @@ void parseAck(void)
       levelingSetProbedPoint(-1, -1, 0);  // cancel waiting for coordinates
       BUZZER_PLAY(SOUND_ERROR);
     }
-    #if DELTA_PROBE_TYPE != 0
-      // parse and store Delta calibration settings
-      else if (ack_seen("Calibration OK"))
-      {
-        BUZZER_PLAY(SOUND_SUCCESS);
-
-        if (infoMachineSettings.EEPROM == 1)
-        {
-          popupDialog(DIALOG_TYPE_SUCCESS, LABEL_DELTA_CONFIGURATION, LABEL_EEPROM_SAVE_INFO,
-                      LABEL_CONFIRM, LABEL_CANCEL, saveEepromSettings, NULL, NULL);
-        }
-        else
-        {
-          popupReminder(DIALOG_TYPE_SUCCESS, LABEL_DELTA_CONFIGURATION, LABEL_PROCESS_COMPLETED);
-        }
-      }
-    #endif
 
     //----------------------------------------
     // Parameter / REPORT_SETTINGS / M115 parsed responses
@@ -1057,30 +1040,6 @@ void parseAck(void)
       if (ack_seen("P")) setParameter(param, 0, ack_value());
       if (ack_seen("I")) setParameter(param, 1, ack_value());
       if (ack_seen("D")) setParameter(param, 2, ack_value());
-    }
-    // parse and store Delta configuration / Delta tower angle (M665) and Delta endstop adjustments (M666)
-    //
-    // IMPORTANT: It must be placed before the following keywords:
-    //            1) M420 S
-    //
-    else if (ack_starts_with("M665") || ack_starts_with("M666"))
-    {
-      PARAMETER_NAME param = ack_starts_with("M665") ? P_DELTA_TOWER_ANGLE : P_DELTA_ENDSTOP;
-
-      if (param < P_DELTA_ENDSTOP)  // options not supported by M666
-      {
-        if (ack_seen("H")) setParameter(P_DELTA_CONFIGURATION, 0, ack_value());
-        if (ack_seen("S")) setParameter(P_DELTA_CONFIGURATION, 1, ack_value());
-        if (ack_seen("R")) setParameter(P_DELTA_CONFIGURATION, 2, ack_value());
-        if (ack_seen("L")) setParameter(P_DELTA_CONFIGURATION, 3, ack_value());
-        if (ack_seen("A")) setParameter(P_DELTA_DIAGONAL_ROD, AXIS_INDEX_X, ack_value());
-        if (ack_seen("B")) setParameter(P_DELTA_DIAGONAL_ROD, AXIS_INDEX_Y, ack_value());
-        if (ack_seen("C")) setParameter(P_DELTA_DIAGONAL_ROD, AXIS_INDEX_Z, ack_value());
-      }
-
-      if (ack_seen("X")) setParameter(param, AXIS_INDEX_X, ack_value());
-      if (ack_seen("Y")) setParameter(param, AXIS_INDEX_Y, ack_value());
-      if (ack_seen("Z")) setParameter(param, AXIS_INDEX_Z, ack_value());
     }
     // parse and store ABL on/off state & Z fade value on REPORT_SETTINGS
     else if (ack_starts_with("// AUTO_BED_LEVELING: S"))

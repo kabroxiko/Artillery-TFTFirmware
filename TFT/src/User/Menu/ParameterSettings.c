@@ -19,10 +19,6 @@ static const LABEL parameterTypes[PARAMETERS_COUNT] = {
   LABEL_ABL,
   LABEL_STEALTH_CHOP,
   LABEL_INPUT_SHAPING,
-  LABEL_DELTA_CONFIGURATION,
-  LABEL_DELTA_TOWER_ANGLE,
-  LABEL_DELTA_DIAGONAL_ROD,
-  LABEL_DELTA_ENDSTOP,
   LABEL_PROBE_OFFSET,
   LABEL_LIN_ADVANCE,
   LABEL_CURRENT_SETTING,
@@ -107,22 +103,6 @@ static void loadElements(LISTITEM * parameterMainItem, uint16_t index, uint8_t i
 
         case P_INPUT_SHAPING:
           parameterMainItem->titlelabel.address = inputShapingDisplayID[elementIndex];
-          break;
-
-        case P_DELTA_CONFIGURATION:
-          parameterMainItem->titlelabel.address = deltaConfigurationDisplayID[elementIndex];
-          break;
-
-        case P_DELTA_TOWER_ANGLE:
-          parameterMainItem->titlelabel.address = deltaTowerAngleDisplayID[elementIndex];
-          break;
-
-        case P_DELTA_DIAGONAL_ROD:
-          parameterMainItem->titlelabel.address = deltaDiagonalRodDisplayID[elementIndex];
-          break;
-
-        case P_DELTA_ENDSTOP:
-          parameterMainItem->titlelabel.address = deltaEndstopDisplayID[elementIndex];
           break;
 
         case P_LIN_ADV:

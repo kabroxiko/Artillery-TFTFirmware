@@ -398,18 +398,6 @@ float getParameter(PARAMETER_NAME name, uint8_t index)
     case P_INPUT_SHAPING:
       return infoParameters.InputShaping[index];
 
-    case P_DELTA_CONFIGURATION:
-      return infoParameters.DeltaConfiguration[index];
-
-    case P_DELTA_TOWER_ANGLE:
-      return infoParameters.DeltaTowerAngle[index];
-
-    case P_DELTA_DIAGONAL_ROD:
-      return infoParameters.DeltaDiagonalRod[index];
-
-    case P_DELTA_ENDSTOP:
-      return infoParameters.DeltaEndstop[index];
-
     case P_PROBE_OFFSET:
       return infoParameters.ProbeOffset[index];
 
@@ -505,22 +493,6 @@ void setParameter(PARAMETER_NAME name, uint8_t index, float val)
 
     case P_INPUT_SHAPING:
       infoParameters.InputShaping[index] = val;
-      break;
-
-    case P_DELTA_CONFIGURATION:
-      infoParameters.DeltaConfiguration[index] = val;
-      break;
-
-    case P_DELTA_TOWER_ANGLE:
-      infoParameters.DeltaTowerAngle[index] = val;
-      break;
-
-    case P_DELTA_DIAGONAL_ROD:
-      infoParameters.DeltaDiagonalRod[index] = val;
-      break;
-
-    case P_DELTA_ENDSTOP:
-      infoParameters.DeltaEndstop[index] = val;
       break;
 
     case P_PROBE_OFFSET:
