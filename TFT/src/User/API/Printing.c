@@ -222,9 +222,8 @@ uint8_t updatePrintProgress(void)
         infoPrinting.progress = (uint8_t)((float)(infoPrinting.cur - infoPrinting.fileOffset) / (infoPrinting.size - infoPrinting.fileOffset) * 100);
       break;
 
-    case PROG_RRF:
     case PROG_SLICER:
-      break;  // progress percentage already updated by the slicer or RRF direct percentage report ("fraction_printed")
+      break;  // progress percentage already updated by the slicer ("fraction_printed")
 
     case PROG_TIME:
       infoPrinting.progress = ((float)infoPrinting.elapsedTime / (infoPrinting.elapsedTime + infoPrinting.remainingTime)) * 100;
