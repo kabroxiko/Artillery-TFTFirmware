@@ -503,7 +503,7 @@ void parseAck(void)
 
       if (requestCommandInfo.done)  // if command parsing is completed
       {
-        // if RepRap or "ok" (e.g. in Marlin) is used as stop magic keyword,
+        // "ok" is used as stop magic keyword,
         // proceed with generic OK response handling to update infoHost.tx_slots and infoHost.tx_count
         //
         if (ack_starts_with("ok"))
@@ -514,7 +514,7 @@ void parseAck(void)
     }
 
     //----------------------------------------
-    // RepRap response handling (response NOT requested by the use of setRequestCommandInfo() function)
+    // json response handling (response NOT requested by the use of setRequestCommandInfo() function)
     //----------------------------------------
 
     // check for a possible json response and eventually parse and process it
@@ -529,7 +529,7 @@ void parseAck(void)
       if (ack_seen(magic_warning))
         ackPopupInfo(magic_warning);
       else
-        ackPopupInfo(magic_warning);
+        ackPopupInfo(magic_echo);
 
       // proceed with generic OK response handling to update infoHost.tx_slots and infoHost.tx_count
       InfoHost_HandleAckOk(HOST_SLOTS_GENERIC_OK);
