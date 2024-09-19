@@ -45,8 +45,6 @@ void request_M25(void);
 void request_M27(uint8_t seconds);
 void request_M125(void);
 void request_M0(void);
-void request_M98(const char * filename);
-void request_M20_rrf(const char * dir, bool with_ts, FP_STREAM_HANDLER handler);
 
 #ifdef __cplusplus
 }

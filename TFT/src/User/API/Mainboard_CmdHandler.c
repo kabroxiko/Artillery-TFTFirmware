@@ -1,6 +1,5 @@
 #include "Mainboard_CmdHandler.h"
 #include "includes.h"
-#include "RRFStatusControl.h"
 
 #define CMD_QUEUE_SIZE  20
 #define CMD_RETRY_COUNT 3
@@ -583,12 +582,6 @@ void sendQueueCmd(void)
           break;
 
         case 105:  // M105
-          if (rrfStatusIsMacroBusy())
-          {
-            sendCmd(true, avoid_terminal);
-            return;
-          }
-
           if (fromTFT)
           {
             avoid_terminal = !infoSettings.terminal_ack;
@@ -845,17 +838,8 @@ void sendQueueCmd(void)
             caseLightSetPercent(cmd_value());
           break;
 
-        case 376:  // M376 (RepRap firmware)
-          break;
-
         case 292:  // M292
         case 408:  // M408
-          // RRF does not send "ok" while executing M98
-          if (rrfStatusIsMacroBusy())
-          {
-            sendCmd(false, avoid_terminal);
-            return;
-          }
           break;
 
         case 569:  // M569 TMC stepping mode
