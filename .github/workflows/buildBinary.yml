@@ -25,6 +25,7 @@ jobs:
         run:
           |
           python -m venv venv
+          ls -l venv/bin
           source venv/bin/activate
           pip install --disable-pip-version-check --upgrade platformio
 
