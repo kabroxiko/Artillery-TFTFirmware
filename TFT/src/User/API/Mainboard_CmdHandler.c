@@ -973,10 +973,6 @@ void sendQueueCmd(void)
           coordinateSetKnown(true);
           babystepSetValue(BABYSTEP_DEFAULT_VALUE);  // reset babystep
 
-          if (infoMachineSettings.leveling != BL_DISABLED)
-            storeCmd("M420\n");  // check bed leveling state
-          break;
-
         #if BED_LEVELING_TYPE > 0  // if bed leveling is enabled
           case 29:  // G29
           break;
