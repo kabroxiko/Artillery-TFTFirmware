@@ -25,8 +25,6 @@ jobs:
         run:
           |
           python -m venv venv
-          source venv/bin/activate
-          pip3 install --disable-pip-version-check --upgrade platformio
 
       - id: list
         name: List hardware
