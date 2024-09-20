@@ -101,16 +101,14 @@ jobs:
 
       - name: Zip icons
         run: |
-          [ "${{ matrix.custom_logo }}" != "" ] &&
-            mv custom_logo/${{ matrix.custom_logo }}/* ${{ matrix.tftfolder }}/bmp/
           [ "${{ matrix.tftfolder }}" = "TFT32" ] &&
-            mv TFT28 ${{ matrix.tftfolder }}
+            mv ARTILLERY ${{ matrix.tftfolder }}
           zip -ur ${GITHUB_WORKSPACE}/${{ matrix.hardware }}.zip ${{ matrix.tftfolder }}
-        working-directory: 'Copy to SD Card root directory to update/THEME_Unified Menu Material theme'
+        working-directory: 'SDCard_install/Unified'
 
       - name: Zip config
         run: zip -ur ${GITHUB_WORKSPACE}/${{ matrix.hardware }}.zip config.ini
-        working-directory: 'Copy to SD Card root directory to update'
+        working-directory: 'SDCard_install'
 
       - name: Upload Release Asset
         id: upload-release-asset

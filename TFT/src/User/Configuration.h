@@ -183,7 +183,7 @@
  * Select the language to use on the LCD while in Touch Mode.
  *
  * NOTE: To add/flash a second language copy the required "language_xx.ini" file from
- *       "Language Packs" folder to the SD root folder.
+ *       "Language_packs" folder to the SD root folder.
  *       Then press the reset button to load/flash the copied language file.
  *
  *   Options: [Primary Language (english): 0, Secondary Language: 1]
@@ -1274,7 +1274,7 @@
  * Select the language to use on the LCD while in Touch Mode.
  *
  * NOTE: To add/flash a second language copy the required "language_xx.ini" file from
- *       "Language Packs" folder to the SD root folder.
+ *       "Language_packs" folder to the SD root folder.
  *       Then press the reset button to load/flash the copied language file.
  *
  *   Options: [ENGLISH,    CHINESE,  RUSSIAN,     JAPANESE,   ARMENIAN,  GERMAN,        CZECH,

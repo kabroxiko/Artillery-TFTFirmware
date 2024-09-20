@@ -207,17 +207,17 @@ In order to use the Marlin Mode (emulation mode) on your screen:
 |                      Unified Menu Theme                      | The Round Miracle Theme by **[Acenotass](https://github.com/Acenotass)** |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![Unified Material Main Screen](https://user-images.githubusercontent.com/54359396/98742038-03cd4d00-23ae-11eb-9552-36dc02fe66f4.png) | ![Round Miracle Main Screen](https://user-images.githubusercontent.com/54359396/99251566-d77e5a00-280d-11eb-9c7a-0e7c0111eedd.png) |
-| Use firmware, icons, and fonts from the [`Copy to SD Card root directory to update - Unified Menu Material theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_Unified%20Menu%20Material%20theme) folder | Use firmware, icons, and fonts from the [`Copy to SD Card root directory to update - The Round Miracle theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_The%20Round%20Miracle%20Menu%20Material%20theme) folder |
+| Use firmware, icons, and fonts from the [`SDCard_install - Unified Menu Material theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_Unified%20Menu%20Material%20theme) folder | Use firmware, icons, and fonts from the [`SDCard_install - The Round Miracle theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_The%20Round%20Miracle%20Menu%20Material%20theme) folder |
 
 | Hybrid Red Material Theme by **[AntoszHUN](https://github.com/AntoszHUN)** | Hybrid Mono Material Theme by **[bepstein111](https://github.com/bepstein111)** |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![Hybrid Red Menu Material Mainscreen](https://user-images.githubusercontent.com/54359396/98869176-a995c000-2471-11eb-94da-a0bc41abf3e9.png) | ![Monochrome TFT35](https://user-images.githubusercontent.com/54359396/110254523-d5dccb80-7f8f-11eb-86a5-2d52ecd7ca4d.png) |
-| Use firmware, icons, and fonts from the [`Copy to SD Card root directory to update - Hybrid Red Menu Material theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_Hybrid%20Red%20Menu%20Material%20theme) folder | Use firmware, icons, and fonts from the [`Copy to SD Card root directory to update - Hybrid Mono Menu Material theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_Hybrid%20Mono%20Menu%20Material%20theme) folder |
+| Use firmware, icons, and fonts from the [`SDCard_install - Hybrid Red Menu Material theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_Hybrid%20Red%20Menu%20Material%20theme) folder | Use firmware, icons, and fonts from the [`SDCard_install - Hybrid Mono Menu Material theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_Hybrid%20Mono%20Menu%20Material%20theme) folder |
 
 | Rep Rap Firmware Dark  Theme by **[xPew](https://github.com/xPew)** |                                                              |
 | :----------------------------------------------------------: | ------------------------------------------------------------ |
 | ![Mainscreen-Rep Rap FW Dark](https://user-images.githubusercontent.com/54359396/132403911-067d5cba-942e-496a-9f24-c4b1c9be99d5.png) | ![Mainscreen](https://user-images.githubusercontent.com/54359396/132404369-948e7677-6d17-4a9a-ad7e-25ebc46b3fdb.png) |
-| Use firmware, icons, and fonts from the [`Copy to SD Card root directory to update - Rep Rap Firmware Dark theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_Rep%20Rap%20Firmware%20Dark%20theme) folder |                                                              |
+| Use firmware, icons, and fonts from the [`SDCard_install - Rep Rap Firmware Dark theme`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/THEME_Rep%20Rap%20Firmware%20Dark%20theme) folder |                                                              |
 
 ## Firmware Update
 
@@ -234,7 +234,7 @@ The following sections provide all the resources needed for the firmware update 
 
 #### Firmware Binary
 
-Precompiled firmwares are available on [`Copy to SD Card root directory to update`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update) folder.
+Precompiled firmwares are available on [`SDCard_install`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update) folder.
 
 For **BTT TFTs**, the firmwares use the naming convention `BIGTREE_TFT*_V*.*.*.x.bin`.
 
@@ -249,7 +249,7 @@ For **MKS TFTs**:
 
 For **MKS GD TFTs**:
 
-For MKS TFT28 mounting GD32 MCU (GigaDevice MCU) (like the newest version of Genious Pro), you need to:
+For MKS TFT28 mounting GD32 MCU (GigaDevice MCU) (like the newest version of Genius Pro), you need to:
 1. Rename the right binary (e.g. `MKS_GD_TFT28_V1_2_4.27.x.bin`) to `MKSTFT28EVO.bin`
 2. Create an empty file named `MKSTFT28.bin`
 3. Create two empty directories named `MKS_FONT` and `MKS_PIC`
@@ -276,24 +276,22 @@ So, make sure to use the firmware matching your TFT screen.
 
 #### Fonts and Icons
 
-Themes are available on [`Copy to SD Card root directory to update`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update) folder.
+Themes are available on [`SDCard_install`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update) folder.
 
-The root folder for fonts and icons is `TFT*`, where `*` is the size of the TFT (e.g. `TFT24`, `TFT35`, `TFT50` etc). Fonts and icons folder structure:
+The root folder for fonts and icons is `ARTILLERY`. Fonts and icons folder structure:
 
-- `TFT*/font`: Includes the fonts in .fon format and a readme.md
-- `TFT*/bmp`: Includes the icons in .bmp format and a readme.md
-
-For **MKS TFT32**, the `TFT28` folder has to be used and **MUST** be renamed to `TFT32` in order it can be recognized and installed by the TFT.
+- `ARTILLERY/font`: Includes the fonts in .fon format and a readme.md
+- `ARTILLERY/bmp`: Includes the icons in .bmp format and a readme.md
 
 #### Configuration File
 
-Templates for configuration file are available on [`Copy to SD Card root directory to update`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update) folder.
+Templates for configuration file are available on [`SDCard_install`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update) folder.
 
 The configuration file is named `config.ini`.
 
 #### Optional - Language Files
 
-Optional language files are available on [`Copy to SD Card root directory to update/Language Packs`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/Language%20Packs) folder.
+Optional language files are available on [`SDCard_install/Language_packs`](https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/Copy%20to%20SD%20Card%20root%20directory%20to%20update/Language%20Packs) folder.
 
 Language files use the naming convention `language_*.ini` (e.g. `language_it.ini`).
 

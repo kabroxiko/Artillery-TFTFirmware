@@ -12,7 +12,7 @@
 
 // Update folder for fonts and icons
 #ifndef UPDATE_DIR
-  #define UPDATE_DIR "TFT28"
+  #define UPDATE_DIR "ARTILLERY"
 #endif
 
 // Hardware manufacturer

@@ -1,6 +1,6 @@
 {
     "include":
     [
-        {"hardware":"ARTILLERY_TFT_CONTROLLER_V1_2", "tftfolder": "TFT28", "logo": "ARTILLERY"}
+        {"hardware":"ARTILLERY_TFT_CONTROLLER_V1_2", "tftfolder": "ARTILLERY", "logo": "ARTILLERY"}
     ]
 }
