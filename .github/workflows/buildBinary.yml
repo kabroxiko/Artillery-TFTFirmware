@@ -24,8 +24,9 @@ jobs:
       - name: Install PlatformIO Core
         run:
           |
+          apt update
+          DEBIAN_FRONTEND=noninteractive apt install -y python3 python3-venv
           python -m venv venv
-          ls -l venv/bin
           source venv/bin/activate
           pip install --disable-pip-version-check --upgrade platformio
 
