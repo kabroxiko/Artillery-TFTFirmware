@@ -24,7 +24,9 @@ jobs:
       - name: Install PlatformIO Core
         run:
           |
-          pip install --disable-pip-version-check --upgrade platformio
+          python3 -m venv venv
+          source venv/bin/activate
+          pip3 install --disable-pip-version-check --upgrade platformio
 
       - id: list
         name: List hardware
@@ -48,6 +50,7 @@ jobs:
           key: ${{ runner.os }}-pio
       - name: Build Artillery TFT Controller V1.2
         run: |
+          source venv/bin/activate
           platformio run --environment ${{ matrix.hardware }}
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
