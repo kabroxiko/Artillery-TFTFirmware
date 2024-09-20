@@ -234,7 +234,7 @@ void setupMachine(FW_TYPE fwType)
   #if BED_LEVELING_TYPE > 1  // if not disabled and not auto-detect
     #if BED_LEVELING_TYPE == 2
       infoMachineSettings.leveling = BL_ABL;
-    #elif BED_LEVELING_TYPE == 5
+    #elif BED_LEVELING_TYPE == 3
       infoMachineSettings.leveling = BL_MBL;
     #endif
   #endif

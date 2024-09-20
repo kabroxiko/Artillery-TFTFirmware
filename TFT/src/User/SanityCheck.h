@@ -260,7 +260,7 @@ extern "C" {
 #endif
 
 #ifdef BED_LEVELING_TYPE
-  #if BED_LEVELING_TYPE > 5
+  #if BED_LEVELING_TYPE > 2
     #error "BED_LEVELING_TYPE cannot be greater than 5"
   #endif
 

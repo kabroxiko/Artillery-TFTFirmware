@@ -1238,7 +1238,7 @@
  * WARNING: If you're not sure, leave on auto-detect or disabled.
  *          UBL has extra options other leveling systems might not have.
  *
- *   Options: [disable: 0, auto-detect: 1, ABL: 2, MBL: 5]
+ *   Options: [disable: 0, auto-detect: 1, ABL: 2, MBL: 3]
  */
 #define BED_LEVELING_TYPE 1  // Default: 1
 
