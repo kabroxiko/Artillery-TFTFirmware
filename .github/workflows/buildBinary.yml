@@ -24,6 +24,7 @@ jobs:
       - name: Install PlatformIO Core
         run:
           |
+          rm -rf venv
           python -m venv venv
           source venv/bin/activate
           pip install --disable-pip-version-check --upgrade platformio
