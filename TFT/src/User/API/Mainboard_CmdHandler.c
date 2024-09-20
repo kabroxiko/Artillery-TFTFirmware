@@ -969,10 +969,6 @@ void sendQueueCmd(void)
           break;
         }
 
-        case 28:  // G28
-          coordinateSetKnown(true);
-          babystepSetValue(BABYSTEP_DEFAULT_VALUE);  // reset babystep
-
         #if BED_LEVELING_TYPE > 0  // if bed leveling is enabled
           case 29:  // G29
           break;
