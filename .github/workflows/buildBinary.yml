@@ -24,7 +24,7 @@ jobs:
       - name: Install PlatformIO Core
         run:
           |
-          python -m venv venv
+          pip install --disable-pip-version-check --upgrade platformio
 
       - id: list
         name: List hardware
