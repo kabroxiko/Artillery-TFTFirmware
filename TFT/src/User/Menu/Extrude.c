@@ -66,6 +66,10 @@ void menuExtrude(void)
       case KEY_ICON_0:
       case KEY_DECREASE:
         extrLength = 0 - extlenSteps[extlenSteps_index];
+        if (extrLength != 0)
+        {
+          mustStoreCmd("G1 E%.5f F%d\n", extrLength, infoSettings.ext_speed[itemSpeed_index]);
+        }
         break;
 
       case KEY_INFOBOX:
@@ -77,6 +81,10 @@ void menuExtrude(void)
       case KEY_ICON_3:
       case KEY_INCREASE:
         extrLength = extlenSteps[extlenSteps_index];
+        if (extrLength != 0)
+        {
+          mustStoreCmd("G1 E%.5f F%d\n", extrLength, infoSettings.ext_speed[itemSpeed_index]);
+        }
         break;
 
       case KEY_ICON_4:
@@ -129,33 +137,6 @@ void menuExtrude(void)
 
       default:
         break;
-    }
-
-    if (extrLength != 0 && heatSetTool(curExtruder_index))
-    {
-      switch (warmupNozzle())
-      {
-        case COLD:
-          extrLength = 0;
-          break;
-
-        case SETTLING:
-          extruderReDraw(curExtruder_index, extrAmount + extrLength, false);
-          break;
-
-        case HEATED:
-          if (storeCmd("G1 E%.5f F%d\n", extrLength, infoSettings.ext_speed[itemSpeed_index]))
-          {
-            if (isPrinting() && isPaused())
-              setExtrusionDuringPause(true);
-
-            extrAmount += extrLength;
-            extrLength = 0;
-
-            extruderReDraw(curExtruder_index, extrAmount, false);
-          }
-          break;
-      }
     }
 
     loopProcess();

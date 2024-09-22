@@ -69,11 +69,11 @@ void menuLoadUnload(void)
       switch (key_num)
       {
         case KEY_ICON_0:  // unload
-          lastCmd = UNLOAD_REQUESTED;
+          mustStoreCmd("UNLOAD_FILAMENT\n");
           break;
 
         case KEY_ICON_3:  // load
-          lastCmd = LOAD_REQUESTED;
+          mustStoreCmd("LOAD_FILAMENT\n");
           break;
 
         case KEY_INFOBOX:  // edit nozzle temp
@@ -124,36 +124,6 @@ void menuLoadUnload(void)
         default:
           temperatureReDraw(tool_index, NULL, false);
           break;
-      }
-
-      if ((lastCmd == UNLOAD_REQUESTED || lastCmd == LOAD_REQUESTED) && heatSetTool(tool_index))
-      {
-        switch (warmupNozzle())
-        {
-          case COLD:
-            lastCmd = NONE;
-            break;
-
-          case SETTLING:
-            break;
-
-          case HEATED:
-            if (lastCmd == UNLOAD_REQUESTED)
-            { // unload
-              lastCmd = UNLOAD_STARTED;
-
-              mustStoreCmd("M702\n");
-            }
-            else  // LOAD_REQUESTED
-            { // load
-              lastCmd = LOAD_STARTED;
-
-              mustStoreCmd("M701\n");
-            }
-
-            if (isPrinting() && isPaused())
-              setExtrusionDuringPause(true);
-         }
       }
     }
 

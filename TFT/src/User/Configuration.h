@@ -1258,13 +1258,6 @@
  */
 #define NOZZLE_PAUSE_M601  // Default: uncommented (enabled)
 
-/**
- * M701, M702: Marlin Filament Load / Unload G-codes Support
- * "FILAMENT_LOAD_UNLOAD_GCODES" option in Configuration_adv.h in Marlin fw needs to be uncommented.
- * Adds a submenu to the movement menu for selecting load and unload actions.
- */
-#define LOAD_UNLOAD_M701_M702  // Default: uncommented (enabled)
-
 //================================================================================
 //================================= UI Settings ==================================
 //================================================================================

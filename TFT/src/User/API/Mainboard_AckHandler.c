@@ -1152,6 +1152,10 @@ void parseAck(void)
 
       infoSetMachineType("Artillery Genius Pro", strlen("Artillery Genius Pro"));  // set printer name
     }
+    else if (ack_starts_with("!! Extrude below minimum temp"))
+    {
+      NOZZLE_STATUS nozzle_status = warmupNozzle();
+    }
     else if (ack_starts_with("// Cap:"))
     {
       if (ack_continue_seen("EEPROM:"))

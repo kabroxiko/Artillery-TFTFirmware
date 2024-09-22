@@ -124,14 +124,6 @@ static void menuNewExtruderESteps(void)
 
 static inline void extrudeFilament(void)
 {
-  // check and adopt current E-steps
-  setParameter(P_STEPS_PER_MM, E_AXIS, 0.0f);  // reset E-steps value
-
-  TASK_LOOP_WHILE(getParameter(P_STEPS_PER_MM, E_AXIS) == 0.0f);  // wait until E-steps is updated
-
-  // home extruder and set absolute positioning
-  mustStoreScript("G28\nG90\n");
-
   // raise Z axis to pause height
   mustStoreCmd("G0 Z%.3f F%d\n", coordinateGetAxisActual(Z_AXIS) + infoSettings.pause_z_raise,
                infoSettings.pause_feedrate[FEEDRATE_Z]);
@@ -231,30 +223,16 @@ void menuTuneExtruder(void)
         break;
     }
 
-    if (loadRequested == true && heatSetTool(tool_index))
+    if (loadRequested == true)
     {
-      switch (warmupNozzle())
-      {
-        case COLD:
-          loadRequested = false;
-          break;
+      loadRequested = false;
 
-        case SETTLING:
-          break;
+      char tempMsg[120];
+      LABELCHAR(tempStr, LABEL_TUNE_EXT_MARK120MM);
 
-        case HEATED:
-        {
-          loadRequested = false;
+      sprintf(tempMsg, tempStr, textSelect(LABEL_EXTRUDE));
 
-          char tempMsg[120];
-          LABELCHAR(tempStr, LABEL_TUNE_EXT_MARK120MM);
-
-          sprintf(tempMsg, tempStr, textSelect(LABEL_EXTRUDE));
-
-          popupDialog(DIALOG_TYPE_QUESTION, tuneExtruderItems.title.index, (uint8_t *) tempMsg, LABEL_EXTRUDE, LABEL_CANCEL, extrudeFilament, NULL, NULL);
-          break;
-        }
-      }
+      popupDialog(DIALOG_TYPE_QUESTION, tuneExtruderItems.title.index, (uint8_t *) tempMsg, LABEL_EXTRUDE, LABEL_CANCEL, extrudeFilament, NULL, NULL);
     }
 
     if (lastCurrent != actCurrent || lastTarget != actTarget)

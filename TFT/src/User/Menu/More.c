@@ -12,11 +12,7 @@ static const MENUITEMS moreItems = {
     {ICON_PERCENTAGE,              LABEL_PERCENTAGE},
     {ICON_FEATURE_SETTINGS,        LABEL_FEATURE_SETTINGS},
     {ICON_MACHINE_SETTINGS,        LABEL_MACHINE_SETTINGS},
-    #ifdef LOAD_UNLOAD_M701_M702
-      {ICON_EXTRUDE,                 LABEL_LOAD_UNLOAD_SHORT},
-    #else
-      {ICON_GCODE,                   LABEL_TERMINAL},
-    #endif
+    {ICON_EXTRUDE,                 LABEL_LOAD_UNLOAD_SHORT},
     {ICON_BACK,                    LABEL_BACK},
   }
 };
@@ -77,18 +73,14 @@ void menuMore(void)
         break;
 
       case KEY_ICON_6:
-        #ifdef LOAD_UNLOAD_M701_M702
-          if (isPrinting() && !isPaused())  // need paused before extrude
-          {
-            popupDialog(DIALOG_TYPE_ALERT, LABEL_WARNING, LABEL_IS_PAUSE, LABEL_CONFIRM, LABEL_CANCEL, isPauseLoadUnload, NULL, NULL);
-          }
-          else
-          {
-            OPEN_MENU(menuLoadUnload);
-          }
-        #else
-          OPEN_MENU(menuTerminal);
-        #endif
+        if (isPrinting() && !isPaused())  // need paused before extrude
+        {
+          popupDialog(DIALOG_TYPE_ALERT, LABEL_WARNING, LABEL_IS_PAUSE, LABEL_CONFIRM, LABEL_CANCEL, isPauseLoadUnload, NULL, NULL);
+        }
+        else
+        {
+          OPEN_MENU(menuLoadUnload);
+        }
         break;
 
       case KEY_ICON_7:
