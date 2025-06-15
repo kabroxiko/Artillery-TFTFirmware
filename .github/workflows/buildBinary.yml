@@ -48,16 +48,27 @@ jobs:
             .platformio/.cache
             venv
           key: ${{ runner.os }}-pio
-      - name: Build Artillery TFT Controller V1.2
+
+      - uses: montudor/action-zip@v1
+
+      - name: Build artifacts
         run: |
           source venv/bin/activate
           platformio run --environment ${{ matrix.hardware }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v4
+          set -x
+          mv .pio/build/${{ matrix.hardware }}/*.bin MKS${{ matrix.tftfolder }}.bin
+          cp -a "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/${{ matrix.tftfolder }}" "."
+          cp -a "Copy to SD Card root directory to update/config.ini" "."
+          if [ "${{ matrix.customlogo }}" != "" ]; then
+            cp -a "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/${{ matrix.customlogo }}/bmp" \
+              "${{ matrix.tftfolder }}"
+          fi
+          zip -mur ${{ matrix.hardware }}.zip MKS${{ matrix.tftfolder }}.bin ${{ matrix.tftfolder }} config.ini
+
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.hardware }}
-          path: |
-            .pio/build/${{ matrix.hardware }}
+          path: ${{ matrix.hardware }}.zip
           retention-days: 1
 
   release:
@@ -67,20 +78,19 @@ jobs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Download a single artifact
-        uses: actions/download-artifact@v4
+
+      - uses: actions/download-artifact@v4
         with:
-          path: firmwares
+          path: artifacts
 
-      - name: Install zip
-        uses: montudor/action-zip@v1
-
-      - name: Zip release
+      - name: List files
         id: ziplist
-        uses: ./.github/actions/zip-release
+        run: |
+          echo 'files<<EOF' >> $GITHUB_OUTPUT
+          ls -1 artifacts/**/*.zip | tee -a $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
-      - name: Create Release
-        id: create_release
+      - id: create_release
         uses: softprops/action-gh-release@v2.3.2
         with:
           tag_name: v${{ github.ref_name }}
