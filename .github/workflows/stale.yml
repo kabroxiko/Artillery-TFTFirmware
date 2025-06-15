@@ -12,7 +12,7 @@ on:
 jobs:
   stale:
     name: Mark Stale Issues and PRs
-    if: github.repository == 'bigtreetech/BIGTREETECH-TouchScreenFirmware'
+    if: github.repository == 'kabroxiko/Artillery-TFTFirmware'
 
     runs-on: ubuntu-latest
     permissions:
