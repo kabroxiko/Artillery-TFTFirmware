@@ -1,7 +1,7 @@
 {
     "include":
     [
-        {"hardware":"ARTILLERY_TFT_CONTROLLER_V1_2", "tftfolder": "TFT28", "logo": "ARTILLERY"},
+        {"hardware":"ARTILLERY_TFT_CONTROLLER_V1_2", "tftfolder": "TFT28", "customlogo": "ARTILLERY"},
         {"hardware":"BIGTREE_TFT24_V1_1", "tftfolder": "TFT24"},
         {"hardware":"BIGTREE_TFT28_V1_0", "tftfolder": "TFT28"},
         {"hardware":"BIGTREE_TFT28_V3_0", "tftfolder": "TFT28"},
