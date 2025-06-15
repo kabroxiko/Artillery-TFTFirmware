@@ -27,14 +27,14 @@ const SERIAL_CFG Serial[_UART_CNT] = {  // RM0008 Table 78-79
     {USART2, RCC_AHBPeriph_DMA1, DMA1, DMA1_Channel6, DMA1_Channel7},
     {USART3, RCC_AHBPeriph_DMA1, DMA1, DMA1_Channel3, DMA1_Channel2},
     {UART4,  RCC_AHBPeriph_DMA2, DMA2, DMA2_Channel3, DMA2_Channel5},
-    {UART5,  -1,                 -1,   -1,            -1           },  // UART5 don't support DMA
+    {UART5,  -1,                 NULL, NULL,          NULL         },  // UART5 don't support DMA
   #else
   // USART   TCC           DMAx  DMAx  RX Channel
     {USART1, RCC_AHBPeriph_DMA1, DMA1, DMA1_Channel5},
     {USART2, RCC_AHBPeriph_DMA1, DMA1, DMA1_Channel6},
     {USART3, RCC_AHBPeriph_DMA1, DMA1, DMA1_Channel3},
     {UART4,  RCC_AHBPeriph_DMA2, DMA2, DMA2_Channel3},
-    {UART5,  -1,                 -1    -1,          },  // UART5 don't support DMA
+    {UART5,  -1,                 NULL, NULL         },  // UART5 don't support DMA
   #endif
 };
 
