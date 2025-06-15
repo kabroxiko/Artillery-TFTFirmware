@@ -57,12 +57,16 @@ jobs:
           platformio run --environment ${{ matrix.hardware }}
           set -x
           mv .pio/build/${{ matrix.hardware }}/*.bin MKS${{ matrix.tftfolder }}.bin
-          cp -a "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/${{ matrix.tftfolder }}" "."
-          cp -a "Copy to SD Card root directory to update/config.ini" "."
+          if [ "${{ matrix.tftfolder }}" == "TFT32" ]; then
+            mv "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/TFT28" "${{ matrix.tftfolder }}"
+          else
+            mv "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/${{ matrix.tftfolder }}" "."
+          fi
           if [ "${{ matrix.customlogo }}" != "" ]; then
             cp -a "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/${{ matrix.customlogo }}/bmp" \
               "${{ matrix.tftfolder }}"
           fi
+          mv "Copy to SD Card root directory to update/config.ini" "."
           zip -mur ${{ matrix.hardware }}.zip MKS${{ matrix.tftfolder }}.bin ${{ matrix.tftfolder }} config.ini
 
       - uses: actions/upload-artifact@v4
