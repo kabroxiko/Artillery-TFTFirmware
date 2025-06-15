@@ -1,9 +1,9 @@
-import pkg_resources
+import importlib.util
 
 Import("env")
-installed = {pkg.key for pkg in pkg_resources.working_set}
 
-if 'psutil' in installed:
-    pass
-else:
+def is_installed(pkg_name):
+    return importlib.util.find_spec(pkg_name) is not None
+
+if not is_installed("psutil"):
     env.Execute("$PYTHONEXE -m pip install psutil")
