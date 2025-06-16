@@ -28,6 +28,8 @@
   #endif
 #endif
 
+#undef QUICK_EEPROM_BUTTON
+
 #include "pin_MKS_TFT32_V1_4.h"
 
 #endif
