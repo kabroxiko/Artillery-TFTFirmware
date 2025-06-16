@@ -1529,7 +1529,7 @@
  * Live Text Common Color Layout (Status Screen menu)
  * Some topics require to use a common color for live text in Status Screen menu.
  * Uncomment to use the color of live text 1 (name) also for live text 2 (value)
- * (e.g. for THEME_Rep Rap Firmware Dark theme).
+ * (e.g. for themes/Rep Rap Firmware Dark theme).
  * Comment to use standard colors.
  */
 //#define LIVE_TEXT_COMMON_COLOR  // Default: commented (disabled)

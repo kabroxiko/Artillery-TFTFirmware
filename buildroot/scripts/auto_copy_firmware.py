@@ -12,7 +12,7 @@ def copy_firmware(source, target, env):
     flags = {k: v for (k, v) in build_flags.get("CPPDEFINES")}
     target_dir = flags.get("BINARY_DIRECTORY")
     if target_dir == None:
-        target_dir = "Copy to SD Card root directory to update"
+        target_dir = "assets"
     target_file_path = os.path.join(repo_path, target_dir, filename)
     shutil.copyfile(src_file_path, target_file_path)
     print("Done.")

@@ -3,7 +3,7 @@ on:
   pull_request_target:
     paths-ignore:
       - Bootloader/**
-      - Copy to SD Card root directory to update/**
+      - assets/**
       - images/**
       - readme/**
       - '**/*.md'
@@ -79,15 +79,15 @@ jobs:
           set -x
           mv .pio/build/${{ matrix.hardware }}/*.bin MKS${{ matrix.assets_dir }}.bin
           if [ "${{ matrix.assets_dir }}" == "TFT32" ]; then
-            mv "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/TFT28" "${{ matrix.assets_dir }}"
+            mv "assets/themes/Unified Menu Material theme/TFT28" "${{ matrix.assets_dir }}"
           else
-            mv "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/${{ matrix.assets_dir }}" "."
+            mv "assets/themes/Unified Menu Material theme/${{ matrix.assets_dir }}" "."
           fi
           if [ "${{ matrix.custom_logo }}" != "" ]; then
-            cp -a "Copy to SD Card root directory to update/THEME_Unified Menu Material theme/${{ matrix.custom_logo }}/bmp" \
+            cp -a "assets/themes/Unified Menu Material theme/${{ matrix.custom_logo }}/bmp" \
               "${{ matrix.assets_dir }}"
           fi
-          mv "Copy to SD Card root directory to update/config.ini" "."
+          mv "assets/config.ini" "."
           zip -mur ${{ matrix.hardware }}.zip MKS${{ matrix.assets_dir }}.bin ${{ matrix.assets_dir }} config.ini
 
       - uses: actions/upload-artifact@v4

@@ -22,8 +22,8 @@ string_header = """#### Language Code:_code_
 ## Escape characters are not supported except newline '\\n'\n\n"""
 
 input_path =  os.path.join("TFT", "src", "User", "API", "Language")
-output_path = os.path.join("Copy to SD Card root directory to update", "Language Packs")
-# output_path2 = "/Copy to SD Card root directory to update - Unified Menu Material theme/Language Packs"
+output_path = os.path.join("assets", "Language Packs")
+# output_path2 = "/assets/themes/Unified Menu Material theme/Language Packs"
 setting_path = os.path.join("TFT", "src", "User", "API", "Settings.h")
 
 file_count = 0
