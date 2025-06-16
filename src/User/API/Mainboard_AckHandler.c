@@ -1265,6 +1265,8 @@ void parseAck(void)
 
       if (ack_continue_seen("Marlin"))
         setupMachine(FW_MARLIN);
+      else if (ack_continue_seen("Klipper"))
+        setupMachine(FW_KLIPPER);
       else if (ack_continue_seen("RepRapFirmware"))
         setupMachine(FW_REPRAPFW);
       else if (ack_continue_seen("Smoothieware"))
@@ -1278,6 +1280,24 @@ void parseAck(void)
         string_end = ack_index - sizeof("SOURCE_CODE_URL:");
 
       infoSetFirmwareName(string, string_end - string_start);  // set firmware name
+
+      if (infoMachineSettings.firmwareType == FW_KLIPPER)
+        {
+        if (ack_seen("ACCESS_POINT:"))
+        {
+          string = &ack_cache[ack_index];
+          // Find length up to space, newline, or end of string
+          uint16_t ap_len = strcspn(string, " \n\r");
+          infoSetAccessPoint(string, ap_len);  // set access point name
+        }
+
+        if (ack_seen("IP_ADDRESS:"))
+        {
+          string = &ack_cache[ack_index];
+          uint16_t ip_len = strcspn(string, " \n\r");
+          infoSetIPAddress(string, ip_len);  // set IP address
+        }
+      }
 
       if (ack_seen("MACHINE_TYPE:"))
       {
