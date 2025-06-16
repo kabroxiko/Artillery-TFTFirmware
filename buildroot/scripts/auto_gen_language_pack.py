@@ -21,10 +21,10 @@ string_header = """#### Language Code:_code_
 ## Maximum byte per keyword is 250 Bytes.
 ## Escape characters are not supported except newline '\\n'\n\n"""
 
-input_path =  os.path.join("TFT", "src", "User", "API", "Language")
+input_path =  os.path.join("src", "User", "API", "Language")
 output_path = os.path.join("assets", "Language Packs")
 # output_path2 = "/assets/themes/Unified Menu Material theme/Language Packs"
-setting_path = os.path.join("TFT", "src", "User", "API", "Settings.h")
+setting_path = os.path.join("src", "User", "API", "Settings.h")
 
 file_count = 0
 key_count = 0
