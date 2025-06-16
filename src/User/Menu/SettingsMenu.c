@@ -109,7 +109,8 @@ void menuInfo(void)
   GUI_DispString(0, version[3].y0, (uint8_t *) "Firmware:");
   GUI_DispString(0, version[4].y0, (uint8_t *) "SPIFlash:");
 
-  if (infoMachineSettings.firmwareType == FW_REPRAPFW)
+  if (infoMachineSettings.firmwareType == FW_REPRAPFW ||
+      infoMachineSettings.firmwareType == FW_KLIPPER)
   {
     GUI_DispString(0, version[5].y0, (uint8_t *) "WIFI    :");
     GUI_DispString(0, version[6].y0, (uint8_t *) "IP      :");
@@ -130,7 +131,8 @@ void menuInfo(void)
   sprintf(buf, "Used %.2f%% (%.2fMB/%uMB)", flashUsedPercentage(), usedMB, (W25Qxx_ReadCapacity() / 1048576));
   GUI_DispStringInPrectEOL(&version[4], (uint8_t *) buf);
 
-  if (infoMachineSettings.firmwareType == FW_REPRAPFW)
+  if (infoMachineSettings.firmwareType == FW_REPRAPFW ||
+      infoMachineSettings.firmwareType == FW_KLIPPER)
   {
     GUI_DispStringInPrectEOL(&version[5], (uint8_t *) access_point);
     GUI_DispStringInPrectEOL(&version[6], (uint8_t *) ip_address);
